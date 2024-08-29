@@ -47,6 +47,10 @@ public class Proveedor {
 		this.baja = baja;
 	}
 
+	public Proveedor() {
+		super();
+	}
+
 	public String getId() {
 		return id;
 	}

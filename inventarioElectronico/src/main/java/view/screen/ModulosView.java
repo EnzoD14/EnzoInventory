@@ -16,6 +16,7 @@ import javax.swing.JRadioButton;
 
 import controlador.ActivoController;
 import controlador.UsuarioController;
+import view.events.CompraEvents;
 import view.events.GestionActivosEvents;
 
 public class ModulosView {
@@ -24,7 +25,7 @@ public class ModulosView {
     private JPanel panelOpciones;
     private JButton btnSeleccionar;
     private ButtonGroup buttonGroup;
-    private String[] categorias = {"Gestión Activos", "Gestión Usuarios", "Mantenimiento / Reparación", "Garantía", "Backup", "Reportes"};
+    private String[] categorias = {"Gestión Activos", "Gestión Usuarios", "Compras" , "Mantenimiento / Reparación", "Garantía", "Backup", "Reportes"};
     
     public ModulosView(UsuarioController usuario) {
         this.usuarioLogin = usuario;
@@ -104,6 +105,11 @@ public class ModulosView {
                 // new GestionUsersVista();
             	GestionUsuariosView gestionUsuariosVista = new GestionUsuariosView(usuarioLogin);
                 break;
+            case "Compras":
+				// new ComprasVista();
+				CompraView comprasVista = new CompraView(usuarioLogin);
+				new CompraEvents(comprasVista);
+				break;
             case "Mantenimiento / Reparación":
                 // new MantenimientoVista();
             	MantenimientoView mantenimientoVista = new MantenimientoView(usuarioLogin);

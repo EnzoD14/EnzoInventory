@@ -26,12 +26,7 @@ public class UsuarioController {
     // Método para actualizar la información del usuario (ejemplo adicional)
     public void actualizarPerfil(String usuarioAd, String contrasena, String nombre, String apellido, String email,
 			String tipoUsuario, Boolean baja) {
-    	usuario.setContrasena(contrasena);
-        usuario.setNombre(nombre);
-        usuario.setApellido(apellido);
-        usuario.setEmail(email);
-        usuario.setTipoUsuario(tipoUsuario);
-        usuario.setBaja(baja);
+    	
         
         //Actualizar usuario en bdd
     }

@@ -9,7 +9,7 @@ public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idUsuario")
+	@Column(name = "idUsuario", nullable = true)
 	private String id;
 	
 	@Column(name = "usuarioAd", unique = true)
@@ -31,12 +31,11 @@ public class Usuario {
 	private String tipoUsuario;
 	
 	@Column(name = "baja")
-	private Boolean baja;
+	private int baja;
 
 	// Constructor
-	public Usuario(String id, String usuarioAd, String contrasena, String nombre, String apellido, String email,
-			String tipoUsuario, Boolean baja) {
-		this.id = id;
+	public Usuario(String usuarioAd, String contrasena, String nombre, String apellido, String email,
+			String tipoUsuario, int baja) {
 		this.usuarioAd = usuarioAd;
 		this.contrasena = contrasena;
 		this.nombre = nombre;
@@ -44,6 +43,9 @@ public class Usuario {
 		this.email = email;
 		this.tipoUsuario = tipoUsuario;
 		this.baja = baja;
+	}
+	
+	public Usuario() {
 	}
 
 	// Getters y Setters
@@ -104,11 +106,11 @@ public class Usuario {
 		this.tipoUsuario = tipoUsuario;
 	}
 
-	public Boolean getBaja() {
+	public int getBaja() {
 		return baja;
 	}
 
-	public void setBaja(Boolean baja) {
+	public void setBaja(int baja) {
 		this.baja = baja;
 	}
 
