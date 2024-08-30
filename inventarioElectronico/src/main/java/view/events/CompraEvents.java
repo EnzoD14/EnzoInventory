@@ -3,11 +3,13 @@ package view.events;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import controlador.UsuarioController;
 import view.screen.CompraView;
+import view.screen.ProveedorAltaView;
 
 public class CompraEvents {
 	private CompraView view;
-	
+	private UsuarioController usuarioLogin;
 	
 	public CompraEvents(CompraView view) {
 		this.view = view;
@@ -20,25 +22,25 @@ public class CompraEvents {
 		// TODO Auto-generated method stub
 		view.setControladorAlta(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				agregarCompra();
+				agregarProveedor();
 			}
 		});
 		
 		view.setControladorBaja(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				bajaCompra();
+				bajaProveedor();
 			}
 		});
 		
 		view.setControladorModificar(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modificarCompra();
+				modificarProveedor();
 			}
 		});
 		
 		view.setControladorListar(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listarCompra();
+				listarProveedor();
 			}
 		});
 		
@@ -49,20 +51,23 @@ public class CompraEvents {
         });
 	}
 	
-	private void agregarCompra() {
-		System.out.println("agregarCompra");
+	private void agregarProveedor() {
+		ProveedorAltaView proveedorAltaView = new ProveedorAltaView(usuarioLogin);
+		new ProveedorAltaEvents(proveedorAltaView);
+		proveedorAltaView.setVisible(true);
+		
 	}
 	
-	private void bajaCompra() {
-		System.out.println("bajaCompra");
+	private void bajaProveedor() {
+		System.out.println("bajaProveedor");
 	}
 	
-	private void modificarCompra() {
-		System.out.println("modificarCompra");
+	private void modificarProveedor() {
+		System.out.println("modificarProveedor");
 	}
 	
-	private void listarCompra() {
-		System.out.println("listarCompra");
+	private void listarProveedor() {
+		System.out.println("listarProveedor");
 	}
 	
 	private void agregarSolicitud() {

@@ -26,10 +26,10 @@ public class CompraView {
 
 	public CompraView(UsuarioController usuarioLogin) {
 		this.usuarioLogin = usuarioLogin;
-        initialize();
+        initialize(usuarioLogin);
 	}
 
-	public void initialize() {
+	public void initialize(UsuarioController usuarioLogin) {
 		frame = new JFrame("Compras - Inventario Electronico");
         frame.setSize(500, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
