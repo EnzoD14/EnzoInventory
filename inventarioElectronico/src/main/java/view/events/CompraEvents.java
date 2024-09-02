@@ -7,6 +7,9 @@ import controlador.UsuarioController;
 import view.screen.CompraView;
 import view.screen.ProveedorAltaView;
 import view.screen.ProveedorBajaView;
+import view.screen.ProveedorListaView;
+import view.screen.ProveedorModificacionBusquedaView;
+import view.screen.ProveedorModificacionView;
 
 public class CompraEvents {
 	private CompraView view;
@@ -66,11 +69,15 @@ public class CompraEvents {
 	}
 	
 	private void modificarProveedor() {
-		System.out.println("modificarProveedor");
+		ProveedorModificacionBusquedaView proveedorModificacionBuscar = new ProveedorModificacionBusquedaView();
+		//ProveedorModificacionView proveedorModificacionView = new ProveedorModificacionView();
+		new ProveedorModificacionBusquedaEvent(proveedorModificacionBuscar);
+		proveedorModificacionBuscar.setVisible(true);
 	}
 	
 	private void listarProveedor() {
-		System.out.println("listarProveedor");
+		ProveedorListaView proveedorListaView = new ProveedorListaView();
+		proveedorListaView.setVisible(true);
 	}
 	
 	private void agregarSolicitud() {

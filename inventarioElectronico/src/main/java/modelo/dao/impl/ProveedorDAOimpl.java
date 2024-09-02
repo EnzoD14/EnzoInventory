@@ -44,8 +44,26 @@ public class ProveedorDAOimpl {
 		    }
 	}
 	
-	public void modificarProveedor() {
+	public void modificarProveedor(Proveedor proveedor) {
 		System.out.println("modificarProveedor");
+		
+		 Session session = null;
+		    try {
+		        session = sessionFactory.openSession();
+		        session.beginTransaction();
+		        session.update(proveedor);
+		        session.getTransaction().commit();
+		        System.out.println("Proveedor actualizado con éxito en la base de datos");
+		    } catch (Exception e) {
+		        if (session != null) {
+		            session.getTransaction().rollback();
+		        }
+		        e.printStackTrace();
+		    } finally {
+		        if (session != null) {
+		            session.close();
+		        }
+		    }
 	}
 	
 	public void eliminarProveedor(Proveedor proveedor) {
