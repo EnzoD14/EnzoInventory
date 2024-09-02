@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import controlador.UsuarioController;
 import view.screen.CompraView;
 import view.screen.ProveedorAltaView;
+import view.screen.ProveedorBajaView;
 
 public class CompraEvents {
 	private CompraView view;
@@ -59,7 +60,9 @@ public class CompraEvents {
 	}
 	
 	private void bajaProveedor() {
-		System.out.println("bajaProveedor");
+		ProveedorBajaView proveedorBajaView = new ProveedorBajaView();
+		new ProveedorBajaEvent(proveedorBajaView);
+		proveedorBajaView.setVisible(true);
 	}
 	
 	private void modificarProveedor() {

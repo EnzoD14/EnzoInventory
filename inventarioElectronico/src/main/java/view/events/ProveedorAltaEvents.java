@@ -3,6 +3,8 @@ package view.events;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import controlador.UsuarioController;
 import modelo.Proveedor;
 import modelo.dao.impl.ProveedorDAOimpl;
@@ -34,6 +36,7 @@ public class ProveedorAltaEvents {
 	}
 	
 	private void agregarProveedor() {
+		Boolean flag;
 		System.out.println("agregarProveedor");
 		
 		Proveedor proveedor = new Proveedor();
@@ -43,7 +46,15 @@ public class ProveedorAltaEvents {
 		proveedor.setTelefono(view.getTelefono());
 		proveedor.setBaja(0);
 		
-		proveedorDAO.agregarProveedor(proveedor);
+		if (flag = proveedorDAO.agregarProveedor(proveedor)) {
+			System.out.println("Proveedor guardado con exito bdd");
+			JOptionPane.showMessageDialog(null, "Proveedor guardado con exito bdd", "Información", JOptionPane.INFORMATION_MESSAGE);
+			view.setVisible(false);
+		} else {
+			System.out.println("Error al guardar proveedor en bdd");
+			JOptionPane.showMessageDialog(null, "Error al guardar proveedor en bdd", "Error", JOptionPane.ERROR_MESSAGE);
+			view.setVisible(false);
+		};
 	}
 	
 	private void cancelarProveedor() {
