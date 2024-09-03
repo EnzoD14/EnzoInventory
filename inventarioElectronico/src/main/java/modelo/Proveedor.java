@@ -99,5 +99,9 @@ public class Proveedor {
 		this.baja = baja;
 	}
 	
+	@Override
+	public String toString() {
+		return razonSocial;
+	}
 	
 }

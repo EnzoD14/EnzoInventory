@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import controlador.UsuarioController;
+import view.screen.CompraAltaView;
 import view.screen.CompraView;
 import view.screen.ProveedorAltaView;
 import view.screen.ProveedorBajaView;
@@ -82,5 +83,7 @@ public class CompraEvents {
 	
 	private void agregarSolicitud() {
 		System.out.println("agregarSolicitud");
+		CompraAltaView compraView = new CompraAltaView();
+		new CompraAltaEvents(compraView);
 	}
 }

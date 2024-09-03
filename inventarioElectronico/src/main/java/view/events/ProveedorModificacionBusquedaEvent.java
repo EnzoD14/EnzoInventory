@@ -48,10 +48,13 @@ public class ProveedorModificacionBusquedaEvent {
 
 			if (proveedor != null) {
 				view2 = new ProveedorModificacionView(proveedor);
+				new ProveedorModificacionEvents(view2, proveedor);
+				view.setVisible(false);
 				view2.setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(view, "No se encontró un proveedor con la razón social: " + razonSocial,
 						"Error", JOptionPane.ERROR_MESSAGE);
+				view.setVisible(false);
 			}
 
 		}

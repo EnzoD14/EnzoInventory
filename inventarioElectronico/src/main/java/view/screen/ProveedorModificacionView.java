@@ -18,6 +18,7 @@ public class ProveedorModificacionView extends JFrame {
     private JTextField emailField;
     private JTextField telefonoField;
     private JButton guardarButton;
+    private JButton cancelarButton;
     private ProveedorDAOimpl proveedorDAO;
     private Proveedor proveedor;
 
@@ -47,6 +48,9 @@ public class ProveedorModificacionView extends JFrame {
 
         guardarButton = new JButton("Guardar");
         add(guardarButton);
+        
+        cancelarButton = new JButton("Cancelar");
+        add(cancelarButton);
     }
     
 	public String getNombre() {
@@ -65,8 +69,12 @@ public class ProveedorModificacionView extends JFrame {
 		return telefonoField.getText();
 	}
     
-	public void setguardarButtonActionListener(ActionListener actionListener) {
+	public void setGuardarButtonActionListener(ActionListener actionListener) {
 		guardarButton.addActionListener(actionListener);
+	}
+	
+	public void setCancelarButtonActionListener(ActionListener actionListener) {
+		cancelarButton.addActionListener(actionListener);
 	}
     
 	public void setViewVisible(boolean visible) {

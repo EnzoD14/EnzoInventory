@@ -1,5 +1,7 @@
 package modelo.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -44,21 +46,22 @@ public class ProveedorDAOimpl {
 		    }
 	}
 	
-	public void modificarProveedor(Proveedor proveedor) {
+	public Boolean modificarProveedor(Proveedor proveedor) {
 		System.out.println("modificarProveedor");
-		
-		 Session session = null;
+		Session session = null;
 		    try {
 		        session = sessionFactory.openSession();
 		        session.beginTransaction();
 		        session.update(proveedor);
 		        session.getTransaction().commit();
 		        System.out.println("Proveedor actualizado con éxito en la base de datos");
+		        return true;
 		    } catch (Exception e) {
 		        if (session != null) {
 		            session.getTransaction().rollback();
 		        }
 		        e.printStackTrace();
+		        return false;
 		    } finally {
 		        if (session != null) {
 		            session.close();
@@ -114,6 +117,43 @@ public class ProveedorDAOimpl {
 			} 
 		
 		return proveedor; 
+	}
+	
+	public Proveedor getIdProveedor(String razonSocial) {
+		Session session = null;
+		Proveedor proveedor = null;
+		
+		try {
+			session = sessionFactory.openSession();
+			Query query = session.createQuery("FROM Proveedor WHERE razonSocial = :razonSocial");
+			query.setParameter("razonSocial", razonSocial);
+			proveedor = (Proveedor) query.uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return proveedor;
+	}
+	
+	public List<Proveedor> getAllProveedores(){
+		Session session = null;
+        List<Proveedor> proveedores = null;
+        
+        try {
+            session = sessionFactory.openSession();
+            Query query = session.createQuery("FROM Proveedor WHERE baja != 1");
+            proveedores = query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return proveedores;
 	}
 }
 

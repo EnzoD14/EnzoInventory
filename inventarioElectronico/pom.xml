@@ -33,7 +33,12 @@
     <groupId>com.fasterxml</groupId>
     <artifactId>classmate</artifactId>
     <version>1.5.1</version>
+    </dependency>
     
+    <dependency>
+    <groupId>com.toedter</groupId>
+    <artifactId>jcalendar</artifactId>
+    <version>1.4</version>
 </dependency>
 </dependencies>
 </project>

@@ -31,6 +31,10 @@ public class Compra {
 		this.numeroFactura = numeroFactura;
 	}
 
+	public Compra() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getId() {
 		return id;
 	}
