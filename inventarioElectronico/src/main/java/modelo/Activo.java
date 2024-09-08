@@ -59,12 +59,12 @@ public class Activo {
     private String estado;
 	
 	@Column(name = "baja")
-    private Boolean baja;
+    private Integer baja;
     
     // Constructor
 	public Activo(String id, Proveedor proveedor, Garantia garantia, Reparacion reparacion, Compra compra, String tipo,
 			String marca, String modelo, String numeroSerie, String especificaciones, Date fechaAlta,
-			Date fechaMantenimiento, String codigoProducto, String valor, String estado, Boolean baja) {
+			Date fechaMantenimiento, String codigoProducto, String valor, String estado, Integer baja) {
 		this.id = id;
 		this.proveedor = proveedor;
 		this.garantia = garantia;
@@ -81,6 +81,10 @@ public class Activo {
 		this.valor = valor;
 		this.estado = estado;
 		this.baja = baja;
+	}
+
+	public Activo() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getId() {
@@ -203,11 +207,11 @@ public class Activo {
 		this.estado = estado;
 	}
 
-	public Boolean getBaja() {
+	public Integer getBaja() {
 		return baja;
 	}
 
-	public void setBaja(Boolean baja) {
+	public void setBaja(Integer baja) {
 		this.baja = baja;
 	}
 	

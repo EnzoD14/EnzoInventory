@@ -15,22 +15,35 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import controlador.ActivoController;
+import controlador.CompraController;
 import controlador.UsuarioController;
+import modelo.Compra;
+import modelo.dao.impl.ActivoDAOimpl;
+import modelo.dao.impl.CompraDAOimpl;
 import view.events.CompraEvents;
 import view.events.GestionActivosEvents;
 
 public class ModulosView {
 	private UsuarioController usuarioLogin;
+	private CompraDAOimpl compraDAO;
+	private ActivoDAOimpl activoDAO;
     private JFrame frame;
     private JPanel panelOpciones;
     private JButton btnSeleccionar;
     private ButtonGroup buttonGroup;
     private String[] categorias = {"Gestión Activos", "Gestión Usuarios", "Compras" , "Mantenimiento / Reparación", "Garantía", "Backup", "Reportes"};
     
-    public ModulosView(UsuarioController usuario) {
+    public ModulosView(UsuarioController usuario, Compra compra, ActivoDAOimpl activoDAO) {
         this.usuarioLogin = usuario;
+        this.compraDAO = new CompraDAOimpl();
+        this.activoDAO = activoDAO;
         initialize();
     }
+    
+	public ModulosView(UsuarioController usuario) {
+		this.usuarioLogin = usuario;
+		initialize();
+	}
 
     private void initialize() {
         frame = new JFrame("Módulos - Inventario Electronico");
@@ -99,7 +112,8 @@ public class ModulosView {
             	//GestionActivosView activosVista = new GestionActivosView(usuarioLogin);
             	GestionActivosView view = new GestionActivosView(usuarioLogin);
                 ActivoController controller = new ActivoController();
-            	new GestionActivosEvents(view, controller);
+                CompraBusquedaView compraView = null;
+            	new GestionActivosEvents(compraView, view, compraDAO, activoDAO);
                 break;
             case "Gestión Usuarios":
                 // new GestionUsersVista();

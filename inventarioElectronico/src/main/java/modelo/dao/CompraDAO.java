@@ -22,7 +22,7 @@ public interface CompraDAO {
     
     public List<Compra> buscarComprasPorFecha(Date fecha);
     
-    public List<Compra> buscarComprasPorNumeroFactura(String numeroFactura);
+    public Compra buscarComprasPorNumeroFactura(String numeroFactura);
     
     public List<Compra> buscarComprasPorProveedorYFecha(Proveedor proveedor, Date fecha);
     
@@ -33,4 +33,6 @@ public interface CompraDAO {
     public List<Compra> buscarComprasPorProveedorFechaYNumeroFactura(Proveedor proveedor, Date fecha, String numeroFactura);
     
     public List<Compra> buscarComprasPorProveedorYFechaYNumeroFactura(Proveedor proveedor, Date fecha, String numeroFactura);
+
+	public Compra getCompra();
 }

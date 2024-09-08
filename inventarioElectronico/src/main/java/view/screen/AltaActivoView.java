@@ -24,13 +24,15 @@ public class AltaActivoView extends JFrame {
 	    private JTextField txtCodigoProveedor;
 	    private JTextField txtNroFactura;
 	    private JTextField txtGarantia;
-	    private JComboBox<String> comboBackup;
+	    private JTextField txtBuscarFactura;
+	    private JComboBox<String> comboEstado;
+	    private JButton btnBuscarFactura;
 	    private JButton btnGuardar;
 	    private JButton btnCancelar;
 
 	    public AltaActivoView() {
 	        setTitle("Alta de Activo - Inventario Electronico");
-	        setSize(600, 500);
+	        setSize(1000, 500);
 	        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	        setLocationRelativeTo(null);
 
@@ -46,7 +48,9 @@ public class AltaActivoView extends JFrame {
 	        txtCodigoProveedor = new JTextField(20);
 	        txtNroFactura = new JTextField(20);
 	        txtGarantia = new JTextField(20);
-	        comboBackup = new JComboBox<>(new String[] {"No", "Si"});
+	        txtBuscarFactura = new JTextField(20);
+	        comboEstado = new JComboBox<>(new String[] {"En funcionamiento", "Backup", "En reparación", "De baja"});
+	        btnBuscarFactura = new JButton("Buscar Factura");
 	        btnGuardar = new JButton("Guardar");
 	        btnCancelar = new JButton("Cancelar");
 
@@ -74,8 +78,12 @@ public class AltaActivoView extends JFrame {
 	        panel.add(txtNroFactura);
 	        panel.add(new JLabel("Anios Garantia:"));
 	        panel.add(txtGarantia);
-	        panel.add(new JLabel("Es para backup?"));
-	        panel.add(comboBackup);
+	        panel.add(new JLabel("Estado:"));
+	        panel.add(comboEstado);
+	        panel.add(new JLabel("Buscar Factura:"));
+	        panel.add(txtBuscarFactura);
+	        txtBuscarFactura.setEditable(false);
+	        panel.add(btnBuscarFactura);
 	        panel.add(btnGuardar);
 	        panel.add(btnCancelar);
 
@@ -127,9 +135,21 @@ public class AltaActivoView extends JFrame {
 	    	return txtValor.getText();
 	    }
 	    
-	    public boolean getEsBackup() {
-	    	return comboBackup.getSelectedItem().equals("Si");
+	    public String getEstado() {
+	    	return comboEstado.getSelectedItem().toString();
 	    }
+	    
+		public String getBuscarFactura() {
+			return txtBuscarFactura.getText();
+		}
+		
+		public void setBuscarFactura(String nroFactura) {
+			txtBuscarFactura.setText(nroFactura);
+		}
+		
+		public void setControladorBuscarFactura(ActionListener controlador) {
+			btnBuscarFactura.addActionListener(controlador);
+		}
 
 	    public void setControladorGuardar(ActionListener controlador) {
 	        btnGuardar.addActionListener(controlador);
@@ -138,5 +158,14 @@ public class AltaActivoView extends JFrame {
 	    public void setControladorCancelar(ActionListener controlador) {
 	        btnCancelar.addActionListener(controlador);
 	    }
+	    
+		public void mostrarMensaje(String mensaje) {
+			System.out.println(mensaje);
+		}
+
+		public void setBtnBuscarFacturaEnabled(boolean b) {
+			// TODO Auto-generated method stub
+			btnBuscarFactura.setEnabled(b);
+		}
 	}
 

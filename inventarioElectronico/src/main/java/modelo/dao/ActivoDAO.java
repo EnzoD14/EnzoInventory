@@ -6,7 +6,7 @@ import java.util.List;
 import modelo.Activo;
 
 public interface ActivoDAO {
-	void agregarActivo(Activo activo) throws SQLException;
+	Boolean agregarActivo(Activo activo) throws SQLException;
 	void modificarActivo(Activo activo);
 	void eliminarActico(Activo activo);
 	Activo obtenerActivoPorId(int id);

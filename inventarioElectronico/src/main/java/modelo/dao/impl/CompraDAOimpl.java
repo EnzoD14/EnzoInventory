@@ -1,14 +1,21 @@
 package modelo.dao.impl;
 
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import modelo.Activo;
 import modelo.Compra;
+import modelo.Proveedor;
+import modelo.dao.CompraDAO;
 
-public class CompraDAOimpl {
+public class CompraDAOimpl implements CompraDAO {
 	
 	private SessionFactory sessionFactory;
 
@@ -111,5 +118,80 @@ public class CompraDAOimpl {
 					session.close();
 				}
 			}
-            }
+     }
+	
+		public Compra buscarComprasPorNumeroFactura(String numeroFactura) {
+			System.out.println("buscarComprasPorNumeroFactura");
+			Session session = null;
+			Compra compra = null;
+			try {
+				session = sessionFactory.openSession();
+				Query query = session.createQuery("FROM Compra WHERE numeroFactura = :numeroFactura");
+				query.setParameter("numeroFactura", numeroFactura);
+				compra = (Compra) query.uniqueResult();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (session != null) {
+					session.close();
+				}
+			}
+			return compra;
+		}
+
+		@Override
+		public List<Compra> listarCompras() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Compra> buscarComprasPorProveedor(Proveedor proveedor) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Compra> buscarComprasPorFecha(Date fecha) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Compra> buscarComprasPorProveedorYFecha(Proveedor proveedor, Date fecha) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Compra> buscarComprasPorProveedorYNumeroFactura(Proveedor proveedor, String numeroFactura) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Compra> buscarComprasPorFechaYNumeroFactura(Date fecha, String numeroFactura) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Compra> buscarComprasPorProveedorFechaYNumeroFactura(Proveedor proveedor, Date fecha,
+				String numeroFactura) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public List<Compra> buscarComprasPorProveedorYFechaYNumeroFactura(Proveedor proveedor, Date fecha,
+				String numeroFactura) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Compra getCompra() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 }
