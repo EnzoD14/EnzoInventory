@@ -45,6 +45,8 @@ public class CompraAltaEvents {
 		Compra compra = new Compra();
 		java.util.Date utilDate = compraView.getFechaCompraChooser().getDate();
 	    java.sql.Date fechaCompra = new java.sql.Date(utilDate.getTime());
+	    
+	    System.out.println(compraView.getProveedoresComboBox().getSelectedItem());
 		
 		compra.setFechaCompra(fechaCompra);
 		compra.setNumeroFactura(compraView.getNumFacturaField().getText());

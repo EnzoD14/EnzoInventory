@@ -48,6 +48,10 @@ public class Solicitud {
 		this.estado = estado;
 		this.baja = baja;
 	}
+	
+	public Solicitud() {
+	// TODO Auto-generated
+	}
 
 	public String getId() {
 		return id;

@@ -15,16 +15,16 @@ import modelo.Compra;
 import modelo.dao.CompraDAO;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.CompraDAOimpl;
-import view.screen.AltaActivoView;
+import view.screen.ActivoAltaView;
 import view.screen.CompraBusquedaView;
 
 public class AltaActivoEvent {
 	private CompraBusquedaView viewCompra;
-	private AltaActivoView vista;
+	private ActivoAltaView vista;
     private CompraDAOimpl compraDAO;
     private ActivoDAOimpl activoDAO;
 
-    public AltaActivoEvent(CompraBusquedaView viewCompra, AltaActivoView vista, CompraDAOimpl compraDAO, ActivoDAOimpl activoDAO) {
+    public AltaActivoEvent(CompraBusquedaView viewCompra, ActivoAltaView vista, CompraDAOimpl compraDAO, ActivoDAOimpl activoDAO) {
         this.viewCompra = viewCompra;
     	this.vista = vista;
         this.compraDAO = new CompraDAOimpl();
@@ -69,7 +69,7 @@ public class AltaActivoEvent {
     private void guardarActivo() throws SQLException {
         Boolean flag = null;
         System.out.println("guardarActivo");
-        Compra compra = compraDAO.buscarComprasPorNumeroFactura(vista.getNroFactura());
+        Compra compra = compraDAO.buscarComprasPorNumeroFactura(vista.getBuscarFactura());
         LocalDate fecha = LocalDate.now();
         Date fechaSql = Date.valueOf(fecha);
         System.out.println(vista.getEstado());
@@ -84,27 +84,19 @@ public class AltaActivoEvent {
         activo.setFechaMantenimiento(null);
         activo.setCodigoProducto(vista.getCodigoProducto());
         activo.setValor(vista.getValor());
-        //activo.setEstado(vista.getEstado());
+        activo.setEstado(vista.getEstado());
         activo.setCompra(compra);
         activo.setBaja(0);
         
 		if (flag = activoDAO.agregarActivo(activo)) {
-			System.out.println("Activo guardado con exito bdd");
 			JOptionPane.showMessageDialog(null, "Activo guardado con exito bdd", "Información", JOptionPane.INFORMATION_MESSAGE);
 			vista.dispose();
 		} else {
-			System.out.println("Error al guardar activo en bdd");
 			JOptionPane.showMessageDialog(null, "Error al guardar activo en bdd", "Error", JOptionPane.ERROR_MESSAGE);
 			vista.dispose();
 		}
-		;
-        
-        
+		
         vista.dispose();
     }
     
-	
-		
-	
-
 }

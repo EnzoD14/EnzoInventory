@@ -21,6 +21,7 @@ import modelo.Compra;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.CompraDAOimpl;
 import view.events.CompraEvents;
+import view.events.GarantiaEvents;
 import view.events.GestionActivosEvents;
 
 public class ModulosView {
@@ -131,6 +132,7 @@ public class ModulosView {
             case "Garantía":
                 // new GarantiaVista();
             	GarantiaView garantiaVista = new GarantiaView(usuarioLogin);
+            	new GarantiaEvents(garantiaVista);
                 break;
             case "Backup":
                 // new BackupVista();

@@ -3,6 +3,7 @@ package modelo.dao.impl;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -32,7 +33,7 @@ public class ActivoDAOimpl implements ActivoDAO {
 	        session.beginTransaction();
 	        session.save(activo);
 	        session.getTransaction().commit();
-	        System.out.println("Activo guardado con exito bdd");
+	        //System.out.println("Activo guardado con exito bdd");
 	        return true;
 	    } catch (Exception e) {
 	        if (session != null) {
@@ -50,8 +51,24 @@ public class ActivoDAOimpl implements ActivoDAO {
 
 	@Override
 	public void modificarActivo(Activo activo) {
-		// TODO Auto-generated method stub
 		
+		Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.update(activo);
+            session.getTransaction().commit();
+            //System.out.println("Activo modificado con exito bdd");
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
 	}
 
 	@Override
@@ -65,11 +82,57 @@ public class ActivoDAOimpl implements ActivoDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Activo obtenerActivoPorNumeroSerie(String numeroSerie) {
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			Query query = session.createQuery("from Activo where numeroSerie = :numeroSerie");
+			query.setParameter("numeroSerie", numeroSerie);
+			Activo activo = (Activo) query.uniqueResult();
+			session.getTransaction().commit();
+			return activo;
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+	}
 
 	@Override
-	public List<Activo> listarActivos() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Activo> listarActivos(String numeroSerie) {
+		Session session = null;
+	    try {
+	        session = sessionFactory.openSession();
+	        session.beginTransaction();
+	        Query query;
+	        if (numeroSerie == null || numeroSerie.isEmpty()) {
+	            query = session.createQuery("from Activo");
+	        } else {
+	            query = session.createQuery("from Activo where numeroSerie = :numeroSerie");
+	            query.setParameter("numeroSerie", numeroSerie);
+	        }
+	        List<Activo> activos = query.list();
+	        session.getTransaction().commit();
+	        return activos;
+	    } catch (Exception e) {
+	        if (session != null) {
+	            session.getTransaction().rollback();
+	        }
+	        e.printStackTrace();
+	        return null;
+	    } finally {
+	        if (session != null) {
+	            session.close();
+	        }
+	    }
 	}
 	
 	@Override

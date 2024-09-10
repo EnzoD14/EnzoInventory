@@ -10,6 +10,7 @@ public interface ActivoDAO {
 	void modificarActivo(Activo activo);
 	void eliminarActico(Activo activo);
 	Activo obtenerActivoPorId(int id);
-	List<Activo> listarActivos();
+	Activo obtenerActivoPorNumeroSerie(String numeroSerie);
+	List<Activo> listarActivos(String numeroSerie);
 	void imprimirActivo(Activo activo);
 }

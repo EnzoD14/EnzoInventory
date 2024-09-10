@@ -12,17 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
-public class AltaActivoView extends JFrame {
+public class ActivoAltaView extends JFrame {
 	 	private JTextField txtTipo;
 	    private JTextField txtMarca;
 	    private JTextField txtModelo;
 	    private JTextField txtNumeroSerie;
 	    private JTextField txtEspecificaciones;
-	    private JTextField txtFechaCompra;
 	    private JTextField txtValor;
 	    private JTextField txtCodigoProducto;
-	    private JTextField txtCodigoProveedor;
-	    private JTextField txtNroFactura;
 	    private JTextField txtGarantia;
 	    private JTextField txtBuscarFactura;
 	    private JComboBox<String> comboEstado;
@@ -30,7 +27,7 @@ public class AltaActivoView extends JFrame {
 	    private JButton btnGuardar;
 	    private JButton btnCancelar;
 
-	    public AltaActivoView() {
+	    public ActivoAltaView() {
 	        setTitle("Alta de Activo - Inventario Electronico");
 	        setSize(1000, 500);
 	        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -42,14 +39,11 @@ public class AltaActivoView extends JFrame {
 	        txtModelo = new JTextField(20);
 	        txtNumeroSerie = new JTextField(20);
 	        txtEspecificaciones = new JTextField(100);
-	        txtFechaCompra = new JTextField(20);
 	        txtValor = new JTextField(20);
 	        txtCodigoProducto = new JTextField(20);
-	        txtCodigoProveedor = new JTextField(20);
-	        txtNroFactura = new JTextField(20);
 	        txtGarantia = new JTextField(20);
 	        txtBuscarFactura = new JTextField(20);
-	        comboEstado = new JComboBox<>(new String[] {"En funcionamiento", "Backup", "En reparación", "De baja"});
+	        comboEstado = new JComboBox<>(new String[] {"Utilizada", "Backup", "Reparacion", "Baja"});
 	        btnBuscarFactura = new JButton("Buscar Factura");
 	        btnGuardar = new JButton("Guardar");
 	        btnCancelar = new JButton("Cancelar");
@@ -66,16 +60,10 @@ public class AltaActivoView extends JFrame {
 	        panel.add(txtNumeroSerie);
 	        panel.add(new JLabel("Especificaciones:"));
 	        panel.add(txtEspecificaciones);
-	        panel.add(new JLabel("Fecha de Compra (YYYY-MM-DD):"));
-	        panel.add(txtFechaCompra);
 	        panel.add(new JLabel("Valor:"));
 	        panel.add(txtValor);
 	        panel.add(new JLabel("Codigo de Producto:"));
 	        panel.add(txtCodigoProducto);
-	        panel.add(new JLabel("Codigo de Proveedor:"));
-	        panel.add(txtCodigoProveedor);
-	        panel.add(new JLabel("Numero de factura: "));
-	        panel.add(txtNroFactura);
 	        panel.add(new JLabel("Anios Garantia:"));
 	        panel.add(txtGarantia);
 	        panel.add(new JLabel("Estado:"));
@@ -115,20 +103,8 @@ public class AltaActivoView extends JFrame {
 	        return txtCodigoProducto.getText();
 	    }
 	    
-	    public String getCodigoProveedor() {
-	        return txtCodigoProveedor.getText();
-	    }
-	    
 	    public String getGarantia() {
 	        return txtGarantia.getText();
-	    }
-	    
-	    public String getFechaCompra() {
-	    	return txtFechaCompra.getText();
-	    }
-	    
-	    public String getNroFactura() {
-	    	return txtNroFactura.getText();
 	    }
 	    
 	    public String getValor() {

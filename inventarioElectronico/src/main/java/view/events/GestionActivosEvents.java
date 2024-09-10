@@ -8,7 +8,8 @@ import controlador.CompraController;
 import modelo.Compra;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.CompraDAOimpl;
-import view.screen.AltaActivoView;
+import view.screen.ActivoListaView;
+import view.screen.ActivoAltaView;
 import view.screen.CompraBusquedaView;
 import view.screen.GestionActivosView;
 
@@ -32,14 +33,27 @@ public class GestionActivosEvents {
 				agregarActivo();
 			}
 		});
+		
+		view.setControladorListar(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listarActivos();
+			}
+		});
 	}
 	
 	private void agregarActivo() {
-		System.out.println("ola");
-		AltaActivoView altaView = new AltaActivoView();
+		System.out.println("agregar");
+		ActivoAltaView altaView = new ActivoAltaView();
 		CompraBusquedaView compraView = null;
 		new AltaActivoEvent(compraView, altaView, compraDAO, activoDAO);
 		altaView.setVisible(true);
+	}
+	
+	private void listarActivos() {
+		System.out.println("listar");
+		ActivoListaView activoListaView = new ActivoListaView();
+		activoListaView.setVisible(true);
+		
 	}
 
 }

@@ -31,7 +31,7 @@ public class ActivoController {
 	}
 	
 	public List<Activo> listarActivos(){
-		return activoDAO.listarActivos();
+		return activoDAO.listarActivos(null);
 	}
 	
 	public void imprimirActivo(Activo activo) {

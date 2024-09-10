@@ -25,6 +25,10 @@ public class Garantia {
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 	}
+	
+	public Garantia() {
+	// TODO Auto-generated
+	}
 
 	public String getId() {
 		return id;

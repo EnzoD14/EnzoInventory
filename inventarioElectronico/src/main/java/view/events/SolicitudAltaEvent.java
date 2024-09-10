@@ -10,12 +10,12 @@ import controlador.ActivoController;
 import modelo.Activo;
 import modelo.Solicitud;
 import utils.DateUtils;
-import view.screen.AltaActivoView;
+import view.screen.ActivoAltaView;
 
 public class SolicitudAltaEvent {
 	
 
-    public SolicitudAltaEvent(AltaActivoView vista, ActivoController controller) {
+    public SolicitudAltaEvent(ActivoAltaView vista, ActivoController controller) {
        
     }
 

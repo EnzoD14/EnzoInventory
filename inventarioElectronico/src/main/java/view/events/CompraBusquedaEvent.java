@@ -9,7 +9,7 @@ import modelo.Compra;
 import modelo.Proveedor;
 import modelo.dao.impl.CompraDAOimpl;
 import modelo.dao.impl.ProveedorDAOimpl;
-import view.screen.AltaActivoView;
+import view.screen.ActivoAltaView;
 import view.screen.CompraBusquedaView;
 import view.screen.ProveedorModificacionBusquedaView;
 import view.screen.ProveedorModificacionView;
@@ -17,10 +17,10 @@ import view.screen.ProveedorModificacionView;
 public class CompraBusquedaEvent {
 	
 		private CompraBusquedaView view;
-		private AltaActivoView view2;
+		private ActivoAltaView view2;
 		private CompraDAOimpl compraDAO;
 		
-		public CompraBusquedaEvent(CompraBusquedaView compraBusquedaView, AltaActivoView altaActivoView) {
+		public CompraBusquedaEvent(CompraBusquedaView compraBusquedaView, ActivoAltaView altaActivoView) {
 			this.view = compraBusquedaView;
 			this.view2 = altaActivoView;
 			this.compraDAO = new CompraDAOimpl();

@@ -33,6 +33,10 @@ public class Reparacion {
 		this.enReparacion = enReparacion;
 		this.valor = valor;
 	}
+	
+	public Reparacion() {
+	// TODO Auto-generated constructor
+	}
 
 	public String getId() {
 		return id;

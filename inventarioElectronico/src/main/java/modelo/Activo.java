@@ -13,10 +13,6 @@ public class Activo {
     private String id;
 	
 	@OneToOne
-	@JoinColumn(name="idProveedor", referencedColumnName = "idProveedor")
-    private Proveedor proveedor;
-	
-	@OneToOne
 	@JoinColumn(name="idGarantia", referencedColumnName = "idGarantia")
     private Garantia garantia;
 	
@@ -62,11 +58,10 @@ public class Activo {
     private Integer baja;
     
     // Constructor
-	public Activo(String id, Proveedor proveedor, Garantia garantia, Reparacion reparacion, Compra compra, String tipo,
+	public Activo(String id, Garantia garantia, Reparacion reparacion, Compra compra, String tipo,
 			String marca, String modelo, String numeroSerie, String especificaciones, Date fechaAlta,
 			Date fechaMantenimiento, String codigoProducto, String valor, String estado, Integer baja) {
 		this.id = id;
-		this.proveedor = proveedor;
 		this.garantia = garantia;
 		this.reparacion = reparacion;
 		this.compra = compra;
@@ -93,14 +88,6 @@ public class Activo {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public Proveedor getProveedor() {
-		return proveedor;
-	}
-
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
 	}
 
 	public Garantia getGarantia() {
