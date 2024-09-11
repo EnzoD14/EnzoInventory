@@ -119,7 +119,8 @@ public class ActivoDAOimpl implements ActivoDAO {
 	            query = session.createQuery("from Activo where numeroSerie = :numeroSerie");
 	            query.setParameter("numeroSerie", numeroSerie);
 	        }
-	        List<Activo> activos = query.list();
+	        @SuppressWarnings("unchecked")
+			List<Activo> activos = query.list();
 	        session.getTransaction().commit();
 	        return activos;
 	    } catch (Exception e) {

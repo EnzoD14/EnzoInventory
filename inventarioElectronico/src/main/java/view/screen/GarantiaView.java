@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -25,7 +24,6 @@ import modelo.Activo;
 import modelo.Garantia;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.GarantiaDAOimpl;
-import view.events.GarantiaEvents;
 
 @SuppressWarnings("serial")
 public class GarantiaView extends JFrame{
@@ -51,6 +49,44 @@ public class GarantiaView extends JFrame{
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        
+        // Crear y agregar una barra de menú
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menuArchivo = new JMenu("Archivo");
+        
+        JMenuItem itemModulos = new JMenuItem("Modulos");
+        itemModulos.addActionListener(new ActionListener() {
+        	@Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                @SuppressWarnings("unused")
+                ModulosView moduloVista = new ModulosView(usuarioLogin);
+            }
+        });
+        
+        JMenuItem itemSalir = new JMenuItem("Salir");
+        itemSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        
+        JMenuItem itemCerrarSesion = new JMenuItem("Cerrar Sesion");
+        itemCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                @SuppressWarnings("unused")
+				LoginView loginView = new LoginView(usuarioLogin);
+            }
+        });
+        
+        menuArchivo.add(itemModulos);
+        menuArchivo.add(itemCerrarSesion);
+        menuArchivo.add(itemSalir);
+        menuBar.add(menuArchivo);
+        setJMenuBar(menuBar);
 
         // Crea el campo de búsqueda
         busquedaPanel = new JPanel(new BorderLayout());
@@ -103,7 +139,6 @@ public class GarantiaView extends JFrame{
         setVisible(true);
     }
 	
-	@SuppressWarnings("unused")
 	private boolean actualizarTabla(String busqueda) throws SQLException {
 		// Limpiar tabla
 		modeloTable.setRowCount(0);

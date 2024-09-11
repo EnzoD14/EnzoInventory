@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GestionActivosView {
+public class ActivoGestionView {
     private UsuarioController usuarioLogin;
     private JFrame frame;
     private JButton btnAltaActivo;
@@ -18,7 +18,7 @@ public class GestionActivosView {
     private JButton btnSolicitudBaja;
 
     // Constructor
-    public GestionActivosView(UsuarioController usuario) {
+    public ActivoGestionView(UsuarioController usuario) {
         this.usuarioLogin = usuario;
         initialize();
     }

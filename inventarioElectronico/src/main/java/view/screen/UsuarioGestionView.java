@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,26 +17,25 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import controlador.UsuarioController;
-import modelo.Activo;
-import modelo.Garantia;
-import modelo.dao.impl.ActivoDAOimpl;
-import modelo.dao.impl.GarantiaDAOimpl;
+import modelo.Usuario;
+import modelo.dao.impl.UsuarioDAOimpl;
 
 @SuppressWarnings("serial")
-public class BackupView extends JFrame {
+public class UsuarioGestionView extends JFrame {
 	private UsuarioController usuarioLogin;
 	private JPanel busquedaPanel;
 	private JTextField busquedaTxtField;
 	private JLabel busquedaLabel;
+	private JButton crearButton;
 	private JButton modificarButton;
+	private JButton eliminarButton;
 	private JButton buscarButton;
 	private JTable activosTable;
 	private DefaultTableModel modeloTable;
-	private String numeroSerie;
+	private String usuarioAd;
 
-	public BackupView(UsuarioController usuario) {
+	public UsuarioGestionView(UsuarioController usuario) {
 		this.usuarioLogin = usuario;
 		initialize();
 	}
@@ -88,7 +86,7 @@ public class BackupView extends JFrame {
      // Crea el campo de búsqueda
         busquedaPanel = new JPanel(new BorderLayout());
         busquedaTxtField= new JTextField();
-        busquedaLabel = new JLabel("Buscar activo:");
+        busquedaLabel = new JLabel("Buscar usuario (AD):");
         buscarButton = new JButton("Buscar");
         busquedaPanel.add(busquedaLabel, BorderLayout.WEST);
         busquedaPanel.add(busquedaTxtField, BorderLayout.CENTER);
@@ -97,13 +95,21 @@ public class BackupView extends JFrame {
 
         // Crea los botones
         JPanel buttonPanel = new JPanel();
-        modificarButton = new JButton("Modificar Backup");
+        crearButton = new JButton("Crear Usuario");
+        buttonPanel.add(crearButton);
+        crearButton.setEnabled(false);
+        
+        modificarButton = new JButton("Modificar Usuario");
         buttonPanel.add(modificarButton);
         modificarButton.setEnabled(false);
+        
+        eliminarButton = new JButton("Eliminar Usuario");
+        buttonPanel.add(eliminarButton);
+        eliminarButton.setEnabled(false);
         add(buttonPanel, BorderLayout.SOUTH);
 
         // Crea la tabla de activos
-        modeloTable = new DefaultTableModel(new Object[]{"Tipo", "Marca", "Modelo", "Número de Serie", "Estado"}, 0);
+        modeloTable = new DefaultTableModel(new Object[]{"UsuarioAD", "Nombre", "Apellido", "Email", "Tipo Usuario"}, 0);
         activosTable = new JTable(modeloTable); // Aquí puedes configurar el modelo de la tabla para mostrar los activos
         add(new JScrollPane(activosTable), BorderLayout.CENTER);
         
@@ -120,8 +126,8 @@ public class BackupView extends JFrame {
 				try {
 					if (actualizarTabla(busquedaTxtField.getText())) {
 						modificarButton.setEnabled(true);
-						numeroSerie = busquedaTxtField.getText();
-						System.out.println("Numero de serie: " + numeroSerie);
+						usuarioAd = busquedaTxtField.getText();
+						System.out.println("Usuario: " + usuarioAd);
 					}
 					
 					if (busquedaTxtField.getText().isEmpty()) {
@@ -140,21 +146,25 @@ public class BackupView extends JFrame {
 	private boolean actualizarTabla(String busqueda) throws SQLException {
 		// Limpiar tabla
 			modeloTable.setRowCount(0);
-			ActivoDAOimpl activoDAO = new ActivoDAOimpl();
-		    List<Activo> activos = activoDAO.listarActivos(busqueda);
+			UsuarioDAOimpl usuarioDAO = new UsuarioDAOimpl();
+		    List<Usuario> usuarios = usuarioDAO.listarUsuarios(busqueda);
 		        
-			if (activos.isEmpty()) {
+			if (usuarios.isEmpty()) {
 				return false;
 			}
 
 		// Agregar activos a la tabla
-		    for (Activo activo : activos) {
-		    	System.out.println(activo.getEstado());
-		        if (activo.getEstado() != null && activo.getEstado().equalsIgnoreCase("Backup")) {
-			        modeloTable.addRow(new Object[]{activo.getTipo(), activo.getMarca(), activo.getModelo(), activo.getNumeroSerie(), activo.getEstado()});
+		    for (Usuario usuario : usuarios) {
+		    	System.out.println(usuario.getTipoUsuario());
+		        if (usuario.getUsuarioAd() != null) {
+			        modeloTable.addRow(new Object[]{
+                    		usuario.getUsuarioAd(),
+                    		usuario.getNombre(),
+                    		usuario.getApellido(),
+                    		usuario.getEmail(),
+                    		usuario.getTipoUsuario()});
 		        }
 		    }
-		        
 	return true;
 	}
 	

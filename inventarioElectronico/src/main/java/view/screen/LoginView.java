@@ -1,14 +1,12 @@
 package view.screen;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
+import java.awt.Component;
+import java.awt.Dimension;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -33,27 +31,41 @@ public class LoginView {
         frame = new JFrame("Login - Inventario Electronico");
         frame.setSize(300, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(null);
+        BoxLayout boxLayout = new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS);
+        frame.setLayout(boxLayout);
 
         JLabel lblUsuario = new JLabel("Usuario:");
-        lblUsuario.setBounds(30, 30, 80, 25);
+        lblUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(lblUsuario);
+        frame.add(Box.createVerticalStrut(5));
 
         txtUsuario = new JTextField();
-        txtUsuario.setBounds(100, 30, 160, 25);
+        txtUsuario.setPreferredSize(new Dimension(200, 30));
+        txtUsuario.setMaximumSize(txtUsuario.getPreferredSize());
+        txtUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(txtUsuario);
+        frame.add(Box.createVerticalStrut(10));
 
         JLabel lblPassword = new JLabel("Contraseña:");
-        lblPassword.setBounds(30, 70, 80, 25);
+        lblPassword.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(lblPassword);
+        frame.add(Box.createVerticalStrut(5));
 
         txtPassword = new JPasswordField();
-        txtPassword.setBounds(100, 70, 160, 25);
+        txtPassword.setPreferredSize(new Dimension(200, 30));
+        txtPassword.setMaximumSize(txtPassword.getPreferredSize());
+        txtPassword.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(txtPassword);
 
+        frame.add(Box.createVerticalStrut(15));
+        
         btnLogin = new JButton("Ingresar");
-        btnLogin.setBounds(100, 110, 160, 25);
+        btnLogin.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(btnLogin);
+        
+        frame.add(Box.createVerticalGlue(), 0);
+        frame.add(Box.createVerticalGlue());
+        
 
         // Se delegan los eventos a la clase LoginEvents
         LoginEvents loginEvents = new LoginEvents(usuarioLogin, this);

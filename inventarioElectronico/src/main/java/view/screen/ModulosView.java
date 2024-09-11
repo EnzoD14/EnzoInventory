@@ -3,7 +3,6 @@ package view.screen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
-
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -13,9 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-
 import controlador.ActivoController;
-import controlador.CompraController;
 import controlador.UsuarioController;
 import modelo.Compra;
 import modelo.dao.impl.ActivoDAOimpl;
@@ -23,6 +20,7 @@ import modelo.dao.impl.CompraDAOimpl;
 import view.events.CompraEvents;
 import view.events.GarantiaEvents;
 import view.events.GestionActivosEvents;
+import view.events.UsuarioGestionEvents;
 
 public class ModulosView {
 	private UsuarioController usuarioLogin;
@@ -62,7 +60,7 @@ public class ModulosView {
 
         // Configuración de las opciones
         panelOpciones = new JPanel();
-        panelOpciones.setBounds(30, 100, 340, 150);
+        panelOpciones.setBounds(30, 100, 340, 200);
         panelOpciones.setLayout(new BoxLayout(panelOpciones, BoxLayout.Y_AXIS));
 
         buttonGroup = new ButtonGroup();
@@ -111,14 +109,15 @@ public class ModulosView {
             case "Gestión Activos":
                 // new GestionActivosVista();
             	//GestionActivosView activosVista = new GestionActivosView(usuarioLogin);
-            	GestionActivosView view = new GestionActivosView(usuarioLogin);
+            	ActivoGestionView view = new ActivoGestionView(usuarioLogin);
                 ActivoController controller = new ActivoController();
                 CompraBusquedaView compraView = null;
             	new GestionActivosEvents(compraView, view, compraDAO, activoDAO);
                 break;
             case "Gestión Usuarios":
                 // new GestionUsersVista();
-            	GestionUsuariosView gestionUsuariosVista = new GestionUsuariosView(usuarioLogin);
+            	UsuarioGestionView usuarioVista = new UsuarioGestionView(usuarioLogin);
+            	new UsuarioGestionEvents(usuarioVista);
                 break;
             case "Compras":
 				// new ComprasVista();
