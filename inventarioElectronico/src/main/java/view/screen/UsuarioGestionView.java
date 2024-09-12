@@ -42,7 +42,7 @@ public class UsuarioGestionView extends JFrame {
 
 	private void initialize() {
 		// Configura el JFrame
-        setTitle("Backups - Inventario Electronico");
+        setTitle("Gestion de Usuarios - Inventario Electronico");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -97,7 +97,7 @@ public class UsuarioGestionView extends JFrame {
         JPanel buttonPanel = new JPanel();
         crearButton = new JButton("Crear Usuario");
         buttonPanel.add(crearButton);
-        crearButton.setEnabled(false);
+        crearButton.setEnabled(true);
         
         modificarButton = new JButton("Modificar Usuario");
         buttonPanel.add(modificarButton);
@@ -109,7 +109,12 @@ public class UsuarioGestionView extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
 
         // Crea la tabla de activos
-        modeloTable = new DefaultTableModel(new Object[]{"UsuarioAD", "Nombre", "Apellido", "Email", "Tipo Usuario"}, 0);
+        modeloTable = new DefaultTableModel(new Object[]{"UsuarioAD", "Nombre", "Apellido", "Email", "Tipo Usuario"}, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+        };
         activosTable = new JTable(modeloTable); // Aquí puedes configurar el modelo de la tabla para mostrar los activos
         add(new JScrollPane(activosTable), BorderLayout.CENTER);
         
@@ -126,6 +131,7 @@ public class UsuarioGestionView extends JFrame {
 				try {
 					if (actualizarTabla(busquedaTxtField.getText())) {
 						modificarButton.setEnabled(true);
+						eliminarButton.setEnabled(true);
 						usuarioAd = busquedaTxtField.getText();
 						System.out.println("Usuario: " + usuarioAd);
 					}
@@ -171,5 +177,17 @@ public class UsuarioGestionView extends JFrame {
 	
 	public void setModificarButton(ActionListener actionListener) {
 		modificarButton.addActionListener(actionListener);
+	}
+	
+	public void setEliminarButton(ActionListener actionListener) {
+		eliminarButton.addActionListener(actionListener);
+	}
+	
+	public void setCrearButton(ActionListener actionListener) {
+		crearButton.addActionListener(actionListener);
+	}
+	
+	public String getUsuarioAd() {
+		return busquedaTxtField.getText();
 	}
 }

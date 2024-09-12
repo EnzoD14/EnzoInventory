@@ -34,11 +34,11 @@ public class Solicitud {
 	private Boolean estado;
 	
 	@Column(name="baja")
-	private Boolean baja;
+	private int baja;
 	
 	// Constructor
 	public Solicitud(String id, Activo activo, Usuario usuario, String tipoSolicitud, Date fechaSolicitud,
-			String motivoBaja, Boolean estado, Boolean baja) {
+			String motivoBaja, Boolean estado, int baja) {
 		this.id = id;
 		this.activo = activo;
 		this.usuario = usuario;
@@ -109,12 +109,12 @@ public class Solicitud {
 		this.estado = estado;
 	}
 
-	public Boolean getBaja() {
+	public int getBaja() {
 		return baja;
 	}
 
-	public void setBaja(Boolean baja) {
-		this.baja = baja;
+	public void setBaja(int i) {
+		this.baja = i;
 	}
 	
 	

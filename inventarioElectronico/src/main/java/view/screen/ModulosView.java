@@ -19,7 +19,7 @@ import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.CompraDAOimpl;
 import view.events.CompraEvents;
 import view.events.GarantiaEvents;
-import view.events.GestionActivosEvents;
+import view.events.ActivoGestionEvents;
 import view.events.UsuarioGestionEvents;
 
 public class ModulosView {
@@ -112,7 +112,7 @@ public class ModulosView {
             	ActivoGestionView view = new ActivoGestionView(usuarioLogin);
                 ActivoController controller = new ActivoController();
                 CompraBusquedaView compraView = null;
-            	new GestionActivosEvents(compraView, view, compraDAO, activoDAO);
+            	new ActivoGestionEvents(compraView, view, compraDAO, activoDAO);
                 break;
             case "Gestión Usuarios":
                 // new GestionUsersVista();

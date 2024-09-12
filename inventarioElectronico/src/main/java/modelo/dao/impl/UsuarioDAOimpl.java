@@ -22,16 +22,95 @@ public class UsuarioDAOimpl {
         sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 	}
 
-	public void agregarUsuario(Usuario usuario) {
+	public Boolean agregarUsuario(Usuario usuario) {
+		Session session = null;
+		
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.save(usuario);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
 	}
 
-	public void modificarUsuario(Usuario usuario) {
+	public Boolean modificarUsuario(Usuario usuario) {
+		Session session = null;
+		
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.update(usuario);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
 	}
 
 	public void eliminarUsuario(Usuario usuario) {
+		Session session = null;
+		
+		try {
+			usuario.setBaja(1);
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.update(usuario);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
 	}
 
-	public Usuario obtenerUsuarioPorId(int id) {
+	public Usuario obtenerUsuarioPorUsuarioAd(String usuarioAd) {
+		Session session = null;
+		Usuario usuario = null;
+		
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			Query query = session.createQuery("from Usuario where usuarioAd = :usuarioAd AND baja != 1");
+			query.setParameter("usuarioAd", usuarioAd);
+			usuario = (Usuario) query.uniqueResult();
+			session.getTransaction().commit();
+			return usuario;
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
 		return null;
 	}
 

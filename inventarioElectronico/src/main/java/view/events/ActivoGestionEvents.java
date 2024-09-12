@@ -11,15 +11,16 @@ import modelo.dao.impl.CompraDAOimpl;
 import view.screen.ActivoListaView;
 import view.screen.ActivoAltaView;
 import view.screen.CompraBusquedaView;
+import view.screen.SolicitudAltaView;
 import view.screen.ActivoGestionView;
 
-public class GestionActivosEvents {
+public class ActivoGestionEvents {
 	private CompraBusquedaView viewCompra;
 	private ActivoGestionView view;
 	private CompraDAOimpl compraDAO;
 	private ActivoDAOimpl activoDAO;
 	
-	public GestionActivosEvents (CompraBusquedaView viewCompra, ActivoGestionView view, CompraDAOimpl compra, ActivoDAOimpl activo) {
+	public ActivoGestionEvents (CompraBusquedaView viewCompra, ActivoGestionView view, CompraDAOimpl compra, ActivoDAOimpl activo) {
 		this.viewCompra = viewCompra;
 		this.view = view;
 		this.compraDAO = new CompraDAOimpl();
@@ -39,6 +40,30 @@ public class GestionActivosEvents {
 				listarActivos();
 			}
 		});
+		
+		view.setControladorModificar(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//modificarActivo();
+			}
+		});
+		
+		view.setControladorBaja(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//bajaActivo();
+			}
+		});
+		
+		view.setControladorSolicitudAlta(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				solicitudAlta();
+			}
+		});
+		
+		view.setControladorSolicitudBaja(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//solicitudBaja();
+			}
+		});
 	}
 	
 	private void agregarActivo() {
@@ -54,6 +79,13 @@ public class GestionActivosEvents {
 		ActivoListaView activoListaView = new ActivoListaView();
 		activoListaView.setVisible(true);
 		
+	}
+	
+	private void solicitudAlta() {
+		System.out.println("solicitud alta");
+		SolicitudAltaView solicitudAltaView = new SolicitudAltaView();
+		new SolicitudAltaEvent(solicitudAltaView);
+		solicitudAltaView.setVisible(true);
 	}
 
 }

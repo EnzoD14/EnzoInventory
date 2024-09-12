@@ -5,13 +5,13 @@ import java.util.List;
 import modelo.Usuario;
 
 public interface UsuarioDAO {
-	void agregarUsuario(Usuario usuario);
+	Boolean agregarUsuario(Usuario usuario);
 
-	void modificarUsuario(Usuario usuario);
+	Boolean modificarUsuario(Usuario usuario);
 
 	void eliminarUsuario(Usuario usuario);
 
-	Usuario obtenerUsuarioPorId(int id);
+	Usuario obtenerUsuarioPorUsuarioAd(String usuarioAd);
 
 	List<Usuario> listarUsuarios();
 

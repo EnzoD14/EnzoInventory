@@ -27,7 +27,7 @@ public class Usuario {
 	@Column(name = "email")
 	private String email;
 	
-	@Column(name = "tipoUsuario")
+	@Column(name = "tipo")
 	private String tipoUsuario;
 	
 	@Column(name = "baja")

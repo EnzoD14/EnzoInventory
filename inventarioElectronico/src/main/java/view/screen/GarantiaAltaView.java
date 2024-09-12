@@ -7,6 +7,7 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+@SuppressWarnings("serial")
 public class GarantiaAltaView extends JFrame {
     private JDateChooser fechaInicioChooser;
     private JDateChooser fechaFinalChooser;
