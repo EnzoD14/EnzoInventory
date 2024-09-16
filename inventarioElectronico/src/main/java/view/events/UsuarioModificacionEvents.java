@@ -2,20 +2,24 @@ package view.events;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
 import modelo.Usuario;
 import modelo.dao.impl.UsuarioDAOimpl;
+import view.screen.UsuarioGestionView;
 import view.screen.UsuarioModificacionView;
 
 public class UsuarioModificacionEvents {
 	
 	private UsuarioModificacionView usuarioModificacionView;
+	private UsuarioGestionView usuarioGestionView;
 	private Usuario usuario;
 	
-	public UsuarioModificacionEvents(UsuarioModificacionView usuarioModificacionView, Usuario usuario) {
+	public UsuarioModificacionEvents(UsuarioModificacionView usuarioModificacionView, UsuarioGestionView usuarioGestionView, Usuario usuario) {
 		this.usuarioModificacionView = usuarioModificacionView;
+		this.usuarioGestionView = usuarioGestionView;
 		this.usuario = usuario;
 		initEventHandlers();
 	}
@@ -27,6 +31,7 @@ public class UsuarioModificacionEvents {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Modificar Usuario");
 				modificarUsuario();
+				actualizarTabla();
 			}
 		});
 
@@ -35,11 +40,12 @@ public class UsuarioModificacionEvents {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Cancelar Usuario");
                 usuarioModificacionView.dispose();
+                actualizarTabla();
 			}
 		});
 	}
 	
-	public void modificarUsuario() {
+	private void modificarUsuario() {
 
 		UsuarioDAOimpl usuarioDAO = new UsuarioDAOimpl();
 
@@ -58,5 +64,14 @@ public class UsuarioModificacionEvents {
 		}
 
 		usuarioModificacionView.dispose();
+	}
+	
+	private void actualizarTabla() {
+		try {
+			usuarioGestionView.setBusquedaTxtField("");
+			usuarioGestionView.actualizarTabla("");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

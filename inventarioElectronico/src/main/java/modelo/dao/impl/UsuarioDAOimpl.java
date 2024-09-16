@@ -66,7 +66,7 @@ public class UsuarioDAOimpl {
 		}
 	}
 
-	public void eliminarUsuario(Usuario usuario) {
+	public Boolean eliminarUsuario(Usuario usuario) {
 		Session session = null;
 		
 		try {
@@ -75,11 +75,13 @@ public class UsuarioDAOimpl {
 			session.beginTransaction();
 			session.update(usuario);
 			session.getTransaction().commit();
+			return true;
 		} catch (Exception e) {
 			if (session != null) {
 				session.getTransaction().rollback();
 			}
 			e.printStackTrace();
+			return false;
 		} finally {
 			if (session != null) {
 				session.close();

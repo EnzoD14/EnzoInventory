@@ -1,21 +1,31 @@
 package view.screen;
-
 import controlador.UsuarioController;
-
+import modelo.Activo;
+import modelo.Garantia;
+import modelo.dao.impl.ActivoDAOimpl;
+import modelo.dao.impl.GarantiaDAOimpl;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
-public class ActivoGestionView {
+@SuppressWarnings("serial")
+public class ActivoGestionView extends JFrame{
     private UsuarioController usuarioLogin;
-    private JFrame frame;
-    private JButton btnAltaActivo;
-    private JButton btnBajaActivo;
+    private JPanel busquedaPanel;
+	private JTextField busquedaTxtField;
+	private JLabel busquedaLabel;
+	private JButton buscarButton;
+    private JButton btnSolicitudActivo;
     private JButton btnModificarActivo;
-    private JButton btnListarActivos;
-    private JButton btnSolicitudAlta;
-    private JButton btnSolicitudBaja;
+	private JButton btnModificarGarantia;
+    private JTable activosTable;
+	private DefaultTableModel modeloTable;
+	private String numeroSerie;
 
     // Constructor
     public ActivoGestionView(UsuarioController usuario) {
@@ -24,10 +34,10 @@ public class ActivoGestionView {
     }
 
     private void initialize() {
-        frame = new JFrame("Gestión de Activos - Inventario Electronico");
-        frame.setSize(500, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+        setTitle("Gestión de Activos - Inventario Electronico");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
 
         // Crear y agregar una barra de menú
         JMenuBar menuBar = new JMenuBar();
@@ -37,8 +47,8 @@ public class ActivoGestionView {
         itemModulos.addActionListener(new ActionListener() {
         	@Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                ModulosView moduloVista = new ModulosView(usuarioLogin);
+                dispose();
+				new ModulosView(usuarioLogin);
             }
         });
         
@@ -54,8 +64,8 @@ public class ActivoGestionView {
         itemCerrarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                LoginView loginView = new LoginView(usuarioLogin);
+                dispose();
+                new LoginView(usuarioLogin);
             }
         });
         
@@ -63,64 +73,113 @@ public class ActivoGestionView {
         menuArchivo.add(itemCerrarSesion);
         menuArchivo.add(itemSalir);
         menuBar.add(menuArchivo);
-        frame.setJMenuBar(menuBar);
+        setJMenuBar(menuBar);
+        
+        busquedaPanel = new JPanel(new BorderLayout());
+        busquedaTxtField= new JTextField();
+        busquedaLabel = new JLabel("Buscar activo:");
+        buscarButton = new JButton("Buscar");
+        busquedaPanel.add(busquedaLabel, BorderLayout.WEST);
+        busquedaPanel.add(busquedaTxtField, BorderLayout.CENTER);
+        busquedaPanel.add(buscarButton, BorderLayout.EAST);
+        add(busquedaPanel, BorderLayout.NORTH);
 
         // Panel principal
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 1, 10, 10)); // Ajusta el diseño según sea necesario
-        frame.add(panel, BorderLayout.CENTER);
+        JPanel buttonPanel = new JPanel();
 
         // Crear y agregar botones
-        btnAltaActivo = new JButton("Alta de Activo");
-        btnBajaActivo = new JButton("Baja de Activo");
+        btnSolicitudActivo = new JButton("Solicitudes");
         btnModificarActivo = new JButton("Modificar Activo");
-        btnListarActivos = new JButton("Listar Activos");
+        btnModificarGarantia = new JButton("Modificar Garantia");
 
-        panel.add(btnAltaActivo);
-        panel.add(btnBajaActivo);
-        panel.add(btnModificarActivo);
-        panel.add(btnListarActivos);
+        buttonPanel.add(btnSolicitudActivo);
+        buttonPanel.add(btnModificarActivo);
+        buttonPanel.add(btnModificarGarantia);
+        btnModificarGarantia.setEnabled(false);
+        add(buttonPanel, BorderLayout.SOUTH);
         
-        System.out.println(usuarioLogin.mostrarTipoUsuario());
-
-        // Verificar el tipo de usuario y agregar botones adicionales si es necesario
-        if (usuarioLogin.mostrarTipoUsuario().equals("It")) {
-        	btnSolicitudAlta = new JButton("Solicitud de Alta");
-            btnSolicitudBaja = new JButton("Solicitud de Baja");
-            panel.add(btnSolicitudAlta);
-            panel.add(btnSolicitudBaja);
+        // Crea la tabla de activos
+        modeloTable = new DefaultTableModel(new Object[]{"Tipo", "Marca", "Modelo", "Número de Serie", "Estado", "Garantia", "Fecha Inicio", "Fecha Fin"}, 0);
+        activosTable = new JTable(modeloTable); // Aquí puedes configurar el modelo de la tabla para mostrar los activos
+        add(new JScrollPane(activosTable), BorderLayout.CENTER);
+        
+     // Actualizar tabla al iniciar
+        try {
+            actualizarTabla("");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         
-        frame.setVisible(true);
+        buscarButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (actualizarTabla(busquedaTxtField.getText())) {
+						btnModificarGarantia.setEnabled(true);
+						numeroSerie = busquedaTxtField.getText();
+						System.out.println("Numero de serie: " + numeroSerie);
+					}
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+        
+        
+        setVisible(true);
     }
     
-        public void setControladorAlta(ActionListener controlador) {
-        	btnAltaActivo.addActionListener(controlador);
+	    private boolean actualizarTabla(String busqueda) throws SQLException {
+			// Limpiar tabla
+			modeloTable.setRowCount(0);
+			ActivoDAOimpl activoDAO = new ActivoDAOimpl();
+			GarantiaDAOimpl garantiaDAO = new GarantiaDAOimpl();
+	        List<Activo> activos = activoDAO.listarActivos(busqueda);
+	        
+			if (activos.isEmpty()) {
+				return false;
+			}
+			
+			// Formato de fecha
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	
+	        // Agregar activos a la tabla
+	        for (Activo activo : activos) {
+	        	if (activo.getGarantia() != null) {
+	        		Garantia garantia = garantiaDAO.obtenerGarantiaPorIdActivo(activo.getGarantia().getId());
+	        	
+		            //System.out.println(garantia.getFechaInicio() + " - " + garantia.getFechaFin());
+		        	
+		        	String fechaInicio = sdf.format(garantia.getFechaInicio());
+		            String fechaFin = sdf.format(garantia.getFechaFin());
+		        	modeloTable.addRow(new Object[]{activo.getTipo(), activo.getMarca(), activo.getModelo(), activo.getNumeroSerie(), activo.getEstado() , "SI", 
+		            		fechaInicio, fechaFin});
+	
+	        	} else {
+	        		modeloTable.addRow(new Object[]{activo.getTipo(), activo.getMarca(), activo.getModelo(), activo.getNumeroSerie(), activo.getEstado() , "NO", 
+	            			"", ""});
+	        	}
+	        	
+	        }
+	        
+	        return true;
+		}
+	    
+	    public String getNumeroSerie() {
+	    	return busquedaTxtField.getText();
+	    }
+    
+        public void setControladorSolicitud(ActionListener controlador) {
+        	btnSolicitudActivo.addActionListener(controlador);
         }
         
-        public void setControladorBaja(ActionListener controlador) {
-        	btnBajaActivo.addActionListener(controlador);
-        }
-        
-        public void setControladorModificar(ActionListener controlador) {
+        public void setControladorActivoModificar(ActionListener controlador) {
         	btnModificarActivo.addActionListener(controlador);
         }
-        
-        public void setControladorListar(ActionListener controlador) {
-        	btnListarActivos.addActionListener(controlador);
-        }
-        
-        public void setControladorSolicitudAlta(ActionListener controlador) {
-        	if (btnSolicitudAlta != null) {
-        		btnSolicitudAlta.addActionListener(controlador);
-        	}
-        }
-        
-        public void setControladorSolicitudBaja(ActionListener controlador) {
-        	if (btnSolicitudBaja != null) {
-        		btnSolicitudBaja.addActionListener(controlador);
-        	}
-        }
+		
+		public void setControladorGarantiaModificar(ActionListener controlador) {
+			btnModificarGarantia.addActionListener(controlador);
+		}
      
 }
 

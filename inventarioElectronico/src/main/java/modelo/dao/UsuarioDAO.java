@@ -9,7 +9,7 @@ public interface UsuarioDAO {
 
 	Boolean modificarUsuario(Usuario usuario);
 
-	void eliminarUsuario(Usuario usuario);
+	Boolean eliminarUsuario(Usuario usuario);
 
 	Usuario obtenerUsuarioPorUsuarioAd(String usuarioAd);
 

@@ -5,14 +5,9 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
 import javax.swing.JOptionPane;
-
-import controlador.ActivoController;
-import controlador.CompraController;
 import modelo.Activo;
 import modelo.Compra;
-import modelo.dao.CompraDAO;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.CompraDAOimpl;
 import view.screen.ActivoAltaView;
@@ -67,7 +62,6 @@ public class AltaActivoEvent {
     }
 
     private void guardarActivo() throws SQLException {
-        Boolean flag = null;
         System.out.println("guardarActivo");
         Compra compra = compraDAO.buscarComprasPorNumeroFactura(vista.getBuscarFactura());
         LocalDate fecha = LocalDate.now();
@@ -88,7 +82,7 @@ public class AltaActivoEvent {
         activo.setCompra(compra);
         activo.setBaja(0);
         
-		if (flag = activoDAO.agregarActivo(activo)) {
+		if (activoDAO.agregarActivo(activo)) {
 			JOptionPane.showMessageDialog(null, "Activo guardado con exito bdd", "Información", JOptionPane.INFORMATION_MESSAGE);
 			vista.dispose();
 		} else {

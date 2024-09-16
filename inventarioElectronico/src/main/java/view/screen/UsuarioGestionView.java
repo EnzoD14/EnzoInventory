@@ -149,7 +149,7 @@ public class UsuarioGestionView extends JFrame {
         setVisible(true);
     }
 	
-	private boolean actualizarTabla(String busqueda) throws SQLException {
+	public boolean actualizarTabla(String busqueda) throws SQLException {
 		// Limpiar tabla
 			modeloTable.setRowCount(0);
 			UsuarioDAOimpl usuarioDAO = new UsuarioDAOimpl();
@@ -189,5 +189,9 @@ public class UsuarioGestionView extends JFrame {
 	
 	public String getUsuarioAd() {
 		return busquedaTxtField.getText();
+	}
+	
+	public void setBusquedaTxtField(String busqueda) {
+		busquedaTxtField.setText(busqueda);
 	}
 }

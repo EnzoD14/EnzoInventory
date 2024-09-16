@@ -18,7 +18,6 @@ import modelo.Compra;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.CompraDAOimpl;
 import view.events.CompraEvents;
-import view.events.GarantiaEvents;
 import view.events.ActivoGestionEvents;
 import view.events.UsuarioGestionEvents;
 
@@ -30,7 +29,7 @@ public class ModulosView {
     private JPanel panelOpciones;
     private JButton btnSeleccionar;
     private ButtonGroup buttonGroup;
-    private String[] categorias = {"Gestión Activos", "Gestión Usuarios", "Compras" , "Mantenimiento / Reparación", "Garantía", "Backup", "Reportes"};
+    private String[] categorias = {"Gestión Activos", "Gestión Usuarios", "Compras" , "Mantenimiento / Reparación", "Backup", "Reportes"};
     
     public ModulosView(UsuarioController usuario, Compra compra, ActivoDAOimpl activoDAO) {
         this.usuarioLogin = usuario;
@@ -127,11 +126,6 @@ public class ModulosView {
             case "Mantenimiento / Reparación":
                 // new MantenimientoVista();
             	MantenimientoView mantenimientoVista = new MantenimientoView(usuarioLogin);
-                break;
-            case "Garantía":
-                // new GarantiaVista();
-            	GarantiaView garantiaVista = new GarantiaView(usuarioLogin);
-            	new GarantiaEvents(garantiaVista);
                 break;
             case "Backup":
                 // new BackupVista();

@@ -2,19 +2,23 @@ package view.events;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
 import modelo.Usuario;
 import modelo.dao.impl.UsuarioDAOimpl;
 import view.screen.UsuarioAltaView;
+import view.screen.UsuarioGestionView;
 
 public class UsuarioAltaEvents {
 	
 	private UsuarioAltaView usuarioAltaView;
+	private UsuarioGestionView usuarioGestionView;
 
-	public UsuarioAltaEvents(UsuarioAltaView usuarioAltaView) {
+	public UsuarioAltaEvents(UsuarioAltaView usuarioAltaView, UsuarioGestionView usuarioGestionView) {
 		this.usuarioAltaView = usuarioAltaView;
+		this.usuarioGestionView = usuarioGestionView;
 		initEventHandlers();
 	}
 	
@@ -23,6 +27,7 @@ public class UsuarioAltaEvents {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				guardarUsuario();
+				actualizarTabla();
 			}
 		});
 
@@ -31,6 +36,7 @@ public class UsuarioAltaEvents {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Cancelar Usuario");
 				usuarioAltaView.dispose();
+				actualizarTabla();
 			}
 		});
 	}
@@ -56,6 +62,15 @@ public class UsuarioAltaEvents {
         	JOptionPane.showMessageDialog(null, "Error al guardar usuario.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
+	}
+	
+	private void actualizarTabla() {
+		try {
+			usuarioGestionView.setBusquedaTxtField("");
+			usuarioGestionView.actualizarTabla("");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	

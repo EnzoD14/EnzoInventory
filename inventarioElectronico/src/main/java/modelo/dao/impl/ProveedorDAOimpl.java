@@ -9,6 +9,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import modelo.Activo;
 import modelo.Proveedor;
 
 public class ProveedorDAOimpl {
@@ -95,8 +96,35 @@ public class ProveedorDAOimpl {
 		}
 	}
 	
-	public void listarProveedor() {
-		System.out.println("listarProveedor");
+	public List<Proveedor> listarProveedor(String razonSocial) {
+		Session session = null;
+	    try {
+	        session = sessionFactory.openSession();
+	        session.beginTransaction();
+	        Query query;
+	        if (razonSocial == null || razonSocial.isEmpty()) {
+	            query = session.createQuery("from Proveedor");
+	        } else {
+	            query = session.createQuery("from Proveedor where razonSocial = :razonSocial");
+	            query.setParameter("razonSocial", razonSocial);
+	        }
+	        @SuppressWarnings("unchecked")
+			List<Proveedor> proveedores = query.list();
+	        session.getTransaction().commit();
+	        return proveedores;
+	    } catch (Exception e) {
+	        if (session != null) {
+	            session.getTransaction().rollback();
+	        }
+	        e.printStackTrace();
+	        return null;
+	    } finally {
+	        if (session != null) {
+	            session.close();
+	        }
+	    }
+		
+		
 	}
 	
 	public Proveedor buscarProveedorPorRazonSocial(String razonSocial) {

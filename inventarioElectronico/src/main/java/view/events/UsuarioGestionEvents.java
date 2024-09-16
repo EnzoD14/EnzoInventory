@@ -2,6 +2,9 @@ package view.events;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
 
 import modelo.Usuario;
 import modelo.dao.impl.UsuarioDAOimpl;
@@ -32,7 +35,7 @@ public class UsuarioGestionEvents {
                 tempUser = usuarioDAO.obtenerUsuarioPorUsuarioAd(usuarioGestionView.getUsuarioAd());
                 System.out.println(tempUser.getContrasena());
                 UsuarioModificacionView usuarioModificacionView = new UsuarioModificacionView(tempUser);
-                new UsuarioModificacionEvents(usuarioModificacionView, tempUser);
+                new UsuarioModificacionEvents(usuarioModificacionView, usuarioGestionView ,tempUser);
              }
          });
 		
@@ -41,7 +44,11 @@ public class UsuarioGestionEvents {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Eliminar Usuario");
                 tempUser = usuarioDAO.obtenerUsuarioPorUsuarioAd(usuarioGestionView.getUsuarioAd());
-                usuarioDAO.eliminarUsuario(tempUser);
+                if (usuarioDAO.eliminarUsuario(tempUser)) {
+                	JOptionPane.showMessageDialog(null, "Usuario eliminado con Exito", "Baja Usuario", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                	JOptionPane.showMessageDialog(null, "Error al eliminar Usuario", "Baja Usuario", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 		
@@ -50,7 +57,7 @@ public class UsuarioGestionEvents {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Crear Usuario");
                 UsuarioAltaView usuarioAltaView = new UsuarioAltaView();
-                new UsuarioAltaEvents(usuarioAltaView);
+                new UsuarioAltaEvents(usuarioAltaView, usuarioGestionView);
             }
         });
 	}
