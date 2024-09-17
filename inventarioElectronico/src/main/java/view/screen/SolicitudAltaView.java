@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -11,7 +12,6 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class SolicitudAltaView extends JFrame {
 	private JFrame frame;
-	private JTextField txtTipo;
 	private JTextField txtMarca;
 	private JTextField txtModelo;
 	private JTextField txtNumeroSerie;
@@ -20,6 +20,8 @@ public class SolicitudAltaView extends JFrame {
 	private JTextField txtCodigoProducto;
 	private JButton btnGuardar;
 	private JButton btnCancelar;
+	private JComboBox<String> cmbTipoSolicitud;
+	private JComboBox<String> cmbTipoActivo;
 	
 	public SolicitudAltaView() {
 		initialize();
@@ -28,24 +30,36 @@ public class SolicitudAltaView extends JFrame {
 	private void initialize() {
 		
 		frame = new JFrame("Solicitud de Alta - Inventario Electronico");
-        frame.setSize(400, 400);
+        frame.setSize(400, 600);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         BoxLayout boxLayout = new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS);
         frame.setLayout(boxLayout);
         
         frame.add(Box.createVerticalStrut(15));
         
+        JLabel lblSolicitud = new JLabel("Tipo Solicitud:");
+        lblSolicitud.setAlignmentX(0.5f);
+        frame.add(lblSolicitud);
+        
+        String[] tipoSolicitud = {"Alta", "Baja"};
+        cmbTipoSolicitud = new JComboBox<>(tipoSolicitud);
+        cmbTipoSolicitud.setAlignmentX(0.5f);
+        cmbTipoSolicitud.setPreferredSize(new Dimension(200, 30));
+        cmbTipoSolicitud.setMaximumSize(cmbTipoSolicitud.getPreferredSize());
+        frame.add(cmbTipoSolicitud);
+        frame.add(Box.createVerticalStrut(5));
+        
         JLabel lblTipo = new JLabel("Tipo Activo:");
         lblTipo.setAlignmentX(0.5f);
         frame.add(lblTipo);
         
-        txtTipo = new JTextField();
-        txtTipo.setAlignmentX(0.5f);
-        txtTipo.setPreferredSize(new Dimension(200, 30));
-        txtTipo.setMaximumSize(txtTipo.getPreferredSize());
-        frame.add(txtTipo);
+        String[] tipoActivo = {"Notebook", "Telefono", "Monitor" , "Impresora", "Proyector", "Switch", "Router", "Otro"};
+        cmbTipoActivo = new JComboBox<>(tipoActivo);
+        cmbTipoActivo.setAlignmentX(0.5f);
+        cmbTipoActivo.setPreferredSize(new Dimension(200, 30));
+        cmbTipoActivo.setMaximumSize(cmbTipoActivo.getPreferredSize());
+        frame.add(cmbTipoActivo);
         frame.add(Box.createVerticalStrut(5));
-        
         
         JLabel lblMarca = new JLabel("Marca:");
         lblMarca.setAlignmentX(0.5f);
@@ -118,12 +132,12 @@ public class SolicitudAltaView extends JFrame {
         frame.add(txtCodigoProducto);
         frame.add(Box.createVerticalStrut(5));
         
-        JButton btnGuardar = new JButton("Guardar");
+        btnGuardar = new JButton("Guardar");
         btnGuardar.setAlignmentX(0.5f);
         frame.add(btnGuardar);
         frame.add(Box.createVerticalStrut(5));
         
-        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar = new JButton("Cancelar");
         btnCancelar.setAlignmentX(0.5f);
         frame.add(btnCancelar);
         frame.add(Box.createVerticalStrut(5));
@@ -132,8 +146,12 @@ public class SolicitudAltaView extends JFrame {
         
 	}
 	
-	public String getTipo() {
-		return txtTipo.getText();
+	public String getTipoSolicitud() {
+		return cmbTipoSolicitud.getSelectedItem().toString();
+	}
+	
+	public String getTipoActivo() {
+		return cmbTipoActivo.getSelectedItem().toString();
 	}
 	
 	public String getMarca() {

@@ -114,9 +114,9 @@ public class ActivoDAOimpl implements ActivoDAO {
 	        session.beginTransaction();
 	        Query query;
 	        if (numeroSerie == null || numeroSerie.isEmpty()) {
-	            query = session.createQuery("from Activo");
+	            query = session.createQuery("from Activo where baja = 0");
 	        } else {
-	            query = session.createQuery("from Activo where numeroSerie = :numeroSerie");
+	            query = session.createQuery("from Activo where numeroSerie = :numeroSerie and baja = 0");
 	            query.setParameter("numeroSerie", numeroSerie);
 	        }
 	        @SuppressWarnings("unchecked")

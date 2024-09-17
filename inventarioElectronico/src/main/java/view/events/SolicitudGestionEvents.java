@@ -3,6 +3,7 @@ package view.events;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import view.screen.SolicitudAltaView;
 import view.screen.SolicitudGestionView;
 
 public class SolicitudGestionEvents {
@@ -40,6 +41,8 @@ public class SolicitudGestionEvents {
 	
 	private void cargarSolicitud() {
 		System.out.println("cargar");
+		SolicitudAltaView solicitudAltaView = new SolicitudAltaView();
+		new SolicitudAltaEvents(solicitudAltaView);
 	}
 	
 	private void agregarSolicitud() {

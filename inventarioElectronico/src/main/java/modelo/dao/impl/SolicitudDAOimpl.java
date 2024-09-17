@@ -9,8 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-
-import modelo.Activo;
 import modelo.Solicitud;
 import modelo.dao.SolicitudDAO;
 
@@ -26,8 +24,26 @@ public class SolicitudDAOimpl implements SolicitudDAO {
 	}
 
 	@Override
-	public void agregarSolicitud(Solicitud solicitud) throws SQLException {
-		// TODO Auto-generated method stub
+	public Boolean agregarSolicitud(Solicitud solicitud) throws SQLException {
+		
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.save(solicitud);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
 		
 	}
 

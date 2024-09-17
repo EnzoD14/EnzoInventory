@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -42,7 +43,7 @@ public class SolicitudGestionView extends JFrame{
 	private void initialize() {
 		setTitle("Gestión de Solicitudes - Inventario Electronico");
 		setSize(800, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		
 		// Crear y agregar una barra de menú
@@ -83,7 +84,7 @@ public class SolicitudGestionView extends JFrame{
         
         busquedaPanel = new JPanel(new BorderLayout());
         busquedaTxtField= new JTextField();
-        busquedaLabel = new JLabel("Buscar activo:");
+        busquedaLabel = new JLabel("Buscar solicitud:");
         buscarButton = new JButton("Buscar");
         busquedaPanel.add(busquedaLabel, BorderLayout.WEST);
         busquedaPanel.add(busquedaTxtField, BorderLayout.CENTER);
@@ -134,8 +135,20 @@ public class SolicitudGestionView extends JFrame{
 		SolicitudDAOimpl solicitudDAO = new SolicitudDAOimpl();
 		List<Solicitud> solicitudes = solicitudDAO.listarSolicitudes(busqueda);
 		
+		// Formato de fecha
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
 		for (Solicitud solicitud : solicitudes) {
-			modeloTable.addRow(new Object[] { solicitud.getTipoSolicitud(), solicitud.getFechaSolicitud(), solicitud.getEstado()});
+			String fecha = sdf.format(solicitud.getFechaSolicitud());
+			String estado = "";
+			
+			if (solicitud.getBaja() == 0) {
+				estado = "Pendiente";
+			} else {
+				estado = "Utilizada";
+			}
+			
+			modeloTable.addRow(new Object[] { solicitud.getTipoSolicitud(), fecha, estado});
 		}
 		
 		return true;
@@ -144,7 +157,6 @@ public class SolicitudGestionView extends JFrame{
 	// Getters y Setters
 	  public void setControladorSolicitudCargar(ActionListener solicitudCargar) {
 	  btnSolicitudCargar.addActionListener(solicitudCargar); }
-	  
 	
 	  public void setControladorSolicitud(ActionListener solicitud) {
 	  btnSolicitudAprobar.addActionListener(solicitud); }

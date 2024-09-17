@@ -6,7 +6,7 @@ import java.util.List;
 import modelo.Solicitud;
 
 public interface SolicitudDAO {
-	void agregarSolicitud(Solicitud solicitud) throws SQLException;
+	Boolean agregarSolicitud(Solicitud solicitud) throws SQLException;
 	void imprimirSolicitud(Solicitud solicitud);
 	List<Solicitud> listarSolicitudes(String tipoSolicitud);
 }
