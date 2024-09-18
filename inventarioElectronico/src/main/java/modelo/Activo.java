@@ -51,6 +51,9 @@ public class Activo {
 	@Column(name = "valor")
     private String valor;
 	
+	@Column(name = "mesesAmortizacion")
+    private Integer mesesAmortizacion;
+	
 	@Column(name = "estado")
     private String estado;
 	
@@ -60,7 +63,7 @@ public class Activo {
     // Constructor
 	public Activo(String id, Garantia garantia, Reparacion reparacion, Compra compra, String tipo,
 			String marca, String modelo, String numeroSerie, String especificaciones, Date fechaAlta,
-			Date fechaMantenimiento, String codigoProducto, String valor, String estado, Integer baja) {
+			Date fechaMantenimiento, String codigoProducto, String valor, Integer mesesAmortizacion, String estado, Integer baja) {
 		this.id = id;
 		this.garantia = garantia;
 		this.reparacion = reparacion;
@@ -74,6 +77,7 @@ public class Activo {
 		this.fechaMantenimiento = fechaMantenimiento;
 		this.codigoProducto = codigoProducto;
 		this.valor = valor;
+		this.mesesAmortizacion = mesesAmortizacion;
 		this.estado = estado;
 		this.baja = baja;
 	}
@@ -184,6 +188,14 @@ public class Activo {
 
 	public void setValor(String valor) {
 		this.valor = valor;
+	}
+	
+	public Integer getMesesAmortizacion() {
+		return mesesAmortizacion;
+	}
+	
+	public void setMesesAmortizacion(Integer mesesAmortizacion) {
+		this.mesesAmortizacion = mesesAmortizacion;
 	}
 
 	public String getEstado() {

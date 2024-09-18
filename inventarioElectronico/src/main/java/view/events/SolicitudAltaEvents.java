@@ -63,7 +63,6 @@ public class SolicitudAltaEvents {
 		activo.setNumeroSerie(solicitudAltaView.getNumeroSerie());
 		activo.setEspecificaciones(solicitudAltaView.getEspecificaciones());
 		activo.setValor(solicitudAltaView.getValor());
-		activo.setCodigoProducto(solicitudAltaView.getCodigoProducto());
 		activo.setEstado(null);
 		activo.setFechaAlta(fechaSql);
 		activo.setFechaMantenimiento(null);
@@ -74,6 +73,7 @@ public class SolicitudAltaEvents {
 		solicitud.setActivo(activo);
 		solicitud.setTipoSolicitud(solicitudAltaView.getTipoSolicitud());
 		solicitud.setFechaSolicitud(fechaSql);
+		solicitud.setEstado(0);
 		solicitud.setBaja(0);
 		
 		if(solicitudDAO.agregarSolicitud(solicitud)) {

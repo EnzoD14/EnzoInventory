@@ -79,8 +79,25 @@ public class ActivoDAOimpl implements ActivoDAO {
 
 	@Override
 	public Activo obtenerActivoPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = null;
+		
+		try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            Activo activo = (Activo) session.get(Activo.class, id);
+            session.getTransaction().commit();
+            return activo;
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
 	}
 	
 	public Activo obtenerActivoPorNumeroSerie(String numeroSerie) {

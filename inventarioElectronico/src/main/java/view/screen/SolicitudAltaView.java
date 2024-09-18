@@ -17,7 +17,6 @@ public class SolicitudAltaView extends JFrame {
 	private JTextField txtNumeroSerie;
 	private JTextField txtEspecificaciones;
 	private JTextField txtValor;
-	private JTextField txtCodigoProducto;
 	private JButton btnGuardar;
 	private JButton btnCancelar;
 	private JComboBox<String> cmbTipoSolicitud;
@@ -125,13 +124,6 @@ public class SolicitudAltaView extends JFrame {
         lblCodigoProducto.setAlignmentX(0.5f);
         frame.add(lblCodigoProducto);
         
-        txtCodigoProducto = new JTextField();
-        txtCodigoProducto.setAlignmentX(0.5f);
-        txtCodigoProducto.setPreferredSize(new Dimension(200, 30));
-        txtCodigoProducto.setMaximumSize(txtCodigoProducto.getPreferredSize());
-        frame.add(txtCodigoProducto);
-        frame.add(Box.createVerticalStrut(5));
-        
         btnGuardar = new JButton("Guardar");
         btnGuardar.setAlignmentX(0.5f);
         frame.add(btnGuardar);
@@ -172,10 +164,6 @@ public class SolicitudAltaView extends JFrame {
 	
 	public String getValor() {
 		return txtValor.getText();
-	}
-	
-	public String getCodigoProducto() {
-		return txtCodigoProducto.getText();
 	}
 	
 	public void setBtnGuardar(ActionListener actionListener) {

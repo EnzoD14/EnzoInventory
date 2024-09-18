@@ -11,7 +11,7 @@ public class Solicitud {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="idSolicitud")
-	private String id;
+	private Integer id;
 	
 	@OneToOne
 	@JoinColumn(name="idActivo")
@@ -31,14 +31,14 @@ public class Solicitud {
 	private String motivoBaja;
 	
 	@Column(name="estado")
-	private Boolean estado;
+	private Integer estado;
 	
 	@Column(name="baja")
 	private int baja;
 	
 	// Constructor
-	public Solicitud(String id, Activo activo, Usuario usuario, String tipoSolicitud, Date fechaSolicitud,
-			String motivoBaja, Boolean estado, int baja) {
+	public Solicitud(Integer id, Activo activo, Usuario usuario, String tipoSolicitud, Date fechaSolicitud,
+			String motivoBaja, Integer estado, int baja) {
 		this.id = id;
 		this.activo = activo;
 		this.usuario = usuario;
@@ -53,11 +53,11 @@ public class Solicitud {
 	// TODO Auto-generated
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -101,11 +101,11 @@ public class Solicitud {
 		this.motivoBaja = motivoBaja;
 	}
 
-	public Boolean getEstado() {
+	public Integer getEstado() {
 		return estado;
 	}
 
-	public void setEstado(Boolean estado) {
+	public void setEstado(Integer estado) {
 		this.estado = estado;
 	}
 

@@ -9,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+
+import modelo.Activo;
 import modelo.Solicitud;
 import modelo.dao.SolicitudDAO;
 
@@ -53,17 +55,17 @@ public class SolicitudDAOimpl implements SolicitudDAO {
 		
 	}
 	
-	public List<Solicitud> listarSolicitudes(String tipoSolicitud) {
+	public List<Solicitud> listarSolicitudes(String idSolicitud) {
 		Session session = null;
 	    try {
 	        session = sessionFactory.openSession();
 	        session.beginTransaction();
 	        Query query;
-	        if (tipoSolicitud == null || tipoSolicitud.isEmpty()) {
-	            query = session.createQuery("from Solicitud");
+	        if (idSolicitud == null || idSolicitud.isEmpty()) {
+	            query = session.createQuery("from Solicitud where baja = 0");
 	        } else {
-	            query = session.createQuery("from Activo where tipoSolicitud = :tipoSolicitud");
-	            query.setParameter("tipoSolicitud", tipoSolicitud);
+	            query = session.createQuery("from Solicitud where idSolicitud = :idSolicitud");
+	            query.setParameter("idSolicitud", idSolicitud);
 	        }
 	        @SuppressWarnings("unchecked")
 			List<Solicitud> solicitudes = query.list();
@@ -80,6 +82,31 @@ public class SolicitudDAOimpl implements SolicitudDAO {
 	            session.close();
 	        }
 	    }
+	}
+	
+	public Activo obtenerActivoPorSolicitudId(int id) throws SQLException {
+		Session session = null;
+		try {
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            Solicitud solicitud = (Solicitud) session.get(Solicitud.class, id);
+            session.getTransaction().commit();
+            if (solicitud != null) {
+                return solicitud.getActivo();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
 	}
 
 }

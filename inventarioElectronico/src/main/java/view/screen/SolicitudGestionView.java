@@ -28,6 +28,7 @@ public class SolicitudGestionView extends JFrame{
 	private UsuarioController usuarioLogin;
     private JPanel busquedaPanel;
 	private JTextField busquedaTxtField;
+	private JLabel txtSolicitudPendiente;
 	private JLabel busquedaLabel;
 	private JButton buscarButton;
 	private JButton btnSolicitudAprobar;
@@ -86,9 +87,11 @@ public class SolicitudGestionView extends JFrame{
         busquedaTxtField= new JTextField();
         busquedaLabel = new JLabel("Buscar solicitud:");
         buscarButton = new JButton("Buscar");
+        txtSolicitudPendiente = new JLabel("Solicitudes Pendientes: ");
         busquedaPanel.add(busquedaLabel, BorderLayout.WEST);
         busquedaPanel.add(busquedaTxtField, BorderLayout.CENTER);
         busquedaPanel.add(buscarButton, BorderLayout.EAST);
+        busquedaPanel.add(txtSolicitudPendiente, BorderLayout.WEST);
         add(busquedaPanel, BorderLayout.NORTH);
         
         // Panel Botones
@@ -102,7 +105,7 @@ public class SolicitudGestionView extends JFrame{
         add(buttonPanel, BorderLayout.SOUTH);
         
         // Crea la tabla de activos
-        modeloTable = new DefaultTableModel(new Object[]{"Tipo Solicitud" , "Fecha Solicitud" , "Estado Solicitud"}, 0);
+        modeloTable = new DefaultTableModel(new Object[]{"Id Solicitud", "Tipo Solicitud" , "Fecha Solicitud" , "Estado Solicitud"}, 0);
         solicitudesTable = new JTable(modeloTable); // Aquí puedes configurar el modelo de la tabla para mostrar los activos
         add(new JScrollPane(solicitudesTable), BorderLayout.CENTER);
         
@@ -131,7 +134,7 @@ public class SolicitudGestionView extends JFrame{
 	}
 	
 	public Boolean actualizarTabla(String busqueda) throws SQLException {
-		
+		modeloTable.setRowCount(0);
 		SolicitudDAOimpl solicitudDAO = new SolicitudDAOimpl();
 		List<Solicitud> solicitudes = solicitudDAO.listarSolicitudes(busqueda);
 		
@@ -142,26 +145,41 @@ public class SolicitudGestionView extends JFrame{
 			String fecha = sdf.format(solicitud.getFechaSolicitud());
 			String estado = "";
 			
-			if (solicitud.getBaja() == 0) {
+			if (solicitud.getEstado() == 0) {
 				estado = "Pendiente";
 			} else {
 				estado = "Utilizada";
-			}
+			} 
 			
-			modeloTable.addRow(new Object[] { solicitud.getTipoSolicitud(), fecha, estado});
+			modeloTable.addRow(new Object[] { solicitud.getId(), solicitud.getTipoSolicitud(), fecha, estado});
 		}
 		
 		return true;
 	}
 	
 	// Getters y Setters
+	
+	public Solicitud getSolicitudSeleccionada() {
+		
+		int selectedRow = solicitudesTable.getSelectedRow();
+		
+		if (selectedRow == -1) {
+			return null;
+		} else {
+			Solicitud solicitud = new Solicitud();
+			solicitud.setTipoSolicitud((String) modeloTable.getValueAt(selectedRow, 0));
+			return solicitud;
+		}
+		
+	}
+	
 	  public void setControladorSolicitudCargar(ActionListener solicitudCargar) {
 	  btnSolicitudCargar.addActionListener(solicitudCargar); }
 	
-	  public void setControladorSolicitud(ActionListener solicitud) {
+	  public void setControladorSolicitudAprobar(ActionListener solicitud) {
 	  btnSolicitudAprobar.addActionListener(solicitud); }
 	  
-	  public void setControladorSolicitud2(ActionListener solicitud2) {
+	  public void setControladorSolicitudRechazar(ActionListener solicitud2) {
 	  btnSolicitudRechazar.addActionListener(solicitud2); }
 	 
 	 
