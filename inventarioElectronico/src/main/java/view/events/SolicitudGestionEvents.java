@@ -4,7 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import modelo.Activo;
+import modelo.Solicitud;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.SolicitudDAOimpl;
 import view.screen.SolicitudAltaView;
@@ -19,7 +22,6 @@ public class SolicitudGestionEvents {
 		if (solicitudGestionView == null) {
             throw new IllegalArgumentException("solicitudGestionView cannot be null");
         }
-
 		this.solicitudGestionView = solicitudGestionView;
 		initEventHandlers();
 	}
@@ -59,22 +61,26 @@ public class SolicitudGestionEvents {
 		Activo activo2 = new Activo();
 		System.out.println("aprobar");
 		
-		activo2 = solicitudGestionView.getSolicitudSeleccionada().getActivo();
+		//activo2 = solicitudGestionView.getSolicitudSeleccionada().getActivo();
 		
 		SolicitudAprobarView solicitudAprobarView = new SolicitudAprobarView();
 		new SolicitudAprobarEvents(solicitudAprobarView, activo);
 	}
 	
 	private void rechazarSolicitud() throws SQLException {
-		Activo activo2 = new Activo();
-		SolicitudDAOimpl solicitudDAO = new SolicitudDAOimpl();
-		System.out.println(solicitudGestionView.getSolicitudSeleccionada().getTipoSolicitud());
-		//Integer id = solicitudGestionView.getSolicitudSeleccionada().getTipoSolicitud();
-		Integer id = 8;
 		
-		System.out.println("rechazar2");
-		activo2 = solicitudDAO.obtenerActivoPorSolicitudId(id);
-		System.out.println("rechazar3");
-		System.out.println(activo2.getMarca() + activo2.getEspecificaciones());
+		SolicitudDAOimpl solicitudDAO = new SolicitudDAOimpl();
+		Solicitud solicitud = new Solicitud();
+		String busqueda = solicitudGestionView.getBusqueda();
+		int idSolicitud = Integer.parseInt(busqueda);
+		solicitud = solicitudDAO.obtenerSolicitudPorId(idSolicitud);
+		
+		if (solicitud.getEstado() == 0) {
+			solicitud.setEstado(2);
+			solicitudDAO.actualizarSolicitud(solicitud);
+			System.out.println("Solicitud Rechazada");
+		} else {
+			JOptionPane.showMessageDialog(null, "La solicitud no se puede rechazar");
+		}
 	}
 }

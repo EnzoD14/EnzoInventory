@@ -42,6 +42,7 @@ public class SolicitudAltaEvents {
 		solicitudAltaView.setBtnCancelar(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	System.out.println("Cancelar");
                 solicitudAltaView.dispose(); // Cierra la ventana si el usuario cancela
             }
         });

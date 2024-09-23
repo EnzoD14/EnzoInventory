@@ -108,5 +108,47 @@ public class SolicitudDAOimpl implements SolicitudDAO {
             }
         }
 	}
+	
+	public Solicitud obtenerSolicitudPorId(int id) throws SQLException {
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			Solicitud solicitud = (Solicitud) session.get(Solicitud.class, id);
+			session.getTransaction().commit();
+			return solicitud;
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+	}
+	
+	public Boolean actualizarSolicitud(Solicitud solicitud) throws SQLException {
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.update(solicitud);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			if (session != null) {
+				session.getTransaction().rollback();
+			}
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+	}
 
 }

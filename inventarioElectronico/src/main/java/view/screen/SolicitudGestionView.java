@@ -102,6 +102,8 @@ public class SolicitudGestionView extends JFrame{
         buttonPanel.add(btnSolicitudCargar);
         buttonPanel.add(btnSolicitudAprobar);
         buttonPanel.add(btnSolicitudRechazar);
+        btnSolicitudAprobar.setEnabled(false);
+        btnSolicitudRechazar.setEnabled(false);
         add(buttonPanel, BorderLayout.SOUTH);
         
         // Crea la tabla de activos
@@ -121,7 +123,14 @@ public class SolicitudGestionView extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (actualizarTabla(busquedaTxtField.getText())) {
-						//numeroSerie = busquedaTxtField.getText();
+						String numeroSerie = busquedaTxtField.getText();
+						if (numeroSerie.equals("")) {
+							btnSolicitudAprobar.setEnabled(false);
+							btnSolicitudRechazar.setEnabled(false);
+						} else {
+							btnSolicitudAprobar.setEnabled(true);
+							btnSolicitudRechazar.setEnabled(true);
+						}
 					}
 				} catch (SQLException ex) {
 					ex.printStackTrace();
@@ -147,9 +156,11 @@ public class SolicitudGestionView extends JFrame{
 			
 			if (solicitud.getEstado() == 0) {
 				estado = "Pendiente";
-			} else {
+			} else if (solicitud.getEstado() == 1) {
 				estado = "Utilizada";
-			} 
+			} else {
+				estado = "Rechazada";
+			}
 			
 			modeloTable.addRow(new Object[] { solicitud.getId(), solicitud.getTipoSolicitud(), fecha, estado});
 		}
@@ -159,27 +170,18 @@ public class SolicitudGestionView extends JFrame{
 	
 	// Getters y Setters
 	
-	public Solicitud getSolicitudSeleccionada() {
-		
-		int selectedRow = solicitudesTable.getSelectedRow();
-		
-		if (selectedRow == -1) {
-			return null;
-		} else {
-			Solicitud solicitud = new Solicitud();
-			solicitud.setTipoSolicitud((String) modeloTable.getValueAt(selectedRow, 0));
-			return solicitud;
-		}
-		
+	public String getBusqueda() {
+		return busquedaTxtField.getText();
 	}
 	
-	  public void setControladorSolicitudCargar(ActionListener solicitudCargar) {
+	
+	public void setControladorSolicitudCargar(ActionListener solicitudCargar) {
 	  btnSolicitudCargar.addActionListener(solicitudCargar); }
 	
-	  public void setControladorSolicitudAprobar(ActionListener solicitud) {
+	public void setControladorSolicitudAprobar(ActionListener solicitud) {
 	  btnSolicitudAprobar.addActionListener(solicitud); }
 	  
-	  public void setControladorSolicitudRechazar(ActionListener solicitud2) {
+	public void setControladorSolicitudRechazar(ActionListener solicitud2) {
 	  btnSolicitudRechazar.addActionListener(solicitud2); }
 	 
 	 

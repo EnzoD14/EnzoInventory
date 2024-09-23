@@ -17,6 +17,7 @@ public class SolicitudAltaView extends JFrame {
 	private JTextField txtNumeroSerie;
 	private JTextField txtEspecificaciones;
 	private JTextField txtValor;
+	private JTextField txtMotivoBaja;
 	private JButton btnGuardar;
 	private JButton btnCancelar;
 	private JComboBox<String> cmbTipoSolicitud;
@@ -120,9 +121,17 @@ public class SolicitudAltaView extends JFrame {
         frame.add(Box.createVerticalStrut(5));
         
         
-        JLabel lblCodigoProducto = new JLabel("Codigo de Producto:");
+        JLabel lblCodigoProducto = new JLabel("Motivo de baja:");
         lblCodigoProducto.setAlignmentX(0.5f);
         frame.add(lblCodigoProducto);
+        
+        txtMotivoBaja = new JTextField();
+        txtMotivoBaja.setAlignmentX(0.5f);
+        txtMotivoBaja.setPreferredSize(new Dimension(200, 30));
+        txtMotivoBaja.setMaximumSize(txtMotivoBaja.getPreferredSize());
+        frame.add(txtMotivoBaja);
+        txtMotivoBaja.setEditable(false);
+        frame.add(Box.createVerticalStrut(20));
         
         btnGuardar = new JButton("Guardar");
         btnGuardar.setAlignmentX(0.5f);
@@ -133,6 +142,18 @@ public class SolicitudAltaView extends JFrame {
         btnCancelar.setAlignmentX(0.5f);
         frame.add(btnCancelar);
         frame.add(Box.createVerticalStrut(5));
+        
+        cmbTipoSolicitud.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(java.awt.event.ActionEvent e) {
+        		if (cmbTipoSolicitud.getSelectedItem().toString().equals("Baja")) {
+        			txtMotivoBaja.setEditable(true);
+        		} else {
+        			txtMotivoBaja.setEditable(false);
+        		}
+        	}
+        });
+        
         
         frame.setVisible(true);
         
@@ -164,6 +185,10 @@ public class SolicitudAltaView extends JFrame {
 	
 	public String getValor() {
 		return txtValor.getText();
+	}
+	
+	public void dispose() {
+		frame.dispose();
 	}
 	
 	public void setBtnGuardar(ActionListener actionListener) {
