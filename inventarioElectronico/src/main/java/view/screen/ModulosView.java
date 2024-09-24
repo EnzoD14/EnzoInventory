@@ -19,6 +19,7 @@ import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.CompraDAOimpl;
 import view.events.CompraEvents;
 import view.events.ActivoGestionEvents;
+import view.events.BackupEvents;
 import view.events.UsuarioGestionEvents;
 
 public class ModulosView {
@@ -130,6 +131,7 @@ public class ModulosView {
             case "Backup":
                 // new BackupVista();
             	BackupView backupVista = new BackupView(usuarioLogin);
+            	new BackupEvents(backupVista);
                 break;
             case "Reportes":
                 // new ReportesVista();

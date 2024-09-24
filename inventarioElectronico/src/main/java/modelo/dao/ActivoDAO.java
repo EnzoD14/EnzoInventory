@@ -7,7 +7,7 @@ import modelo.Activo;
 
 public interface ActivoDAO {
 	Boolean agregarActivo(Activo activo) throws SQLException;
-	void modificarActivo(Activo activo);
+	Boolean modificarActivo(Activo activo);
 	void eliminarActico(Activo activo);
 	Activo obtenerActivoPorId(int id);
 	Activo obtenerActivoPorNumeroSerie(String numeroSerie);

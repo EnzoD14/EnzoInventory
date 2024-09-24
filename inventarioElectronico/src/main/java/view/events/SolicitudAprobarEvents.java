@@ -55,8 +55,9 @@ public class SolicitudAprobarEvents {
 		
 		activo.setMesesAmortizacion(amortizacion);
 		activo.setCodigoProducto(patrimonio);
+		activo.setBaja(0);
 		
-		if (activoDAO.agregarActivo(activo)) {
+		if (activoDAO.modificarActivo(activo)) {
 			System.out.println("Activo agregado");
 		} else {
 			System.out.println("Error al agregar activo");

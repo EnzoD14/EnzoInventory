@@ -50,7 +50,7 @@ public class ActivoDAOimpl implements ActivoDAO {
 	}
 
 	@Override
-	public void modificarActivo(Activo activo) {
+	public Boolean modificarActivo(Activo activo) {
 		
 		Session session = null;
         try {
@@ -59,11 +59,13 @@ public class ActivoDAOimpl implements ActivoDAO {
             session.update(activo);
             session.getTransaction().commit();
             //System.out.println("Activo modificado con exito bdd");
+            return true;
         } catch (Exception e) {
             if (session != null) {
                 session.getTransaction().rollback();
             }
             e.printStackTrace();
+            return false;
         } finally {
             if (session != null) {
                 session.close();

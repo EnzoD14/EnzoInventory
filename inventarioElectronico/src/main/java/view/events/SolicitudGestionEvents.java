@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 
 import modelo.Activo;
 import modelo.Solicitud;
-import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.SolicitudDAOimpl;
 import view.screen.SolicitudAltaView;
 import view.screen.SolicitudAprobarView;
@@ -16,8 +15,6 @@ import view.screen.SolicitudGestionView;
 
 public class SolicitudGestionEvents {
 	private SolicitudGestionView solicitudGestionView;
-	private Activo activo;
-	
 	public SolicitudGestionEvents(SolicitudGestionView solicitudGestionView) {
 		if (solicitudGestionView == null) {
             throw new IllegalArgumentException("solicitudGestionView cannot be null");
@@ -35,7 +32,12 @@ public class SolicitudGestionEvents {
 		  
 		  solicitudGestionView.setControladorSolicitudAprobar(new ActionListener() { 
 			  public void actionPerformed(ActionEvent e) { 
-				  aprobarSolicitud(); 
+				  try {
+					aprobarSolicitud();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
 			  } });
 			  
 		  solicitudGestionView.setControladorSolicitudRechazar(new ActionListener() { 
@@ -57,14 +59,27 @@ public class SolicitudGestionEvents {
 		new SolicitudAltaEvents(solicitudAltaView);
 	}
 	
-	private void aprobarSolicitud() {
+	private void aprobarSolicitud() throws SQLException {
 		Activo activo2 = new Activo();
+		SolicitudDAOimpl solicitudDAO = new SolicitudDAOimpl();
+		Solicitud solicitud = new Solicitud();
+		String busqueda = solicitudGestionView.getBusqueda();
+		int idSolicitud = Integer.parseInt(busqueda);
+		solicitud = solicitudDAO.obtenerSolicitudPorId(idSolicitud);
 		System.out.println("aprobar");
 		
-		//activo2 = solicitudGestionView.getSolicitudSeleccionada().getActivo();
+		if (solicitud.getEstado() == 0) {
+            solicitud.setEstado(1);
+			solicitudDAO.actualizarSolicitud(solicitud);
+            activo2 = solicitudDAO.obtenerActivoPorSolicitudId(idSolicitud);
+            System.out.println(activo2.getEspecificaciones());
+            SolicitudAprobarView solicitudAprobarView = new SolicitudAprobarView();
+    		new SolicitudAprobarEvents(solicitudAprobarView, activo2); 
+        } else {
+            JOptionPane.showMessageDialog(null, "La solicitud no se puede aprobar");
+        }
 		
-		SolicitudAprobarView solicitudAprobarView = new SolicitudAprobarView();
-		new SolicitudAprobarEvents(solicitudAprobarView, activo);
+		
 	}
 	
 	private void rechazarSolicitud() throws SQLException {

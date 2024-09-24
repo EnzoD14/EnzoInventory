@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class SolicitudAprobarView extends JFrame{
 	private JFrame frame;
 	private JTextField txtAmortizacion;
@@ -22,7 +23,7 @@ public class SolicitudAprobarView extends JFrame{
 	
 	private void initialize() {
 		frame = new JFrame("Aprobacion Solicitud - Inventario Electronico");
-        frame.setSize(400, 600);
+        frame.setSize(400, 400);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         BoxLayout boxLayout = new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS);
         frame.setLayout(boxLayout);
