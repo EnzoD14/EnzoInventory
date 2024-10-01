@@ -74,13 +74,14 @@ public class SolicitudAltaEvents {
 		solicitud.setActivo(activo);
 		solicitud.setTipoSolicitud(solicitudAltaView.getTipoSolicitud());
 		solicitud.setFechaSolicitud(fechaSql);
+		solicitud.setMotivoBaja(solicitudAltaView.getMotivoBaja());
 		solicitud.setEstado(0);
 		solicitud.setBaja(0);
 		
 		if(solicitudDAO.agregarSolicitud(solicitud)) {
             System.out.println("Solicitud guardada");
         } else {
-        	System.out.println("Error al guardar solicitud ");
+        	System.out.println("Error al guardar solicitud.");
         }
 	}
 

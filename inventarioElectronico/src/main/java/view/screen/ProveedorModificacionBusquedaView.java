@@ -18,7 +18,7 @@ public class ProveedorModificacionBusquedaView extends JFrame {
     public ProveedorModificacionBusquedaView() {
         setTitle("Modificacion de Proveedor - Inventario Electronico");
         setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();

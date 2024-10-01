@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class ProveedorBajaView extends JFrame {
     private JTextField razonSocialField;
     private JButton buscarButton;
@@ -17,7 +18,7 @@ public class ProveedorBajaView extends JFrame {
     public ProveedorBajaView() {
         setTitle("Baja de Proveedor - Inventario Electronico");
         setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();

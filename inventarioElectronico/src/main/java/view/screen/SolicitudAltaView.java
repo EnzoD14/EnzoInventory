@@ -17,11 +17,11 @@ public class SolicitudAltaView extends JFrame {
 	private JTextField txtNumeroSerie;
 	private JTextField txtEspecificaciones;
 	private JTextField txtValor;
-	private JTextField txtMotivoBaja;
 	private JButton btnGuardar;
 	private JButton btnCancelar;
 	private JComboBox<String> cmbTipoSolicitud;
 	private JComboBox<String> cmbTipoActivo;
+	private JComboBox<String> cmbMotivoBaja;
 	
 	public SolicitudAltaView() {
 		initialize();
@@ -125,13 +125,15 @@ public class SolicitudAltaView extends JFrame {
         lblCodigoProducto.setAlignmentX(0.5f);
         frame.add(lblCodigoProducto);
         
-        txtMotivoBaja = new JTextField();
-        txtMotivoBaja.setAlignmentX(0.5f);
-        txtMotivoBaja.setPreferredSize(new Dimension(200, 30));
-        txtMotivoBaja.setMaximumSize(txtMotivoBaja.getPreferredSize());
-        frame.add(txtMotivoBaja);
-        txtMotivoBaja.setEditable(false);
-        frame.add(Box.createVerticalStrut(20));
+        String[] motivoBaja = {"Extravio", "Robo", "Obsolecencia", "Venta", "Otros", "No"};
+        cmbMotivoBaja = new JComboBox<>(motivoBaja);
+        cmbMotivoBaja.setAlignmentX(0.5f);
+        cmbMotivoBaja.setPreferredSize(new Dimension(200, 30));
+        cmbMotivoBaja.setMaximumSize(cmbMotivoBaja.getPreferredSize());
+        frame.add(cmbMotivoBaja);
+        frame.add(Box.createVerticalStrut(5));
+        cmbMotivoBaja.setSelectedIndex(5);
+        cmbMotivoBaja.setEnabled(false);
         
         btnGuardar = new JButton("Guardar");
         btnGuardar.setAlignmentX(0.5f);
@@ -147,9 +149,10 @@ public class SolicitudAltaView extends JFrame {
         	@Override
         	public void actionPerformed(java.awt.event.ActionEvent e) {
         		if (cmbTipoSolicitud.getSelectedItem().toString().equals("Baja")) {
-        			txtMotivoBaja.setEditable(true);
+        			cmbMotivoBaja.setEnabled(true);
         		} else {
-        			txtMotivoBaja.setEditable(false);
+        			cmbMotivoBaja.setSelectedIndex(5);
+        			cmbMotivoBaja.setEnabled(false);
         		}
         	}
         });
@@ -197,6 +200,10 @@ public class SolicitudAltaView extends JFrame {
 	
 	public void setBtnCancelar(ActionListener actionListener) {
 		btnCancelar.addActionListener(actionListener);
+	}
+
+	public String getMotivoBaja() {
+		return cmbMotivoBaja.getSelectedItem().toString();
 	}
 
 

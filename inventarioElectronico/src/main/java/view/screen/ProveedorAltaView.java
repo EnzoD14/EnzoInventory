@@ -20,6 +20,7 @@ public class ProveedorAltaView {
     public ProveedorAltaView(UsuarioController usuarioLogin) {
         frame = new JFrame("Alta de Proveedor - Inventario Electronico");
         frame.setSize(300, 400);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         
         JMenuBar menuBar = new JMenuBar();

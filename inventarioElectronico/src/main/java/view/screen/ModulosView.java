@@ -18,6 +18,7 @@ import modelo.Compra;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.CompraDAOimpl;
 import view.events.CompraEvents;
+import view.events.ReportesEvents;
 import view.events.ActivoGestionEvents;
 import view.events.BackupEvents;
 import view.events.UsuarioGestionEvents;
@@ -136,8 +137,8 @@ public class ModulosView {
             case "Reportes":
                 // new ReportesVista();
             	ReportesView reportesVista = new ReportesView(usuarioLogin);
-            	System.out.println("llego");
-                break;
+				new ReportesEvents(reportesVista);
+				break;
             default:
                 throw new IllegalArgumentException("Categoría no reconocida: " + categoria);
         }

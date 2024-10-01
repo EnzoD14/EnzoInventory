@@ -1,17 +1,15 @@
 package view.screen;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import modelo.Proveedor;
 import modelo.dao.impl.ProveedorDAOimpl;
 
+@SuppressWarnings("serial")
 public class ProveedorModificacionView extends JFrame {
 	private JTextField nombreField;
     private JTextField razonSocialField;
@@ -28,6 +26,7 @@ public class ProveedorModificacionView extends JFrame {
         
         setTitle("Modificación de Proveedor - Inventario Electronico");
         setSize(300, 200);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new GridLayout(5, 2));
         
         add(new JLabel("Nombre:"));

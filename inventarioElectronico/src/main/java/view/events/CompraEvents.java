@@ -77,7 +77,7 @@ public class CompraEvents {
 	}
 	
 	private void listarProveedor() {
-		ProveedorListaView proveedorListaView = new ProveedorListaView();
+		ProveedorListaView proveedorListaView = new ProveedorListaView(usuarioLogin);
 		proveedorListaView.setVisible(true);
 	}
 	

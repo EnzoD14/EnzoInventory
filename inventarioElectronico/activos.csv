@@ -1,0 +1,7 @@
+Tipo,Marca,Modelo,Numero de Serie,Especificaciones,Valor,Estado,Fecha de Alta,Fecha de Mantenimiento,Meses de Amortizacion
+Notebook,Dell,Latitude 5430,PF123456,Intel i5 , 8GB RAM , 256GB SSD.,1200000.00,Backup,2024-09-08 00:00:00.0,2024-09-08 00:00:00.0,30
+Notebook,Lenovo,Thinkpad,PF3MBE3,Intel i7 , 8GB RAM , 256GB SSD,1400000.00,Backup,2024-09-08 00:00:00.0,2024-09-08 00:00:00.0,48
+Notebook,HP,G14,G14N98D4,Intel i5 , 8GB RAM , 256GB SSD,1100000.00,Backup,2024-09-09 00:00:00.0,2024-09-08 00:00:00.0,60
+Notebook,Dell,Latitude,HGFJ0001,Intel i5 , 8GB RAM , 256GB SSD,1250000.00,Utilizada,2024-09-09 00:00:00.0,2024-09-08 00:00:00.0,54
+Notebook,Lenovo,THINKPAD,PF3MB3EK,Intel i5 , 8GB RAM , 256GB SSD,1600000.00,Utilizada,2024-09-09 00:00:00.0,2024-09-08 00:00:00.0,42
+SWITCH,Cisco,ST400DG,400DGST,42Puertos, POE, Administrable,3000000.00,Utilizada,2024-09-10 00:00:00.0,2024-09-08 00:00:00.0,32

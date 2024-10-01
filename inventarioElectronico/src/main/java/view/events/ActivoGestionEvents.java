@@ -58,6 +58,7 @@ public class ActivoGestionEvents {
 	
 	private void solicitud() {
 		System.out.println("solicitud");
+		activoView.dispose();
 		SolicitudGestionView solicitudView = new SolicitudGestionView();
 		new SolicitudGestionEvents(solicitudView);
 	}
