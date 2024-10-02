@@ -24,8 +24,8 @@ public class ProveedorModificacionView extends JFrame {
         this.proveedor = proveedor;
         this.proveedorDAO = new ProveedorDAOimpl();
         
-        setTitle("Modificación de Proveedor - Inventario Electronico");
-        setSize(300, 200);
+        setTitle("Modificación de Proveedor");
+        setSize(400, 200);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new GridLayout(5, 2));
         

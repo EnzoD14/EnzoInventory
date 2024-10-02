@@ -8,14 +8,17 @@ import javax.swing.JOptionPane;
 import controlador.UsuarioController;
 import modelo.Proveedor;
 import modelo.dao.impl.ProveedorDAOimpl;
+import view.screen.CompraView;
 import view.screen.ProveedorAltaView;
 
 public class ProveedorAltaEvents {
 	private ProveedorAltaView view;
+	private CompraView compraView;
 	private ProveedorDAOimpl proveedorDAO;
 	
-	public ProveedorAltaEvents(ProveedorAltaView proveedorAltaView) {
+	public ProveedorAltaEvents(ProveedorAltaView proveedorAltaView, CompraView compraView) {
 		this.view = proveedorAltaView;
+		this.compraView = compraView;
 		this.proveedorDAO = new ProveedorDAOimpl();
 		System.out.println("teste");
 		initEventHandlers();
@@ -25,12 +28,15 @@ public class ProveedorAltaEvents {
 		view.setAceptar(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				agregarProveedor();
+				compraView.habilitarBotones();
 			}
 		});
 		
 		view.setCancelar(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	compraView.habilitarBotones();
                 view.setVisible(false);
+                
             }
         });
 	}

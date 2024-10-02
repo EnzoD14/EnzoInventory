@@ -2,6 +2,8 @@ package view.events;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import controlador.UsuarioController;
 import view.screen.CompraAltaView;
@@ -27,40 +29,38 @@ public class CompraEvents {
 		// TODO Auto-generated method stub
 		view.setControladorAlta(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				view.deshabilitarBotones();
 				agregarProveedor();
 			}
 		});
 		
 		view.setControladorBaja(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				view.deshabilitarBotones();
 				bajaProveedor();
 			}
 		});
 		
 		view.setControladorModificar(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				view.deshabilitarBotones();
 				modificarProveedor();
-			}
-		});
-		
-		view.setControladorListar(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listarProveedor();
 			}
 		});
 		
 		view.setControladorSolicitudAlta(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	view.deshabilitarBotones();
                 agregarSolicitud();
             }
         });
+		
 	}
 	
 	private void agregarProveedor() {
 		ProveedorAltaView proveedorAltaView = new ProveedorAltaView(usuarioLogin);
-		new ProveedorAltaEvents(proveedorAltaView);
+		new ProveedorAltaEvents(proveedorAltaView, view);
 		proveedorAltaView.setVisible(true);
-		
 	}
 	
 	private void bajaProveedor() {

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,8 +12,13 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import controlador.UsuarioController;
+import modelo.Proveedor;
+import modelo.dao.impl.ProveedorDAOimpl;
 
 public class CompraView {
 	
@@ -21,8 +27,9 @@ public class CompraView {
     private JButton btnAltaProveedor;
     private JButton btnBajaProveedor;
     private JButton btnModificarProveedor;
-    private JButton btnListarProveedor;
     private JButton btnAltaCompra;
+    private JTable proveedoresTable;
+    private DefaultTableModel modeloTable;
 
 	public CompraView(UsuarioController usuarioLogin) {
 		this.usuarioLogin = usuarioLogin;
@@ -31,13 +38,21 @@ public class CompraView {
 
 	public void initialize(UsuarioController usuarioLogin) {
 		frame = new JFrame("Compras - Inventario Electronico");
-        frame.setSize(500, 400);
+        frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
         // Crear y agregar una barra de menú
         JMenuBar menuBar = new JMenuBar();
         JMenu menuArchivo = new JMenu("Archivo");
+        
+        JMenuItem itemActualizar = new JMenuItem("Actualizar");
+        itemActualizar.addActionListener(new ActionListener() {
+        	@Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarVista();
+            }
+        });
         
         JMenuItem itemModulos = new JMenuItem("Modulos");
         itemModulos.addActionListener(new ActionListener() {
@@ -65,32 +80,42 @@ public class CompraView {
             }
         });
         
+        menuArchivo.add(itemActualizar);
         menuArchivo.add(itemModulos);
         menuArchivo.add(itemCerrarSesion);
         menuArchivo.add(itemSalir);
         menuBar.add(menuArchivo);
         frame.setJMenuBar(menuBar);
 
-        // Panel principal
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 1, 10, 10)); // Ajusta el diseño según sea necesario
-        frame.add(panel, BorderLayout.CENTER);
+        //Panel botones
+        JPanel buttonPanel = new JPanel();
 
         // Crear y agregar botones
         btnAltaCompra = new JButton("Alta de Compra");
         btnAltaProveedor = new JButton("Alta de Proveedor");
         btnBajaProveedor = new JButton("Baja de Proveedor");
         btnModificarProveedor = new JButton("Modificar Proveedor");
-        btnListarProveedor = new JButton("Listar Proveedores");
 
-        panel.add(btnAltaCompra);
-        panel.add(btnAltaProveedor);
-        panel.add(btnBajaProveedor);
-        panel.add(btnModificarProveedor);
-        panel.add(btnListarProveedor);
+        buttonPanel.add(btnAltaCompra);
+        buttonPanel.add(btnAltaProveedor);
+        buttonPanel.add(btnBajaProveedor);
+        buttonPanel.add(btnModificarProveedor);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
         
-        
+        modeloTable = new DefaultTableModel(new Object[]{"Nombre", "Razon Social", "Email", "Telefono", "Baja"}, 0);
+        proveedoresTable = new JTable(modeloTable);
+        frame.add(new JScrollPane(proveedoresTable), BorderLayout.CENTER);
+        loadProveedores();
     }
+	
+		private void loadProveedores() {
+			ProveedorDAOimpl proveedorDAO = new ProveedorDAOimpl();
+	    	List<Proveedor> proveedores = proveedorDAO.listarProveedor("");
+	        
+	        for (Proveedor proveedor : proveedores) {
+	            modeloTable.addRow(new Object[]{proveedor.getNombre(), proveedor.getRazonSocial(), proveedor.getEmail(), proveedor.getTelefono(), proveedor.getBaja()});
+	        }
+		}
     
         public void setControladorAlta(ActionListener controlador) {
         	btnAltaProveedor.addActionListener(controlador);
@@ -104,10 +129,6 @@ public class CompraView {
         	btnModificarProveedor.addActionListener(controlador);
         }
         
-        public void setControladorListar(ActionListener controlador) {
-        	btnListarProveedor.addActionListener(controlador);
-        }
-        
         public void setControladorSolicitudAlta(ActionListener controlador) {
         	btnAltaCompra.addActionListener(controlador);
         }
@@ -119,6 +140,29 @@ public class CompraView {
 		public void setVisible(boolean b) {
 			// TODO Auto-generated method stub
 			frame.setVisible(b);
+		}
+		
+		public void deshabilitarBotones() {
+			btnAltaProveedor.setEnabled(false);
+			btnBajaProveedor.setEnabled(false);
+			btnModificarProveedor.setEnabled(false);
+			btnAltaCompra.setEnabled(false);
+		}
+		
+		public void habilitarBotones() {
+			btnAltaProveedor.setEnabled(true);
+			btnBajaProveedor.setEnabled(true);
+			btnModificarProveedor.setEnabled(true);
+			btnAltaCompra.setEnabled(true);
+			frame.revalidate();
+			System.out.println("botones habilitados");
+		}
+		
+		public void actualizarVista() {
+			modeloTable.setRowCount(0);
+			habilitarBotones();
+			loadProveedores();
+			frame.revalidate();
 		}
 
 }

@@ -2,12 +2,15 @@ package view.screen;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
 import controlador.UsuarioController;
 
-public class ProveedorAltaView {
+@SuppressWarnings("serial")
+public class ProveedorAltaView extends JFrame {
 	private UsuarioController usuarioLogin;
     private JFrame frame;
     private JTextField nombreField;

@@ -23,7 +23,7 @@ public class CompraAltaView extends JFrame {
 	
     public CompraAltaView() {
         setTitle("Alta de Compras - Inventario Electronico");
-        setSize(300, 200);
+        setSize(500, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(5, 2));
 
