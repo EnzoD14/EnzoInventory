@@ -1,11 +1,9 @@
 package view.screen;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -21,7 +19,7 @@ import modelo.Proveedor;
 import modelo.dao.impl.ProveedorDAOimpl;
 
 public class CompraView {
-	
+	@SuppressWarnings("unused")
 	private UsuarioController usuarioLogin;
     private JFrame frame;
     private JButton btnAltaProveedor;
@@ -56,7 +54,8 @@ public class CompraView {
         
         JMenuItem itemModulos = new JMenuItem("Modulos");
         itemModulos.addActionListener(new ActionListener() {
-        	@Override
+        	@SuppressWarnings("unused")
+			@Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 ModulosView moduloVista = new ModulosView(usuarioLogin);
@@ -73,7 +72,8 @@ public class CompraView {
         
         JMenuItem itemCerrarSesion = new JMenuItem("Cerrar Sesion");
         itemCerrarSesion.addActionListener(new ActionListener() {
-            @Override
+            @SuppressWarnings("unused")
+			@Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 LoginView loginView = new LoginView(usuarioLogin);

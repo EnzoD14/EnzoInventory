@@ -12,12 +12,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import controlador.ActivoController;
 import controlador.UsuarioController;
 import modelo.Compra;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.CompraDAOimpl;
 import view.events.CompraEvents;
+import view.events.MantenimientoEvents;
 import view.events.ReportesEvents;
 import view.events.ActivoGestionEvents;
 import view.events.BackupEvents;
@@ -111,7 +111,6 @@ public class ModulosView {
                 // new GestionActivosVista();
             	//GestionActivosView activosVista = new GestionActivosView(usuarioLogin);
             	ActivoGestionView view = new ActivoGestionView(usuarioLogin);
-                ActivoController controller = new ActivoController();
                 CompraBusquedaView compraView = null;
             	new ActivoGestionEvents(compraView, view, compraDAO, activoDAO);
                 break;
@@ -128,6 +127,7 @@ public class ModulosView {
             case "Mantenimiento / Reparación":
                 // new MantenimientoVista();
             	MantenimientoView mantenimientoVista = new MantenimientoView(usuarioLogin);
+            	new MantenimientoEvents(mantenimientoVista);
                 break;
             case "Backup":
                 // new BackupVista();

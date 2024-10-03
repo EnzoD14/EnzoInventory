@@ -1,19 +1,42 @@
 package view.screen;
 
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import controlador.UsuarioController;
+import modelo.Activo;
+import modelo.dao.impl.ActivoDAOimpl;
 
-public class MantenimientoView {
+@SuppressWarnings("serial")
+public class MantenimientoView extends JFrame {
 	private UsuarioController usuarioLogin;
-	private JFrame frame;
+	private JTable reparTable;
+	private JTable mantenTable;
+	private JButton btnAltaReparacion;
+	private JButton btnBajaReparacion;
+	private JButton btnMantenimiento;
+	private DefaultTableModel reparacionTable;
+	private DefaultTableModel mantenimientoTable;
 
 	public MantenimientoView(UsuarioController usuario) {
 		this.usuarioLogin = usuario;
@@ -21,23 +44,20 @@ public class MantenimientoView {
 	}
 
 	private void initialize() {
-		frame = new JFrame("Mantenimiento/Reparacion - Inventario Electronico");
-		frame.setSize(400, 400);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(null);
-
-		JLabel lblCategoria2 = new JLabel("Activos en reparacion:");
-		lblCategoria2.setBounds(30, 30, 200, 100);
-		frame.add(lblCategoria2);
+		setTitle("Mantenimiento/Reparacion - Inventario Electronico");
+		setSize(1000, 600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
 
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menuArchivo = new JMenu("Archivo");
 
 		JMenuItem itemModulos = new JMenuItem("Modulos");
 		itemModulos.addActionListener(new ActionListener() {
+			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
+				dispose();
 				ModulosView moduloVista = new ModulosView(usuarioLogin);
 			}
 		});
@@ -52,9 +72,10 @@ public class MantenimientoView {
 
 		JMenuItem itemCerrarSesion = new JMenuItem("Cerrar Sesion");
 		itemCerrarSesion.addActionListener(new ActionListener() {
+			@SuppressWarnings("unused")
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
+				dispose();
 				LoginView loginView = new LoginView(usuarioLogin);
 			}
 		});
@@ -63,10 +84,96 @@ public class MantenimientoView {
 		menuArchivo.add(itemCerrarSesion);
 		menuArchivo.add(itemSalir);
 		menuBar.add(menuArchivo);
-		frame.setJMenuBar(menuBar);
+		setJMenuBar(menuBar);
+		
+		//Botones
+		JPanel buttonPanel = new JPanel();
+		btnAltaReparacion = new JButton("Alta Reparacion");
+		btnBajaReparacion = new JButton("Baja Reparacion");
+		btnMantenimiento = new JButton("Mantenimiento");
+		
+		buttonPanel.add(btnAltaReparacion);
+		buttonPanel.add(btnBajaReparacion);
+		buttonPanel.add(btnMantenimiento);
+		add(buttonPanel, BorderLayout.SOUTH);
+		
+		//Texto
+		JPanel textPanel = new JPanel();
+		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.X_AXIS));
+		JLabel lblCategoria2 = new JLabel("Activos en reparacion:");
+		JLabel lblCategoria3 = new JLabel("Proximo mantenimiento:");
+		textPanel.add(Box.createHorizontalGlue());
+		
+		textPanel.add(lblCategoria2);
+		textPanel.add(Box.createHorizontalGlue());
+		
+		textPanel.add(lblCategoria3);
+		textPanel.add(Box.createHorizontalGlue());
+		add(textPanel, BorderLayout.NORTH);
+		
+		//Tablas Reparacion-Mantenimiento
+		reparacionTable = new DefaultTableModel(new Object[]{ "Numero de serie", "Marca", "Modelo", "Estado" }, 0);
+		reparTable = new JTable(reparacionTable);
+		
+		mantenimientoTable = new DefaultTableModel(new Object[]{ "Numero de serie", "Marca", "Modelo", "Ultimo mantenimiento" }, 0);
+		mantenTable = new JTable(mantenimientoTable);
+		
+		JPanel tablePanel = new JPanel(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 0.5;
+		gbc.weighty = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		tablePanel.add(new JScrollPane(reparTable), gbc);
+		
+		gbc.gridx = 1;
+		tablePanel.add(new JScrollPane(mantenTable), gbc);
+		
+		add(tablePanel, BorderLayout.CENTER);
+		
+		//Actualizar tablas
+		try {
+			actualizarTabla("");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		frame.setVisible(true);
+		setVisible(true);
 
+	}
+	
+	private void actualizarTabla(String numeroSerie) {
+		reparacionTable.setRowCount(0);
+		mantenimientoTable.setRowCount(0);
+		ActivoDAOimpl activoDAO = new ActivoDAOimpl();
+		List<Activo> activos = activoDAO.listarActivos(numeroSerie);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
+		for (Activo activo : activos) {
+			if(activo.getReparacion() != null) {
+				reparacionTable.addRow(new Object[] { activo.getNumeroSerie(), activo.getMarca(), activo.getModelo(),
+					activo.getEstado() });
+				System.out.println("Activo en reparacion: " + activo.getNumeroSerie());
+			}
+			
+			LocalDate localDate = activo.getFechaMantenimiento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			String date = localDate.format(formatter);
+			mantenimientoTable.addRow(new Object[] { activo.getNumeroSerie(), activo.getMarca(), activo.getModelo(), date});
+		}
+	}
+	
+	public void setBtnAltaReparacionListener(ActionListener actionListener) {
+		btnAltaReparacion.addActionListener(actionListener);
+	}
+	
+	public void setBtnBajaReparacionListener(ActionListener actionListener) {
+		btnBajaReparacion.addActionListener(actionListener);
+	}
+	
+	public void setBtnMantenimientoListener(ActionListener actionListener) {
+		btnMantenimiento.addActionListener(actionListener);
 	}
 
 }
