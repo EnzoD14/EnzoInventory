@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import modelo.Activo;
+import modelo.Empleado;
 import modelo.Solicitud;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.SolicitudDAOimpl;
@@ -64,6 +65,7 @@ public class SolicitudAltaEvents {
 		activo.setNumeroSerie(solicitudAltaView.getNumeroSerie());
 		activo.setEspecificaciones(solicitudAltaView.getEspecificaciones());
 		activo.setValor(solicitudAltaView.getValor());
+		activo.setEmpleado((Empleado) solicitudAltaView.getCmbEmpleado().getSelectedItem());
 		activo.setEstado(null);
 		activo.setFechaAlta(fechaSql);
 		activo.setFechaMantenimiento(null);

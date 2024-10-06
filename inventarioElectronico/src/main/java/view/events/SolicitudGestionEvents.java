@@ -25,10 +25,15 @@ public class SolicitudGestionEvents {
 	
 	private void initEventHandlers() {	
 		
-		  solicitudGestionView.setControladorSolicitudCargar(new ActionListener() {
+		  solicitudGestionView.setControladorSolicitudAlta(new ActionListener() {
 			  public void actionPerformed(ActionEvent e) { 
-			  cargarSolicitud(); 
+			  altaSolicitud(); 
 			  } });
+		  
+			solicitudGestionView.setControladorSolicitudBaja(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				bajaSolicitud();
+				} });
 		  
 		  solicitudGestionView.setControladorSolicitudAprobar(new ActionListener() { 
 			  public void actionPerformed(ActionEvent e) { 
@@ -53,10 +58,14 @@ public class SolicitudGestionEvents {
 		 
 	}
 	
-	private void cargarSolicitud() {
+	private void altaSolicitud() {
 		System.out.println("cargar");
 		SolicitudAltaView solicitudAltaView = new SolicitudAltaView();
 		new SolicitudAltaEvents(solicitudAltaView);
+	}
+	
+	private void bajaSolicitud() {
+		System.out.println("eliminar");
 	}
 	
 	private void aprobarSolicitud() throws SQLException {

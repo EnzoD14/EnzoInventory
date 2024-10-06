@@ -33,7 +33,8 @@ public class SolicitudGestionView extends JFrame{
 	private JButton buscarButton;
 	private JButton btnSolicitudAprobar;
 	private JButton btnSolicitudRechazar;
-	private JButton btnSolicitudCargar;
+	private JButton btnSolicitudAlta;
+	private JButton btnSolicitudBaja;
 	private JTable solicitudesTable;
 	private DefaultTableModel modeloTable;
 	
@@ -96,10 +97,12 @@ public class SolicitudGestionView extends JFrame{
         
         // Panel Botones
         JPanel buttonPanel = new JPanel();
-        btnSolicitudCargar = new JButton("Cargar Solicitud");
+        btnSolicitudAlta = new JButton("Alta Solicitud");
+        btnSolicitudBaja = new JButton("Baja Solicitud");
         btnSolicitudAprobar = new JButton("Aprobar Solicitud");
         btnSolicitudRechazar = new JButton("Rechazar Solicitud");
-        buttonPanel.add(btnSolicitudCargar);
+        buttonPanel.add(btnSolicitudAlta);
+        buttonPanel.add(btnSolicitudBaja);
         buttonPanel.add(btnSolicitudAprobar);
         buttonPanel.add(btnSolicitudRechazar);
         btnSolicitudAprobar.setEnabled(false);
@@ -175,8 +178,11 @@ public class SolicitudGestionView extends JFrame{
 	}
 	
 	
-	public void setControladorSolicitudCargar(ActionListener solicitudCargar) {
-	  btnSolicitudCargar.addActionListener(solicitudCargar); }
+	public void setControladorSolicitudAlta(ActionListener solicitudCargar) {
+	  btnSolicitudAlta.addActionListener(solicitudCargar); }
+	
+	public void setControladorSolicitudBaja(ActionListener solicitudBaja) {
+		btnSolicitudBaja.addActionListener(solicitudBaja);}
 	
 	public void setControladorSolicitudAprobar(ActionListener solicitud) {
 	  btnSolicitudAprobar.addActionListener(solicitud); }

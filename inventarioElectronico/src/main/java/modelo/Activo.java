@@ -24,6 +24,10 @@ public class Activo {
 	@JoinColumn(name="idCompra", referencedColumnName = "idCompra")
     private Compra compra;
 	
+	@OneToOne
+	@JoinColumn(name = "idEmpleado", referencedColumnName = "idEmpleado")
+	private Empleado empleado;
+	
 	@Column(name = "tipo")
     private String tipo;
 	
@@ -61,13 +65,14 @@ public class Activo {
     private Integer baja;
     
     // Constructor
-	public Activo(String id, Garantia garantia, Reparacion reparacion, Compra compra, String tipo,
+	public Activo(String id, Garantia garantia, Reparacion reparacion, Compra compra, Empleado empleado, String tipo,
 			String marca, String modelo, String numeroSerie, String especificaciones, Date fechaAlta,
 			Date fechaMantenimiento, String codigoProducto, String valor, Integer mesesAmortizacion, String estado, Integer baja) {
 		this.id = id;
 		this.garantia = garantia;
 		this.reparacion = reparacion;
 		this.compra = compra;
+		this.empleado = empleado;
 		this.tipo = tipo;
 		this.marca = marca;
 		this.modelo = modelo;
@@ -116,6 +121,14 @@ public class Activo {
 
 	public void setCompra(Compra compra) {
 		this.compra = compra;
+	}
+	
+	public Empleado getEmpleado() {
+		return empleado;
+	}
+	
+	public void setEmpleado(Empleado empleado) {
+		this.empleado = empleado;
 	}
 
 	public String getTipo() {

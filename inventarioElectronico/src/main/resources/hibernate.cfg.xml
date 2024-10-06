@@ -20,5 +20,6 @@
   <mapping class="modelo.Reparacion"/>
   <mapping class="modelo.Solicitud"/>
   <mapping class="modelo.Usuario"/>
+  <mapping class="modelo.Empleado"/>
  </session-factory>
 </hibernate-configuration>
