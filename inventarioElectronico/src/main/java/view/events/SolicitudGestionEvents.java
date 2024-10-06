@@ -11,6 +11,7 @@ import modelo.Solicitud;
 import modelo.dao.impl.SolicitudDAOimpl;
 import view.screen.SolicitudAltaView;
 import view.screen.SolicitudAprobarView;
+import view.screen.SolicitudBajaView;
 import view.screen.SolicitudGestionView;
 
 public class SolicitudGestionEvents {
@@ -30,7 +31,7 @@ public class SolicitudGestionEvents {
 			  altaSolicitud(); 
 			  } });
 		  
-			solicitudGestionView.setControladorSolicitudBaja(new ActionListener() {
+		  solicitudGestionView.setControladorSolicitudBaja(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 				bajaSolicitud();
 				} });
@@ -59,13 +60,15 @@ public class SolicitudGestionEvents {
 	}
 	
 	private void altaSolicitud() {
-		System.out.println("cargar");
+		System.out.println("altaSC");
 		SolicitudAltaView solicitudAltaView = new SolicitudAltaView();
 		new SolicitudAltaEvents(solicitudAltaView);
 	}
 	
 	private void bajaSolicitud() {
-		System.out.println("eliminar");
+		System.out.println("bajaSC");
+		SolicitudBajaView solicitudBajaView = new SolicitudBajaView();
+		new SolicitudBajaEvents(solicitudBajaView);
 	}
 	
 	private void aprobarSolicitud() throws SQLException {

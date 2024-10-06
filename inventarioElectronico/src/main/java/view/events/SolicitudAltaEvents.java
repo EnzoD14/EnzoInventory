@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+import javax.swing.JOptionPane;
+
 import modelo.Activo;
 import modelo.Empleado;
 import modelo.Solicitud;
@@ -74,17 +76,20 @@ public class SolicitudAltaEvents {
 		activoDAO.agregarActivo(activo);
 		
 		solicitud.setActivo(activo);
-		solicitud.setTipoSolicitud(solicitudAltaView.getTipoSolicitud());
+		solicitud.setTipoSolicitud("Alta");
 		solicitud.setFechaSolicitud(fechaSql);
-		solicitud.setMotivoBaja(solicitudAltaView.getMotivoBaja());
 		solicitud.setEstado(0);
 		solicitud.setBaja(0);
 		
-		if(solicitudDAO.agregarSolicitud(solicitud)) {
-            System.out.println("Solicitud guardada");
-        } else {
-        	System.out.println("Error al guardar solicitud.");
-        }
+		if (solicitudDAO.agregarSolicitud(solicitud)) {
+			JOptionPane.showMessageDialog(null, "Solicitud de alta guardada con éxito.", "Información",
+					JOptionPane.INFORMATION_MESSAGE);
+			solicitudAltaView.dispose();
+		} else {
+			JOptionPane.showMessageDialog(null, "Error al guardar la solicitud de alta.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			solicitudAltaView.dispose();
+		}
 	}
 
 }

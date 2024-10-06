@@ -23,7 +23,6 @@ public class SolicitudAltaView extends JFrame {
 	private JButton btnGuardar;
 	private JButton btnCancelar;
 	private JComboBox<Empleado> cmbEmpleado;
-	private JComboBox<String> cmbTipoSolicitud;
 	private JComboBox<String> cmbTipoActivo;
 	private JComboBox<String> cmbMotivoBaja;
 	
@@ -34,24 +33,12 @@ public class SolicitudAltaView extends JFrame {
 	private void initialize() {
 		
 		frame = new JFrame("Solicitud de Alta - Inventario Electronico");
-        frame.setSize(400, 600);
+        frame.setSize(400, 500);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         BoxLayout boxLayout = new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS);
         frame.setLayout(boxLayout);
         
         frame.add(Box.createVerticalStrut(15));
-        
-        JLabel lblSolicitud = new JLabel("Tipo Solicitud:");
-        lblSolicitud.setAlignmentX(0.5f);
-        frame.add(lblSolicitud);
-        
-        String[] tipoSolicitud = {"Alta", "Baja"};
-        cmbTipoSolicitud = new JComboBox<>(tipoSolicitud);
-        cmbTipoSolicitud.setAlignmentX(0.5f);
-        cmbTipoSolicitud.setPreferredSize(new Dimension(200, 30));
-        cmbTipoSolicitud.setMaximumSize(cmbTipoSolicitud.getPreferredSize());
-        frame.add(cmbTipoSolicitud);
-        frame.add(Box.createVerticalStrut(5));
         
         JLabel lblTipo = new JLabel("Tipo Activo:");
         lblTipo.setAlignmentX(0.5f);
@@ -137,21 +124,6 @@ public class SolicitudAltaView extends JFrame {
         frame.add(cmbEmpleado);
         frame.add(Box.createVerticalStrut(5));
         
-        
-        JLabel lblCodigoProducto = new JLabel("Motivo de baja:");
-        lblCodigoProducto.setAlignmentX(0.5f);
-        frame.add(lblCodigoProducto);
-        
-        String[] motivoBaja = {"Extravio", "Robo", "Obsolecencia", "Venta", "Otros", "No"};
-        cmbMotivoBaja = new JComboBox<>(motivoBaja);
-        cmbMotivoBaja.setAlignmentX(0.5f);
-        cmbMotivoBaja.setPreferredSize(new Dimension(200, 30));
-        cmbMotivoBaja.setMaximumSize(cmbMotivoBaja.getPreferredSize());
-        frame.add(cmbMotivoBaja);
-        frame.add(Box.createVerticalStrut(5));
-        cmbMotivoBaja.setSelectedIndex(5);
-        cmbMotivoBaja.setEnabled(false);
-        
         btnGuardar = new JButton("Guardar");
         btnGuardar.setAlignmentX(0.5f);
         frame.add(btnGuardar);
@@ -160,22 +132,7 @@ public class SolicitudAltaView extends JFrame {
         btnCancelar = new JButton("Cancelar");
         btnCancelar.setAlignmentX(0.5f);
         frame.add(btnCancelar);
-        frame.add(Box.createVerticalStrut(5));
-        
-        cmbTipoSolicitud.addActionListener(new ActionListener() {
-        	@Override
-        	public void actionPerformed(java.awt.event.ActionEvent e) {
-        		if (cmbTipoSolicitud.getSelectedItem().toString().equals("Baja")) {
-        			cmbMotivoBaja.setEnabled(true);
-        			cmbEmpleado.setEnabled(false);
-        		} else {
-        			cmbMotivoBaja.setSelectedIndex(5);
-        			cmbMotivoBaja.setEnabled(false);
-        			cmbEmpleado.setEnabled(true);
-        		}
-        	}
-        });
-        
+        frame.add(Box.createVerticalStrut(5));    
         
         frame.setVisible(true);
         
@@ -190,10 +147,6 @@ public class SolicitudAltaView extends JFrame {
 	
 	public JComboBox<Empleado> getCmbEmpleado() {
 		return cmbEmpleado;
-	}
-	
-	public String getTipoSolicitud() {
-		return cmbTipoSolicitud.getSelectedItem().toString();
 	}
 	
 	public String getTipoActivo() {
