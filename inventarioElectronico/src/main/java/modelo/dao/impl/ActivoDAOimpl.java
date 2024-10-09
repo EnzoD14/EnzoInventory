@@ -156,6 +156,36 @@ public class ActivoDAOimpl implements ActivoDAO {
 	}
 	
 	@Override
+	public List<Activo> listarActivosConBaja(String numeroSerie) {
+		Session session = null;
+	    try {
+	        session = sessionFactory.openSession();
+	        session.beginTransaction();
+	        Query query;
+	        if (numeroSerie == null || numeroSerie.isEmpty()) {
+	            query = session.createQuery("from Activo");
+	        } else {
+	            query = session.createQuery("from Activo where numeroSerie = :numeroSerie");
+	            query.setParameter("numeroSerie", numeroSerie);
+	        }
+	        @SuppressWarnings("unchecked")
+			List<Activo> activos = query.list();
+	        session.getTransaction().commit();
+	        return activos;
+	    } catch (Exception e) {
+	        if (session != null) {
+	            session.getTransaction().rollback();
+	        }
+	        e.printStackTrace();
+	        return null;
+	    } finally {
+	        if (session != null) {
+	            session.close();
+	        }
+	    }
+	}
+	
+	@Override
 	public void imprimirActivo(Activo activo) {
 		System.out.println("Modelo Activo: " + activo.getModelo() + "\nActivo: " + activo.getTipo() 
 		+ "\nMarca Activo: " + activo.getMarca() + ".");

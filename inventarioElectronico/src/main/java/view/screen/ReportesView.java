@@ -1,6 +1,9 @@
 package view.screen;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +26,8 @@ public class ReportesView extends JFrame{
 	private JButton btnReporte3;
 	private JButton btnReporte4;
 	private JButton btnReporte5;
+	private JButton btnReporte6;
+	private JButton btnReporte7;
 	private JFrame frame;
 
 	public ReportesView(UsuarioController usuario) {
@@ -33,7 +38,7 @@ public class ReportesView extends JFrame{
 	private void initialize() {
 		System.out.println("asdasd");
 		frame = new JFrame("Reportes - Inventario Electronico");
-		frame.setSize(400, 400);
+		frame.setSize(400, 450);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -73,25 +78,39 @@ public class ReportesView extends JFrame{
 		menuBar.add(menuArchivo);
 		frame.setJMenuBar(menuBar);
 		
-		JPanel buttonPanel = new JPanel(new GridLayout(6, 1));
+		JPanel buttonPanel = new JPanel(new GridBagLayout());
+		JPanel gridPanel = new JPanel(new GridLayout(8, 1, 0, 10));
 		
 		JLabel lblCategoria2 = new JLabel("Selecciona un reporte:");
-		buttonPanel.add(lblCategoria2);
+		gridPanel.add(lblCategoria2);
 		
-		btnReporte1 = new JButton("Reporte 1");
-		buttonPanel.add(btnReporte1);
+		btnReporte1 = new JButton("Activos por sector");
+		gridPanel.add(btnReporte1);
 		
-		btnReporte2 = new JButton("Reporte 2");
-		buttonPanel.add(btnReporte2);
+		btnReporte2 = new JButton("Activos de backup disponibles");
+		gridPanel.add(btnReporte2);
 		
-		btnReporte3 = new JButton("Reporte 3");
-		buttonPanel.add(btnReporte3);
+		btnReporte3 = new JButton("Activos en reparacion");
+		gridPanel.add(btnReporte3);
 		
-		btnReporte4 = new JButton("Reporte 4");
-		buttonPanel.add(btnReporte4);
+		btnReporte4 = new JButton("Proveedores");
+		gridPanel.add(btnReporte4);
 		
-		btnReporte5 = new JButton("Reporte 5");
-		buttonPanel.add(btnReporte5);
+		btnReporte5 = new JButton("Amortizacion de activos");
+		gridPanel.add(btnReporte5);
+		
+		btnReporte6 = new JButton("Activos de baja");
+		gridPanel.add(btnReporte6);
+		
+		btnReporte7 = new JButton("Garantia de activos");
+		gridPanel.add(btnReporte7);
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		
+		buttonPanel.add(gridPanel, gbc);
 		
 		frame.add(buttonPanel, BorderLayout.CENTER);
 
@@ -119,4 +138,11 @@ public class ReportesView extends JFrame{
 		btnReporte5.addActionListener(listener);
 	}
 
+	public void setReporte6Listener(ActionListener listener) {
+		btnReporte6.addActionListener(listener);
+	}
+	
+	public void setReporte7Listener(ActionListener listener) {
+		btnReporte7.addActionListener(listener);
+	}
 }

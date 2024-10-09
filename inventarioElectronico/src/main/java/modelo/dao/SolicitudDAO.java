@@ -12,5 +12,6 @@ public interface SolicitudDAO {
 	List<Solicitud> listarSolicitudes(String tipoSolicitud);
 	Activo obtenerActivoPorSolicitudId(int id) throws SQLException;
 	Solicitud obtenerSolicitudPorId(int id) throws SQLException;
+	Solicitud obtenerSolicitudPorIdActivo(String id, String tipo) throws SQLException;
 	Boolean actualizarSolicitud(Solicitud solicitud) throws SQLException;
 }

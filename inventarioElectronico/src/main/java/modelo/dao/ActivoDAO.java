@@ -12,5 +12,6 @@ public interface ActivoDAO {
 	Activo obtenerActivoPorId(int id);
 	Activo obtenerActivoPorNumeroSerie(String numeroSerie);
 	List<Activo> listarActivos(String numeroSerie);
+	List<Activo> listarActivosConBaja(String numeroSerie);
 	void imprimirActivo(Activo activo);
 }

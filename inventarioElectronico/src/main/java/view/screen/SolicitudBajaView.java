@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial" })
 public class SolicitudBajaView extends JFrame {
 	private JFrame frame;
 	private JButton btnGuardar;
