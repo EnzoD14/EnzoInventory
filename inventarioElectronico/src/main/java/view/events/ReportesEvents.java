@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -88,7 +91,7 @@ public class ReportesEvents {
 		reportesView.setReporte7Listener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// reporte7();
+				obtenerActivosGarantiaCsv();
 			}
 		});
 
@@ -370,6 +373,7 @@ public class ReportesEvents {
 					SolicitudDAOimpl scBaja = new SolicitudDAOimpl();
 					Solicitud solicitud = new Solicitud();
 					solicitud = scBaja.obtenerSolicitudPorIdActivo(activo.getId(), "Baja");
+					//System.out.println(solicitud.getMotivoBaja());
 					
 					if (activo.getBaja() == 1 && solicitud != null) {
 						csvActivos.append(activo.getTipo());
@@ -398,6 +402,82 @@ public class ReportesEvents {
 				csvActivos.close();
 				String rutaArchivo = fileToSave.getAbsolutePath();
 				JOptionPane.showMessageDialog(null, "Reporte ActivosBaja generado con exito y guardado en " + rutaArchivo + ".csv");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void obtenerActivosGarantiaCsv() {
+		JFileChooser fileChooser = new JFileChooser();
+		int userSelection = fileChooser.showSaveDialog(reportesView);
+		
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			File fileToSave = fileChooser.getSelectedFile();
+			
+			try {
+				FileWriter csvActivos = new FileWriter(fileToSave.getAbsolutePath() + ".csv");
+				ActivoDAOimpl activoDAO = new ActivoDAOimpl();
+				
+				csvActivos.append("Tipo");
+				csvActivos.append(",");
+				csvActivos.append("Marca");
+				csvActivos.append(",");
+				csvActivos.append("Modelo");
+				csvActivos.append(",");
+				csvActivos.append("Numero de Serie");
+				csvActivos.append(",");
+				csvActivos.append("Estado");
+				csvActivos.append(",");
+				csvActivos.append("Fecha de Alta");
+				csvActivos.append(",");
+				csvActivos.append("Garantia");
+				csvActivos.append(",");
+				csvActivos.append("Meses restantes");
+				csvActivos.append(",");
+				csvActivos.append("Finalizacion Garantia");	
+				csvActivos.append("\n");
+				
+				List<Activo> listaActivos = activoDAO.listarActivos(null);
+				
+				for (Activo activo : listaActivos) {
+					String garantia = "";
+					int mesesGarantia = 0;
+					java.util.Date garantiaFecha = activo.getGarantia().getFechaFin();
+					java.util.Date fechaActual = new java.util.Date();
+					LocalDate fechaHoy = LocalDate.now();
+					
+					if (garantiaFecha.before(fechaActual)) {
+						garantia = "NO";
+					} else {
+						garantia = "SI";
+						Period periodo = Period.between(fechaHoy, garantiaFecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+						mesesGarantia = periodo.getMonths() + periodo.getYears() * 12;
+					}
+					
+					csvActivos.append(activo.getTipo());
+	                csvActivos.append(",");
+	                csvActivos.append(activo.getMarca());
+	                csvActivos.append(",");
+	                csvActivos.append(activo.getModelo());
+	                csvActivos.append(",");
+	                csvActivos.append(activo.getNumeroSerie());
+	                csvActivos.append(",");
+	                csvActivos.append(activo.getEstado());
+	                csvActivos.append(",");
+	                csvActivos.append(activo.getFechaAlta().toString());
+	                csvActivos.append(",");
+	                csvActivos.append(garantia);
+	                csvActivos.append(",");
+	                csvActivos.append(String.valueOf(mesesGarantia));
+	                csvActivos.append(",");
+	                csvActivos.append(garantiaFecha.toString());
+	                csvActivos.append("\n");
+				}	
+				csvActivos.flush();
+				csvActivos.close();
+				String rutaArchivo = fileToSave.getAbsolutePath();
+				JOptionPane.showMessageDialog(null, "Reporte ActivosGarantia generado con exito y guardado en " + rutaArchivo + ".csv");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

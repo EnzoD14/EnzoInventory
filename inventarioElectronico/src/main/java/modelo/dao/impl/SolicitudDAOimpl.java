@@ -109,29 +109,28 @@ public class SolicitudDAOimpl implements SolicitudDAO {
         }
 	}
 	
-	public Solicitud obtenerSolicitudPorIdActivo(String id, String tipo) throws SQLException {
+	public Solicitud obtenerSolicitudPorIdActivo(String idActivo, String tipo) throws SQLException {
 		Session session = null;
 		try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-            Solicitud solicitud = (Solicitud) session.get(Solicitud.class, id);
-            session.getTransaction().commit();
-            if (solicitud != null && solicitud.getActivo().getId().equals(id) && solicitud.getTipoSolicitud().equals(tipo)) {
-                return solicitud;
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+	        session = sessionFactory.openSession();
+	        session.beginTransaction();
+	        Query query = session.createQuery("from Solicitud where activo.id = :idActivo and tipoSolicitud = :tipo");
+	        query.setParameter("idActivo", idActivo);
+	        query.setParameter("tipo", tipo);
+	        Solicitud solicitud = (Solicitud) query.uniqueResult();
+	        session.getTransaction().commit();
+	        return solicitud;
+	    } catch (Exception e) {
+	        if (session != null) {
+	            session.getTransaction().rollback();
+	        }
+	        e.printStackTrace();
+	        return null;
+	    } finally {
+	        if (session != null) {
+	            session.close();
+	        }
+	    }
 	}
 	
 	public Solicitud obtenerSolicitudPorId(int id) throws SQLException {
