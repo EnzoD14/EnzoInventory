@@ -1,7 +1,7 @@
 package view.screen;
-import controlador.UsuarioController;
 import modelo.Activo;
 import modelo.Garantia;
+import modelo.Usuario;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.GarantiaDAOimpl;
 import javax.swing.*;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class ActivoGestionView extends JFrame{
-    private UsuarioController usuarioLogin;
+    private Usuario usuarioLogin;
     private JPanel busquedaPanel;
 	private JTextField busquedaTxtField;
 	private JLabel busquedaLabel;
@@ -28,7 +28,7 @@ public class ActivoGestionView extends JFrame{
 	private String numeroSerie;
 
     // Constructor
-    public ActivoGestionView(UsuarioController usuario) {
+    public ActivoGestionView(Usuario usuario) {
         this.usuarioLogin = usuario;
         initialize();
     }
@@ -65,7 +65,7 @@ public class ActivoGestionView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new LoginView(usuarioLogin);
+                new LoginView();
             }
         });
         

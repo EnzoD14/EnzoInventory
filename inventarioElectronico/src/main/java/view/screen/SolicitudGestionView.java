@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,14 +17,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
-import controlador.UsuarioController;
 import modelo.Solicitud;
+import modelo.Usuario;
 import modelo.dao.impl.SolicitudDAOimpl;
 
 @SuppressWarnings("serial")
 public class SolicitudGestionView extends JFrame{
-	private UsuarioController usuarioLogin;
+	private Usuario usuarioLogin;
     private JPanel busquedaPanel;
 	private JTextField busquedaTxtField;
 	private JLabel txtSolicitudPendiente;
@@ -74,7 +72,7 @@ public class SolicitudGestionView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new LoginView(usuarioLogin);
+                new LoginView();
             }
         });
         

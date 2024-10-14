@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,13 +16,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import controlador.UsuarioController;
 import modelo.Usuario;
 import modelo.dao.impl.UsuarioDAOimpl;
 
 @SuppressWarnings("serial")
 public class UsuarioGestionView extends JFrame {
-	private UsuarioController usuarioLogin;
+	private Usuario usuarioLogin;
 	private JPanel busquedaPanel;
 	private JTextField busquedaTxtField;
 	private JLabel busquedaLabel;
@@ -35,7 +33,7 @@ public class UsuarioGestionView extends JFrame {
 	private DefaultTableModel modeloTable;
 	private String usuarioAd;
 
-	public UsuarioGestionView(UsuarioController usuario) {
+	public UsuarioGestionView(Usuario usuario) {
 		this.usuarioLogin = usuario;
 		initialize();
 	}
@@ -56,7 +54,8 @@ public class UsuarioGestionView extends JFrame {
         	@Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                ModulosView moduloVista = new ModulosView(usuarioLogin);
+                @SuppressWarnings("unused")
+				ModulosView moduloVista = new ModulosView(usuarioLogin);
             }
         });
         
@@ -73,7 +72,8 @@ public class UsuarioGestionView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                LoginView loginView = new LoginView(usuarioLogin);
+                @SuppressWarnings("unused")
+				LoginView loginView = new LoginView();
             }
         });
         

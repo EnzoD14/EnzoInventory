@@ -2,16 +2,13 @@ package view.screen;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 import javax.swing.*;
-
-import controlador.UsuarioController;
+import modelo.Usuario;
 
 @SuppressWarnings("serial")
 public class ProveedorAltaView extends JFrame {
-	private UsuarioController usuarioLogin;
+	@SuppressWarnings("unused")
+	private Usuario usuarioLogin;
     private JFrame frame;
     private JTextField nombreField;
     private JTextField razonSocialField;
@@ -20,13 +17,15 @@ public class ProveedorAltaView extends JFrame {
     private JButton aceptarButton;
     private JButton cancelarButton;
 
-    public ProveedorAltaView(UsuarioController usuarioLogin) {
+    @SuppressWarnings("unused")
+	public ProveedorAltaView(Usuario usuarioLogin) {
         frame = new JFrame("Alta de Proveedor - Inventario Electronico");
         frame.setSize(300, 400);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         
-        JMenuBar menuBar = new JMenuBar();
+        @SuppressWarnings("unused")
+		JMenuBar menuBar = new JMenuBar();
         JMenu menuArchivo = new JMenu("Archivo");
         
         JMenuItem itemModulos = new JMenuItem("Modulos");
@@ -51,7 +50,7 @@ public class ProveedorAltaView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                LoginView loginView = new LoginView(usuarioLogin);
+                LoginView loginView = new LoginView();
             }
         });
 

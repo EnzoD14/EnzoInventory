@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,14 +21,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-import controlador.UsuarioController;
 import modelo.Activo;
+import modelo.Usuario;
 import modelo.dao.impl.ActivoDAOimpl;
 
 @SuppressWarnings("serial")
 public class MantenimientoView extends JFrame {
-	private UsuarioController usuarioLogin;
+	private Usuario usuarioLogin;
 	private JTable reparTable;
 	private JTable mantenTable;
 	private JButton btnAltaReparacion;
@@ -38,7 +36,7 @@ public class MantenimientoView extends JFrame {
 	private DefaultTableModel reparacionTable;
 	private DefaultTableModel mantenimientoTable;
 
-	public MantenimientoView(UsuarioController usuario) {
+	public MantenimientoView(Usuario usuario) {
 		this.usuarioLogin = usuario;
 		initialize();
 	}
@@ -76,7 +74,7 @@ public class MantenimientoView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				LoginView loginView = new LoginView(usuarioLogin);
+				LoginView loginView = new LoginView();
 			}
 		});
 

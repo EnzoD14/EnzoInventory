@@ -1,13 +1,7 @@
 package app;
 
-import org.hibernate.Transaction;
-
-import org.hibernate.Session;
-
 import controlador.UsuarioController;
-import modelo.Proveedor;
 import modelo.Usuario;
-import utils.HibernateUtil;
 import view.screen.LoginView;
 
 public class Main {
@@ -19,7 +13,7 @@ public class Main {
        // UsuarioController controlador2 = new UsuarioController(new Usuario("2", "2", "Gonzalo", "Agostino", "gonzalo", "Finanzas", true));
         
         // Instancia de la vista que quieres probar
-       LoginView loginView = new LoginView(controlador);
+       LoginView loginView = new LoginView();
 		
 	}
 

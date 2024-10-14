@@ -1,13 +1,11 @@
 package view.screen;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,12 +13,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-
-import controlador.UsuarioController;
+import modelo.Usuario;
 
 @SuppressWarnings("serial")
 public class ReportesView extends JFrame{
-	private UsuarioController usuarioLogin;
+	private Usuario usuarioLogin;
 	private JButton btnReporte1;
 	private JButton btnReporte2;
 	private JButton btnReporte3;
@@ -30,7 +27,7 @@ public class ReportesView extends JFrame{
 	private JButton btnReporte7;
 	private JFrame frame;
 
-	public ReportesView(UsuarioController usuario) {
+	public ReportesView(Usuario usuario) {
 		this.usuarioLogin = usuario;
 		initialize();
 	}
@@ -68,7 +65,7 @@ public class ReportesView extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 				@SuppressWarnings("unused")
-				LoginView loginView = new LoginView(usuarioLogin);
+				LoginView loginView = new LoginView();
 			}
 		});
 

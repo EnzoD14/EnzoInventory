@@ -13,14 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-import controlador.UsuarioController;
 import modelo.Proveedor;
+import modelo.Usuario;
 import modelo.dao.impl.ProveedorDAOimpl;
 
 public class CompraView {
 	@SuppressWarnings("unused")
-	private UsuarioController usuarioLogin;
+	private Usuario usuarioLogin;
     private JFrame frame;
     private JButton btnAltaProveedor;
     private JButton btnBajaProveedor;
@@ -29,12 +28,12 @@ public class CompraView {
     private JTable proveedoresTable;
     private DefaultTableModel modeloTable;
 
-	public CompraView(UsuarioController usuarioLogin) {
+	public CompraView(Usuario usuarioLogin) {
 		this.usuarioLogin = usuarioLogin;
         initialize(usuarioLogin);
 	}
 
-	public void initialize(UsuarioController usuarioLogin) {
+	public void initialize(Usuario usuarioLogin) {
 		frame = new JFrame("Compras - Inventario Electronico");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,7 +75,7 @@ public class CompraView {
 			@Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                LoginView loginView = new LoginView(usuarioLogin);
+                LoginView loginView = new LoginView();
             }
         });
         

@@ -11,17 +11,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import controlador.UsuarioController;
 import modelo.Proveedor;
+import modelo.Usuario;
 import modelo.dao.impl.ProveedorDAOimpl;
 
 @SuppressWarnings("serial")
 public class ProveedorListaView extends JFrame {
-	private UsuarioController usuarioLogin;
+	private Usuario usuarioLogin;
     private JTable table;
     private DefaultTableModel model;
     
-    public ProveedorListaView(UsuarioController usuario) {
+    public ProveedorListaView(Usuario usuario) {
     	this.usuarioLogin = usuario;
     	initialize();
     }
@@ -59,7 +59,7 @@ public class ProveedorListaView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				@SuppressWarnings("unused")
-				LoginView loginView = new LoginView(usuarioLogin);
+				LoginView loginView = new LoginView();
 			}
 		});
 

@@ -2,21 +2,17 @@ package view.events;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import controlador.UsuarioController;
+import modelo.Usuario;
 import view.screen.CompraAltaView;
 import view.screen.CompraView;
 import view.screen.ProveedorAltaView;
 import view.screen.ProveedorBajaView;
 import view.screen.ProveedorListaView;
 import view.screen.ProveedorModificacionBusquedaView;
-import view.screen.ProveedorModificacionView;
 
 public class CompraEvents {
 	private CompraView view;
-	private UsuarioController usuarioLogin;
+	private Usuario usuarioLogin;
 	
 	public CompraEvents(CompraView view) {
 		this.view = view;
@@ -76,6 +72,7 @@ public class CompraEvents {
 		proveedorModificacionBuscar.setVisible(true);
 	}
 	
+	@SuppressWarnings("unused")
 	private void listarProveedor() {
 		ProveedorListaView proveedorListaView = new ProveedorListaView(usuarioLogin);
 		proveedorListaView.setVisible(true);

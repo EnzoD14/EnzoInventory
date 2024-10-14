@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import controlador.UsuarioController;
 import modelo.Compra;
+import modelo.Usuario;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.CompraDAOimpl;
 import view.events.CompraEvents;
@@ -24,7 +25,7 @@ import view.events.BackupEvents;
 import view.events.UsuarioGestionEvents;
 
 public class ModulosView {
-	private UsuarioController usuarioLogin;
+	private Usuario usuarioLogin;
 	private CompraDAOimpl compraDAO;
 	private ActivoDAOimpl activoDAO;
     private JFrame frame;
@@ -33,19 +34,20 @@ public class ModulosView {
     private ButtonGroup buttonGroup;
     private String[] categorias = {"Gestión Activos", "Gestión Usuarios", "Compras" , "Mantenimiento / Reparación", "Backup", "Reportes"};
     
-    public ModulosView(UsuarioController usuario, Compra compra, ActivoDAOimpl activoDAO) {
-        this.usuarioLogin = usuario;
+    public ModulosView(Usuario usuarioLogin, Compra compra, ActivoDAOimpl activoDAO) {
+        this.usuarioLogin = usuarioLogin;
         this.compraDAO = new CompraDAOimpl();
         this.activoDAO = activoDAO;
         initialize();
     }
     
-	public ModulosView(UsuarioController usuario) {
+	public ModulosView(Usuario usuario) {
 		this.usuarioLogin = usuario;
 		initialize();
 	}
 
     private void initialize() {
+    	UsuarioController usuarioController = new UsuarioController(usuarioLogin);
         frame = new JFrame("Módulos - Inventario Electronico");
         frame.setSize(400, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,6 +71,13 @@ public class ModulosView {
         // Crear botones de opción y agregarlos al panel y al ButtonGroup
         for (String categoria : categorias) {
             JRadioButton radioButton = new JRadioButton(categoria);
+            
+			if (usuarioController.tienePermiso(usuarioLogin, categoria)) {
+				radioButton.setEnabled(true);
+			} else {
+				radioButton.setEnabled(false);
+			}
+            
             panelOpciones.add(radioButton);
             buttonGroup.add(radioButton);
         }
@@ -144,4 +153,5 @@ public class ModulosView {
         }
         frame.setVisible(false); // Ocultar la ventana actual si es necesario
     }
+    
 }

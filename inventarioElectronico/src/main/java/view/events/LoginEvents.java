@@ -8,14 +8,16 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 import controlador.UsuarioController;
+import modelo.Usuario;
 import view.screen.LoginView;
 import view.screen.ModulosView;
 
 public class LoginEvents {
-	private UsuarioController usuarioLogin;
+	@SuppressWarnings("unused")
+	private Usuario usuarioLogin;
 	private LoginView loginView;
 	
-	public LoginEvents(UsuarioController usuarioLogin, LoginView loginView) {
+	public LoginEvents(Usuario usuarioLogin, LoginView loginView) {
 		this.usuarioLogin = usuarioLogin;
 		this.loginView = loginView;
 	}
@@ -42,12 +44,17 @@ public class LoginEvents {
 	private void login() {
 		String usuario = loginView.getUsuario();
 		String password = loginView.getPassword();
+		Usuario usuarioLog = new Usuario();
+		UsuarioController usuarioLogin = new UsuarioController(usuarioLog);
 		
-		if (usuarioLogin.iniciarSesion(usuario, password)) {
+		usuarioLog = usuarioLogin.iniciarSesion(usuario, password);
+		
+		if (usuarioLog != null) {
             JOptionPane.showMessageDialog(loginView.getFrame(), "Login exitoso");
             // Lógica para abrir la siguiente vista o pantalla
             loginView.getFrame().setVisible(false);
-            ModulosView moduloVista = new ModulosView(usuarioLogin);
+            @SuppressWarnings("unused")
+			ModulosView moduloVista = new ModulosView(usuarioLog);
         } else {
             JOptionPane.showMessageDialog(loginView.getFrame(), "Credenciales incorrectas");
         }

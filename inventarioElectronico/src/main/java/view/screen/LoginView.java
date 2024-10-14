@@ -9,21 +9,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
-import controlador.UsuarioController;
+import modelo.Usuario;
 import view.events.LoginEvents;
 
 
 public class LoginView {
-    private UsuarioController usuarioLogin;
+    private Usuario usuarioLogin;
     private JFrame frame;
     private JTextField txtUsuario;
     private JPasswordField txtPassword;
     private JButton btnLogin;
 
     // Constructor
-    public LoginView(UsuarioController usuario) {
-        this.usuarioLogin = usuario;
+    public LoginView() {
         initialize();
     }
 

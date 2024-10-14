@@ -17,13 +17,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import controlador.UsuarioController;
 import modelo.Activo;
+import modelo.Usuario;
 import modelo.dao.impl.ActivoDAOimpl;
 
 @SuppressWarnings("serial")
 public class BackupView extends JFrame {
-	private UsuarioController usuarioLogin;
+	private Usuario usuarioLogin;
 	private JPanel busquedaPanel;
 	private JTextField busquedaTxtField;
 	private JLabel busquedaLabel;
@@ -34,7 +34,7 @@ public class BackupView extends JFrame {
 	private DefaultTableModel modeloTable;
 	private String numeroSerie;
 
-	public BackupView(UsuarioController usuario) {
+	public BackupView(Usuario usuario) {
 		this.usuarioLogin = usuario;
 		initialize();
 	}
@@ -74,7 +74,7 @@ public class BackupView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 @SuppressWarnings("unused")
-				LoginView loginView = new LoginView(usuarioLogin);
+				LoginView loginView = new LoginView();
             }
         });
         
