@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import view.screen.MantenimientoView;
+import view.screen.ReparacionAltaView;
 
 public class MantenimientoEvents {
 	private MantenimientoView mantenimientoView;
@@ -17,7 +18,7 @@ public class MantenimientoEvents {
 		mantenimientoView.setBtnAltaReparacionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("alta");
-				//altaReparacion();
+				altaReparacion();
 			}
 		});
 
@@ -34,5 +35,9 @@ public class MantenimientoEvents {
 				//mantenimiento();
 			}
 		});
+	}
+	
+	private void altaReparacion() {
+		ReparacionAltaView reparacionAltaView = new ReparacionAltaView();
 	}
 }

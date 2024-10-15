@@ -2,6 +2,8 @@ package view.events;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import modelo.Usuario;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.CompraDAOimpl;
 import view.screen.ActivoAltaView;
@@ -14,11 +16,13 @@ public class ActivoGestionEvents {
 	private ActivoGestionView activoView;
 	private CompraDAOimpl compraDAO;
 	private ActivoDAOimpl activoDAO;
+	private Usuario usuario;
 	
-	public ActivoGestionEvents (CompraBusquedaView viewCompra, ActivoGestionView activoView, CompraDAOimpl compra, ActivoDAOimpl activo) {
+	public ActivoGestionEvents (CompraBusquedaView viewCompra, ActivoGestionView activoView, CompraDAOimpl compra, ActivoDAOimpl activo, Usuario usuario) {
 		this.activoView = activoView;
 		this.compraDAO = new CompraDAOimpl();
 		this.activoDAO = new ActivoDAOimpl();
+		this.usuario = usuario;
 		initEventHandlers();
 	}
 
@@ -59,7 +63,7 @@ public class ActivoGestionEvents {
 	private void solicitud() {
 		System.out.println("solicitud");
 		activoView.dispose();
-		SolicitudGestionView solicitudView = new SolicitudGestionView();
+		SolicitudGestionView solicitudView = new SolicitudGestionView(usuario);
 		new SolicitudGestionEvents(solicitudView);
 	}
 

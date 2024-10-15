@@ -121,7 +121,7 @@ public class ModulosView {
             	//GestionActivosView activosVista = new GestionActivosView(usuarioLogin);
             	ActivoGestionView view = new ActivoGestionView(usuarioLogin);
                 CompraBusquedaView compraView = null;
-            	new ActivoGestionEvents(compraView, view, compraDAO, activoDAO);
+            	new ActivoGestionEvents(compraView, view, compraDAO, activoDAO, usuarioLogin);
                 break;
             case "Gestión Usuarios":
                 // new GestionUsersVista();

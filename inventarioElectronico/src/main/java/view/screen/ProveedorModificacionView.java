@@ -17,8 +17,10 @@ public class ProveedorModificacionView extends JFrame {
     private JTextField telefonoField;
     private JButton guardarButton;
     private JButton cancelarButton;
-    private ProveedorDAOimpl proveedorDAO;
-    private Proveedor proveedor;
+    @SuppressWarnings("unused")
+	private ProveedorDAOimpl proveedorDAO;
+    @SuppressWarnings("unused")
+	private Proveedor proveedor;
 
     public ProveedorModificacionView(Proveedor proveedor) {
         this.proveedor = proveedor;

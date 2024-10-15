@@ -14,6 +14,7 @@ import com.toedter.calendar.JDateChooser;
 import modelo.Proveedor;
 import modelo.dao.impl.ProveedorDAOimpl;
 
+@SuppressWarnings("serial")
 public class CompraAltaView extends JFrame {
     private JDateChooser fechaCompraChooser;
     private JTextField numFacturaField;

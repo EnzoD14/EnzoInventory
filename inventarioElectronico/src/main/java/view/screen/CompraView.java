@@ -6,12 +6,14 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import modelo.Proveedor;
 import modelo.Usuario;
@@ -86,6 +88,11 @@ public class CompraView {
         menuBar.add(menuArchivo);
         frame.setJMenuBar(menuBar);
 
+        JPanel textPanel = new JPanel(new BorderLayout());
+        JLabel lblProveedores = new JLabel("Proveedores:", SwingConstants.CENTER);
+        textPanel.add(lblProveedores, BorderLayout.CENTER);
+        frame.add(textPanel, BorderLayout.NORTH);
+        
         //Panel botones
         JPanel buttonPanel = new JPanel();
 

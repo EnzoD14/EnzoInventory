@@ -17,13 +17,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import modelo.Activo;
 import modelo.Solicitud;
 import modelo.Usuario;
 import modelo.dao.impl.SolicitudDAOimpl;
 
 @SuppressWarnings("serial")
 public class SolicitudGestionView extends JFrame{
-	private Usuario usuarioLogin;
+	private Usuario usuario;
     private JPanel busquedaPanel;
 	private JTextField busquedaTxtField;
 	private JLabel txtSolicitudPendiente;
@@ -36,13 +38,14 @@ public class SolicitudGestionView extends JFrame{
 	private JTable solicitudesTable;
 	private DefaultTableModel modeloTable;
 	
-	public SolicitudGestionView() {
-		initialize();
+	public SolicitudGestionView(Usuario usuario) {
+		this.usuario = usuario;
+		initialize(usuario);
 	}
 	
-	private void initialize() {
+	private void initialize(Usuario usuarioLogin) {
 		setTitle("Gestión de Solicitudes - Inventario Electronico");
-		setSize(800, 600);
+		setSize(930, 600);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		
@@ -55,7 +58,7 @@ public class SolicitudGestionView extends JFrame{
         	@Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-				new ModulosView(usuarioLogin);
+				new ModulosView(usuario);
             }
         });
         
@@ -108,7 +111,7 @@ public class SolicitudGestionView extends JFrame{
         add(buttonPanel, BorderLayout.SOUTH);
         
         // Crea la tabla de activos
-        modeloTable = new DefaultTableModel(new Object[]{"Id Solicitud", "Tipo Solicitud" , "Fecha Solicitud" , "Estado Solicitud"}, 0);
+        modeloTable = new DefaultTableModel(new Object[]{"Id Solicitud", "Tipo Solicitud" , "Fecha Solicitud" , "Estado Solicitud", "Tipo Activo", "Marca Activo", "Modelo Activo", "Numero de serie", "Codigo Activo"}, 0);
         solicitudesTable = new JTable(modeloTable); // Aquí puedes configurar el modelo de la tabla para mostrar los activos
         add(new JScrollPane(solicitudesTable), BorderLayout.CENTER);
         
@@ -131,6 +134,7 @@ public class SolicitudGestionView extends JFrame{
 						} else {
 							btnSolicitudAprobar.setEnabled(true);
 							btnSolicitudRechazar.setEnabled(true);
+							actualizarBotonesPorUsuarioSector();
 						}
 					}
 				} catch (SQLException ex) {
@@ -139,6 +143,7 @@ public class SolicitudGestionView extends JFrame{
 			}
 		});
         
+		actualizarBotonesPorUsuarioSector();
         
         setVisible(true);
 	}
@@ -163,7 +168,14 @@ public class SolicitudGestionView extends JFrame{
 				estado = "Rechazada";
 			}
 			
-			modeloTable.addRow(new Object[] { solicitud.getId(), solicitud.getTipoSolicitud(), fecha, estado});
+			Activo activo = solicitudDAO.obtenerActivoPorSolicitudId(solicitud.getId());
+			String tipoActivo = activo.getTipo();
+			String marca = activo.getMarca();
+			String modelo = activo.getModelo();
+			String numeroSerie = activo.getNumeroSerie();
+			String codigoActivo = activo.getCodigoProducto();
+			
+			modeloTable.addRow(new Object[] { solicitud.getId(), solicitud.getTipoSolicitud(), fecha, estado, tipoActivo, marca, modelo, numeroSerie, codigoActivo});
 		}
 		
 		return true;
@@ -175,6 +187,21 @@ public class SolicitudGestionView extends JFrame{
 		return busquedaTxtField.getText();
 	}
 	
+	public void actualizarBotonesPorUsuarioSector() {
+		
+		if (usuario.getTipoUsuario().equals("It")) {
+			btnSolicitudAlta.setEnabled(true);
+			btnSolicitudBaja.setEnabled(true);
+			btnSolicitudAprobar.setEnabled(false);
+			btnSolicitudRechazar.setEnabled(false);
+		} else {
+			btnSolicitudAlta.setEnabled(false);
+			btnSolicitudBaja.setEnabled(false);
+			btnSolicitudAprobar.setEnabled(true);
+			btnSolicitudRechazar.setEnabled(true);
+		}
+		
+	}
 	
 	public void setControladorSolicitudAlta(ActionListener solicitudCargar) {
 	  btnSolicitudAlta.addActionListener(solicitudCargar); }

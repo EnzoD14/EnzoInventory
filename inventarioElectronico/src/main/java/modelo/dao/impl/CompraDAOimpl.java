@@ -2,15 +2,12 @@ package modelo.dao.impl;
 
 import java.util.Date;
 import java.util.List;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-
-import modelo.Activo;
 import modelo.Compra;
 import modelo.Proveedor;
 import modelo.dao.CompraDAO;
@@ -19,7 +16,6 @@ public class CompraDAOimpl implements CompraDAO {
 	
 	private SessionFactory sessionFactory;
 
-	@SuppressWarnings("deprecation")
 	public CompraDAOimpl() {
 		Configuration configuration = new Configuration();
 		configuration.configure("hibernate.cfg.xml");
