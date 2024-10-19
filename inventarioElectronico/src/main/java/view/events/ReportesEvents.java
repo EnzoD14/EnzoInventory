@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +71,7 @@ public class ReportesEvents {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//obtenerAmortizacionCsv();
+				obtenerAmortizacionCsv();
 			}
 		});
 		
@@ -333,6 +335,33 @@ public class ReportesEvents {
 		}
 	 }
 	
+	private void obtenerAmortizacionCsv() {
+		ActivoDAOimpl activoDAO = new ActivoDAOimpl();
+		List<Activo> listaActivos = activoDAO.listarActivos(null);
+		String valorAmortizacion = null;
+		
+		for (Activo activo : listaActivos) {
+			valorAmortizacion  = "0";
+            if (activo.getMesesAmortizacion() != null) {
+            	
+            	LocalDate fechaAlta = activo.getFechaAlta().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            	LocalDate fechaHoy = LocalDate.now();	
+            	long mesesTranscurridos = ChronoUnit.MONTHS.between(fechaAlta, fechaHoy);
+            	
+            	if(mesesTranscurridos <= activo.getMesesAmortizacion()){
+	            	// Calcular el valor de amortización
+	            	double valorActivo = Double.parseDouble(activo.getValor());
+	            	int amortizacionMensual = (int) (valorActivo / activo.getMesesAmortizacion());
+	            	int mesesRestantes = activo.getMesesAmortizacion() - (int) mesesTranscurridos;
+	            	valorAmortizacion = String.valueOf(amortizacionMensual * mesesRestantes);
+            	}
+            	
+            	activo.setValorAmortizacion(valorAmortizacion);
+                activoDAO.modificarActivo(activo);
+            }
+        }
+	}
+	
 	
 	private void obtenerActivosBajaCsv() throws NumberFormatException, SQLException {
 		JFileChooser fileChooser = new JFileChooser();
@@ -483,5 +512,7 @@ public class ReportesEvents {
 			}
 		}
 	}
+	
+	
 
 }

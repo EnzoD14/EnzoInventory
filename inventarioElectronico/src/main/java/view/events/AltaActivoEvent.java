@@ -78,6 +78,7 @@ public class AltaActivoEvent {
         activo.setFechaMantenimiento(null);
         activo.setCodigoProducto(vista.getCodigoProducto());
         activo.setValor(vista.getValor());
+        activo.setValorAmortizacion(null);
         activo.setEstado(vista.getEstado());
         activo.setCompra(compra);
         activo.setBaja(0);
