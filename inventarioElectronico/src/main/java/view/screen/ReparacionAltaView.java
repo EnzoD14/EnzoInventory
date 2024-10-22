@@ -107,12 +107,20 @@ public class ReparacionAltaView extends JFrame{
 		grabarReparacionButton.setEnabled(enabled);
 	}
 	
+	public void setEnabledBuscarActivoButton(boolean enabled) {
+		buscarActivo.setEnabled(enabled);
+	}
+	
+	public void setEnabledActivoField(boolean enabled) {
+		activoField.setEnabled(enabled);
+	}
+	
 	public JDateChooser getFechaReparacionChooser() {
 		return fechaReparacionChooser;
 	}
 	
-	public JTextField getActivoField() {
-		return activoField;
+	public String getActivoField() {
+		return activoField.getText();
 	}
 	
 	public JTextField getMotivoField() {
@@ -121,6 +129,10 @@ public class ReparacionAltaView extends JFrame{
 	
 	public JTextField getCostoField() {
 		return costoField;
+	}
+	
+	public void setActivoField(String activo) {
+		activoField.setText(activo);
 	}
 	
 	public JButton getGrabarReparacionButton() {
@@ -145,6 +157,16 @@ public class ReparacionAltaView extends JFrame{
 	
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
+	}
+
+	public String getMotivoReparacion() {
+		// TODO Auto-generated method stub
+		return motivoField.getText();
+	}
+
+	public String getValorReparacion() {
+		// TODO Auto-generated method stub
+		return costoField.getText();
 	}
 
 }

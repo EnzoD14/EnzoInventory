@@ -47,7 +47,7 @@ public class Reparacion {
 	}
 
 	public String getMotivoReparacion() {
-		return motivoReparacion;
+		return motivoReparacion.toString();
 	}
 
 	public void setMotivoReparacion(String motivoReparacion) {

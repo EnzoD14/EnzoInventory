@@ -124,6 +124,10 @@ public class ReportesEvents {
 				csvActivos.append(",");
 				csvActivos.append("Especificaciones");
 				csvActivos.append(",");
+				csvActivos.append("RAM");
+				csvActivos.append(",");
+				csvActivos.append("DISCO");
+				csvActivos.append(",");
 				csvActivos.append("Valor");
 				csvActivos.append(",");
 				csvActivos.append("Estado");
@@ -240,6 +244,10 @@ public class ReportesEvents {
 				csvActivos.append(",");
 				csvActivos.append("Especificaciones");
 				csvActivos.append(",");
+				csvActivos.append(" ");
+				csvActivos.append(",");
+				csvActivos.append(" ");
+				csvActivos.append(",");
 				csvActivos.append("Fecha Reparacion");
 				csvActivos.append(",");
 				csvActivos.append("Motivo Reparacion");
@@ -336,30 +344,99 @@ public class ReportesEvents {
 	 }
 	
 	private void obtenerAmortizacionCsv() {
+		JFileChooser fileChooser = new JFileChooser();
+		int userSelection = fileChooser.showSaveDialog(reportesView);
 		ActivoDAOimpl activoDAO = new ActivoDAOimpl();
 		List<Activo> listaActivos = activoDAO.listarActivos(null);
 		String valorAmortizacion = null;
 		
-		for (Activo activo : listaActivos) {
-			valorAmortizacion  = "0";
-            if (activo.getMesesAmortizacion() != null) {
-            	
-            	LocalDate fechaAlta = activo.getFechaAlta().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            	LocalDate fechaHoy = LocalDate.now();	
-            	long mesesTranscurridos = ChronoUnit.MONTHS.between(fechaAlta, fechaHoy);
-            	
-            	if(mesesTranscurridos <= activo.getMesesAmortizacion()){
-	            	// Calcular el valor de amortización
-	            	double valorActivo = Double.parseDouble(activo.getValor());
-	            	int amortizacionMensual = (int) (valorActivo / activo.getMesesAmortizacion());
-	            	int mesesRestantes = activo.getMesesAmortizacion() - (int) mesesTranscurridos;
-	            	valorAmortizacion = String.valueOf(amortizacionMensual * mesesRestantes);
-            	}
-            	
-            	activo.setValorAmortizacion(valorAmortizacion);
-                activoDAO.modificarActivo(activo);
-            }
-        }
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			File fileToSave = fileChooser.getSelectedFile();
+			
+			try {
+				FileWriter csvActivos = new FileWriter(fileToSave.getAbsolutePath() + ".csv");
+				
+				csvActivos.append("Sector");
+				csvActivos.append(",");
+				csvActivos.append("Usuario");
+				csvActivos.append(",");
+				csvActivos.append("Tipo");
+				csvActivos.append(",");
+				csvActivos.append("Marca");
+				csvActivos.append(",");
+				csvActivos.append("Modelo");
+				csvActivos.append(",");
+				csvActivos.append("Numero de Serie");
+				csvActivos.append(",");
+				csvActivos.append("Valor");
+				csvActivos.append(",");
+				csvActivos.append("ValorAmortizacion");
+				csvActivos.append(",");
+				csvActivos.append("Estado");
+				csvActivos.append(",");
+				csvActivos.append("Fecha de Alta");
+				csvActivos.append(",");
+				csvActivos.append("Fecha de Mantenimiento");
+				csvActivos.append(",");
+				csvActivos.append("Meses de Amortizacion");
+				csvActivos.append("\n");
+				
+				for (Activo activo : listaActivos) {
+					valorAmortizacion  = "0";
+		            if (activo.getMesesAmortizacion() != null) {
+		            	
+		            	LocalDate fechaAlta = activo.getFechaAlta().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		            	LocalDate fechaHoy = LocalDate.now();	
+		            	long mesesTranscurridos = ChronoUnit.MONTHS.between(fechaAlta, fechaHoy);
+		            	
+		            	if(mesesTranscurridos <= activo.getMesesAmortizacion()){
+			            	// Calcular el valor de amortización
+			            	double valorActivo = Double.parseDouble(activo.getValor());
+			            	int amortizacionMensual = (int) (valorActivo / activo.getMesesAmortizacion());
+			            	int mesesRestantes = activo.getMesesAmortizacion() - (int) mesesTranscurridos;
+			            	valorAmortizacion = String.valueOf(amortizacionMensual * mesesRestantes);
+		            	}
+		            	
+		            	activo.setValorAmortizacion(valorAmortizacion);
+		                activoDAO.modificarActivo(activo);
+		            }
+					
+					String sector = activo.getEmpleado().getSector();
+					String usuario = activo.getEmpleado().getUsuarioAD();
+					csvActivos.append(sector);
+	                csvActivos.append(",");
+	                csvActivos.append(usuario);
+	                csvActivos.append(",");
+					csvActivos.append(activo.getTipo());
+	                csvActivos.append(",");
+	                csvActivos.append(activo.getMarca());
+	                csvActivos.append(",");
+	                csvActivos.append(activo.getModelo());
+	                csvActivos.append(",");
+	                csvActivos.append(activo.getNumeroSerie());
+	                csvActivos.append(",");
+	                csvActivos.append(String.valueOf(activo.getValor()));
+	                csvActivos.append(",");
+	                csvActivos.append(String.valueOf(activo.getValorAmortizacion()));
+	                csvActivos.append(",");
+	                csvActivos.append(activo.getEstado());
+	                csvActivos.append(",");
+	                csvActivos.append(activo.getFechaAlta().toString());
+	                csvActivos.append(",");
+	                csvActivos.append(activo.getFechaMantenimiento().toString());
+	                csvActivos.append(",");
+	                csvActivos.append(String.valueOf(activo.getMesesAmortizacion()));
+	                csvActivos.append("\n");
+				}	
+				csvActivos.flush();
+				csvActivos.close();
+				String rutaArchivo = fileToSave.getAbsolutePath();
+				JOptionPane.showMessageDialog(null, "Reporte ActivosAmortizacion generado con exito y guardado en " + rutaArchivo + ".csv");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 	
@@ -383,6 +460,10 @@ public class ReportesEvents {
 				csvActivos.append("Numero de Serie");
 				csvActivos.append(",");
 				csvActivos.append("Especificaciones");
+				csvActivos.append(",");
+				csvActivos.append("Ram");
+				csvActivos.append(",");
+				csvActivos.append("Disco");
 				csvActivos.append(",");
 				csvActivos.append("Valor");
 				csvActivos.append(",");

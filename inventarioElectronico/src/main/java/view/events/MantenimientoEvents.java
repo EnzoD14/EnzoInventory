@@ -18,14 +18,16 @@ public class MantenimientoEvents {
 		mantenimientoView.setBtnAltaReparacionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("alta");
-				altaReparacion();
+				ReparacionAltaView reparacionAltaView = new ReparacionAltaView();
+				new ReparacionAltaEvents(reparacionAltaView);
 			}
 		});
 
 		mantenimientoView.setBtnBajaReparacionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("baja");
-				//bajaReparacion();
+				ReparacionBajaView reparacionBajaView = new ReparacionBajaView();
+				new ReparacionBajaEvents(reparacionBajaView);
 			}
 		});
 
@@ -37,7 +39,4 @@ public class MantenimientoEvents {
 		});
 	}
 	
-	private void altaReparacion() {
-		ReparacionAltaView reparacionAltaView = new ReparacionAltaView();
-	}
 }
