@@ -9,6 +9,7 @@ import modelo.Activo;
 import modelo.Reparacion;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.ReparacionDAOimpl;
+import view.screen.ReparacionBajaView;
 
 public class ReparacionBajaEvents {
 	private ReparacionBajaView reparacionBajaView;
@@ -54,6 +55,7 @@ public class ReparacionBajaEvents {
 					reparacion = activo.getReparacion();
 					reparacion.setEnReparacion(false);
 					reparacionDAO.modificarReparacion(reparacion);
+					activo.setValor(activo.getValor() + reparacion.getValor());
 					activo.setEstado(null);
 					activo.setReparacion(null);
 					activoDAO.modificarActivo(activo);

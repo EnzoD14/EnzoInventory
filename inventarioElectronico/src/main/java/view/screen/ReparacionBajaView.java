@@ -1,4 +1,4 @@
-package view.events;
+package view.screen;
 
 import java.awt.Dimension;
 import java.awt.event.ActionListener;

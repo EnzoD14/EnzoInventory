@@ -35,7 +35,7 @@ public class ActivoGestionEvents {
 		
 		activoView.setControladorActivoModificar(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				agregarActivo();
+				//agregarActivo();
 			}
 		});
 		

@@ -96,10 +96,16 @@ public class SolicitudBajaEvents {
 		} else {
 			System.out.println("Buscando activo");
 			activo = activoDAO.obtenerActivoPorNumeroSerie(busqueda);
-			JOptionPane.showMessageDialog(null, "Activo encontrado.", "Información", JOptionPane.INFORMATION_MESSAGE);
-			solicitudBajaView.setBusqueda(activo.getNumeroSerie());
-			solicitudBajaView.setBusquedaEnabled(false);
-			solicitudBajaView.setBtnGuardarEnabled(true);
+			if (activo == null) {
+				JOptionPane.showMessageDialog(null, "Activo no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			} else {
+				JOptionPane.showMessageDialog(null, "Activo encontrado.", "Información", JOptionPane.INFORMATION_MESSAGE);
+				solicitudBajaView.setBusqueda(activo.getNumeroSerie());
+				solicitudBajaView.setBusquedaEnabled(false);
+				solicitudBajaView.setBtnGuardarEnabled(true);
+				solicitudBajaView.setBtnBuscarEnabled(false);
+			}
 		}
 	}
 

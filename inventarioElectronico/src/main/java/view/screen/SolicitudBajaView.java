@@ -66,7 +66,7 @@ public class SolicitudBajaView extends JFrame {
         frame.add(Box.createVerticalStrut(5));
         cmbMotivoBaja.setSelectedIndex(5);
         
-        btnGuardar = new JButton("Guardar");
+        btnGuardar = new JButton("Cargar Solicitud de Baja");
         btnGuardar.setAlignmentX(0.5f);
         btnGuardar.setEnabled(false);
         frame.add(btnGuardar);
@@ -100,6 +100,10 @@ public class SolicitudBajaView extends JFrame {
 		btnGuardar.setEnabled(enabled);
 	}
 	
+	public void setBtnBuscarEnabled(boolean enabled) {
+		btnBuscar.setEnabled(enabled);
+	}
+	
 	public void setBtnGuardar(ActionListener actionListener) {
 		btnGuardar.addActionListener(actionListener);
 	}
@@ -110,5 +114,9 @@ public class SolicitudBajaView extends JFrame {
 	
 	public void setBtnBuscar(ActionListener actionListener) {
 		btnBuscar.addActionListener(actionListener);
+	}
+	
+	public void dispose() {
+		frame.dispose();
 	}
 }

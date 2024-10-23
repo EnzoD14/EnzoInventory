@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import view.screen.MantenimientoView;
 import view.screen.ReparacionAltaView;
+import view.screen.ReparacionBajaView;
 
 public class MantenimientoEvents {
 	private MantenimientoView mantenimientoView;

@@ -24,7 +24,15 @@ public class ProveedorModificacionEvents {
 	public void initEventHandlers(Proveedor proveedor) {
 		view.setGuardarButtonActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modificarProveedor(proveedor);
+				if (validarCampos()) {
+					String razonSocial = view.getRazonSocial();
+					if (proveedorDAO.buscarProveedorPorRazonSocial(razonSocial) != null) {
+                        JOptionPane.showMessageDialog(null, "Ya existe un proveedor con esa razon social.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    } else {
+                    	modificarProveedor(proveedor);
+                    }
+				}
 			}
 		});
 
@@ -61,5 +69,14 @@ public class ProveedorModificacionEvents {
             view.setVisible(false);
 		}
 		
+	}
+	
+	private boolean validarCampos() {
+		if (view.getNombre().isEmpty() || view.getRazonSocial().isEmpty() || view.getEmail().isEmpty() || view.getTelefono().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+		} else {
+            return true;
+        }
 	}
 }

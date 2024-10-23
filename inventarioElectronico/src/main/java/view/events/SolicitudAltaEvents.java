@@ -18,6 +18,7 @@ import view.screen.SolicitudAltaView;
 public class SolicitudAltaEvents {
 	
 	private SolicitudAltaView solicitudAltaView;
+	private ActivoDAOimpl activoDAO;
 	
 	public SolicitudAltaEvents(SolicitudAltaView solicitudAltaView) {
 		if (solicitudAltaView == null) {
@@ -25,6 +26,7 @@ public class SolicitudAltaEvents {
 		}
 
 		this.solicitudAltaView = solicitudAltaView;
+		this.activoDAO = new ActivoDAOimpl();
 		initEventHandlers();
 	}
 	
@@ -33,12 +35,21 @@ public class SolicitudAltaEvents {
 		solicitudAltaView.setBtnGuardar(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-					guardarSolicitud();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+            	
+            	if (validarCampos()) {
+            		String nroSerie = solicitudAltaView.getNumeroSerie();
+            		if (activoDAO.obtenerActivoPorNumeroSerie(nroSerie) != null) {
+            			JOptionPane.showMessageDialog(null, "Ya existe un activo con ese número de serie.", "Error", JOptionPane.ERROR_MESSAGE);
+            			return;
+            		} else {
+            			try {
+        					guardarSolicitud();
+        				} catch (SQLException e1) {
+        					// TODO Auto-generated catch block
+        					e1.printStackTrace();
+        				}
+            		}
+            	}
             }
         });
 		
@@ -90,6 +101,23 @@ public class SolicitudAltaEvents {
 					JOptionPane.ERROR_MESSAGE);
 			solicitudAltaView.dispose();
 		}
+	}
+	
+	private boolean validarCampos() {
+		if (solicitudAltaView.getTipoActivo().isEmpty() || solicitudAltaView.getMarca().isEmpty() || solicitudAltaView.getModelo().isEmpty() || solicitudAltaView.getNumeroSerie().isEmpty() || solicitudAltaView.getEspecificaciones().isEmpty() || solicitudAltaView.getValor().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+		
+		try {
+			Double.parseDouble(solicitudAltaView.getValor());
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "El campo 'Valor' debe ser numerico.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
+        return true;
 	}
 
 }

@@ -32,13 +32,23 @@ public class AltaActivoEvent {
         vista.setControladorGuardar(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-					guardarActivo();
-					System.out.println("teste");
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+            	
+            	if(validarCampos()) {
+            		String nroSerie = vista.getNumeroSerie();
+            		if (activoDAO.obtenerActivoPorNumeroSerie(nroSerie) != null) {
+            			JOptionPane.showMessageDialog(null, "Ya existe un activo con ese número de serie.", "Error", JOptionPane.ERROR_MESSAGE);
+            			return;
+            		} else {
+            			try {
+        					guardarActivo();
+        					System.out.println("teste");
+        				} catch (SQLException e1) {
+        					// TODO Auto-generated catch block
+        					e1.printStackTrace();
+        				}
+					}
+            	}
+                
             }
         });
 
@@ -92,6 +102,24 @@ public class AltaActivoEvent {
 		}
 		
         vista.dispose();
+    }
+    
+    private boolean validarCampos() {
+		if (vista.getNumeroSerie().isEmpty() || vista.getTipo().isEmpty() || vista.getMarca().isEmpty()
+				|| vista.getModelo().isEmpty() || vista.getEspecificaciones().isEmpty() || vista.getEstado().isEmpty()
+				|| vista.getCodigoProducto().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Debe completar todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		
+		try {
+			Double.parseDouble(vista.getValor());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El valor debe ser un número.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+		
+		return true;
     }
     
 }

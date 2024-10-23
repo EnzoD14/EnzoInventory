@@ -95,6 +95,7 @@ public class ActivoGestionView extends JFrame{
         buttonPanel.add(btnSolicitudActivo);
         buttonPanel.add(btnModificarActivo);
         buttonPanel.add(btnModificarGarantia);
+        btnModificarActivo.setEnabled(false);
         btnModificarGarantia.setEnabled(false);
         add(buttonPanel, BorderLayout.SOUTH);
         
