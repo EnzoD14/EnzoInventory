@@ -115,6 +115,34 @@ public class ReportesView extends JFrame{
 
 	}
 	
+	public void mostrarReporte1(Boolean enabled) {
+		btnReporte1.setEnabled(enabled);
+	}
+	
+	public void mostrarReporte2(Boolean enabled) {
+		btnReporte2.setEnabled(enabled);
+	}
+	
+	public void mostrarReporte3(Boolean enabled) {
+		btnReporte3.setEnabled(enabled);
+	}
+	
+	public void mostrarReporte4(Boolean enabled) {
+		btnReporte4.setEnabled(enabled);
+	}
+	
+	public void mostrarReporte5(Boolean enabled) {
+		btnReporte5.setEnabled(enabled);
+	}
+	
+	public void mostrarReporte6(Boolean enabled) {
+		btnReporte6.setEnabled(enabled);
+	}
+	
+	public void mostrarReporte7(Boolean enabled) {
+		btnReporte7.setEnabled(enabled);
+	}
+	
 	public void setReporte1Listener(ActionListener listener) {
 		btnReporte1.addActionListener(listener);
 	}

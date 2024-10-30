@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import modelo.Activo;
 import modelo.Solicitud;
+import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.SolicitudDAOimpl;
 import view.screen.SolicitudAltaView;
 import view.screen.SolicitudAprobarView;
@@ -73,6 +74,7 @@ public class SolicitudGestionEvents {
 	
 	private void aprobarSolicitud() throws SQLException {
 		Activo activo2 = new Activo();
+		ActivoDAOimpl activoDAO = new ActivoDAOimpl();
 		SolicitudDAOimpl solicitudDAO = new SolicitudDAOimpl();
 		Solicitud solicitud = new Solicitud();
 		String busqueda = solicitudGestionView.getBusqueda();
@@ -81,12 +83,21 @@ public class SolicitudGestionEvents {
 		System.out.println("aprobar");
 		
 		if (solicitud.getEstado() == 0) {
-            solicitud.setEstado(1);
-			solicitudDAO.actualizarSolicitud(solicitud);
-            activo2 = solicitudDAO.obtenerActivoPorSolicitudId(idSolicitud);
-            System.out.println(activo2.getEspecificaciones());
-            SolicitudAprobarView solicitudAprobarView = new SolicitudAprobarView();
-    		new SolicitudAprobarEvents(solicitudAprobarView, activo2); 
+			if (solicitud.getTipoSolicitud().equals("Alta")) {
+	            solicitud.setEstado(1);
+				solicitudDAO.actualizarSolicitud(solicitud);
+	            activo2 = solicitudDAO.obtenerActivoPorSolicitudId(idSolicitud);
+	            System.out.println(activo2.getEspecificaciones());
+	            SolicitudAprobarView solicitudAprobarView = new SolicitudAprobarView();
+	    		new SolicitudAprobarEvents(solicitudAprobarView, activo2); 
+			} else {
+				solicitud.setEstado(1);
+				solicitudDAO.actualizarSolicitud(solicitud);
+				activo2 = solicitudDAO.obtenerActivoPorSolicitudId(idSolicitud);
+				activo2.setBaja(1);
+				activoDAO.modificarActivo(activo2);
+				JOptionPane.showMessageDialog(null, "Solicitud de baja aprobada!");
+			}
         } else {
             JOptionPane.showMessageDialog(null, "La solicitud no se puede aprobar");
         }

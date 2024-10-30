@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 
 import modelo.Activo;
 import modelo.Solicitud;
+import modelo.Usuario;
 import modelo.dao.impl.ActivoDAOimpl;
 import modelo.dao.impl.SolicitudDAOimpl;
 import view.screen.ReportesView;
@@ -27,17 +28,20 @@ import view.screen.ReportesView;
 public class ReportesEvents {
 	
 	private ReportesView reportesView;
+	private Usuario usuarioLogin;
 	
-	public ReportesEvents(ReportesView reportesView) {
+	public ReportesEvents(ReportesView reportesView, Usuario usuarioLogin) {
 		if (reportesView == null) {
 			throw new IllegalArgumentException("reportesView cannot be null");
 		}
-
 		this.reportesView = reportesView;
+		this.usuarioLogin = usuarioLogin;
 		initEventHandlers();
 	}
 	
 	private void initEventHandlers() {
+		
+		actualizarBotones(usuarioLogin);
 
 		reportesView.setReporte1Listener(new ActionListener() {
 			@Override
@@ -592,6 +596,44 @@ public class ReportesEvents {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void actualizarBotones(Usuario usuario) {
+		
+		if (usuario.getTipoUsuario().equals("It")) {
+			reportesView.mostrarReporte1(true);
+			reportesView.mostrarReporte2(true);
+			reportesView.mostrarReporte3(true);
+			reportesView.mostrarReporte4(false);
+			reportesView.mostrarReporte5(false);
+			reportesView.mostrarReporte6(true);
+			reportesView.mostrarReporte7(true);
+		} else if (usuario.getTipoUsuario().equals("Finanzas")) {
+			reportesView.mostrarReporte1(false);
+			reportesView.mostrarReporte2(false);
+			reportesView.mostrarReporte3(false);
+			reportesView.mostrarReporte4(false);
+			reportesView.mostrarReporte5(true);
+			reportesView.mostrarReporte6(true);
+			reportesView.mostrarReporte7(false);
+		} else if (usuario.getTipoUsuario().equals("Compras")) {
+			reportesView.mostrarReporte1(false);
+			reportesView.mostrarReporte2(false);
+			reportesView.mostrarReporte3(false);
+			reportesView.mostrarReporte4(true);
+			reportesView.mostrarReporte5(false);
+			reportesView.mostrarReporte6(false);
+			reportesView.mostrarReporte7(false);
+		} else if (usuario.getTipoUsuario().equals("Administrador")) {
+			reportesView.mostrarReporte1(true);
+			reportesView.mostrarReporte2(true);
+			reportesView.mostrarReporte3(true);
+			reportesView.mostrarReporte4(true);
+			reportesView.mostrarReporte5(true);
+			reportesView.mostrarReporte6(true);
+			reportesView.mostrarReporte7(true);
+		}
+		
 	}
 	
 	

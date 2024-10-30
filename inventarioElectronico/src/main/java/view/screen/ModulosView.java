@@ -146,7 +146,7 @@ public class ModulosView {
             case "Reportes":
                 // new ReportesVista();
             	ReportesView reportesVista = new ReportesView(usuarioLogin);
-				new ReportesEvents(reportesVista);
+				new ReportesEvents(reportesVista, usuarioLogin);
 				break;
             default:
                 throw new IllegalArgumentException("Categoría no reconocida: " + categoria);

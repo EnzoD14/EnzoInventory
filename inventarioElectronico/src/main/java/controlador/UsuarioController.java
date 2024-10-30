@@ -76,7 +76,7 @@ public class UsuarioController {
 		permisosPorUsuario.put("Administrador", Arrays.asList("Gestión Activos", "Gestión Usuarios", "Compras" , "Mantenimiento / Reparación", "Backup", "Reportes"));
 		permisosPorUsuario.put("It", Arrays.asList("Gestión Activos", "Gestión Usuarios", "Mantenimiento / Reparación", "Backup", "Reportes"));
 		permisosPorUsuario.put("Finanzas", Arrays.asList("Gestión Activos", "Reportes"));
-		permisosPorUsuario.put("Compras", Arrays.asList("Compras"));
+		permisosPorUsuario.put("Compras", Arrays.asList("Compras", "Reportes"));
 		
 		List<String> permisos = permisosPorUsuario.get(usuarioLogin.getTipoUsuario());
 		
